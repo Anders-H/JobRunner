@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<jobs>
+  <job>
+    <name>Visa notepad 1</name>
+    <command>notepad.exe</command>
+    <arguments></arguments>
+    <timeout>00:00:03</timeout>
+    <display>Hidden</display>
+  </job>
+  <job>
+    <name>Visa notepad 2</name>
+    <command>notepad.exe</command>
+    <arguments></arguments>
+    <timeout>00:10:00</timeout>
+    <display>Visible</display>
+  </job>
+</jobs>
