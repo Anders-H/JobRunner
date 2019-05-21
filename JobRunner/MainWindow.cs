@@ -26,7 +26,7 @@ namespace JobRunner
             if (!HasJobs())
                 return;
             lblStatus.Text = @"Running...";
-            runToolStripMenuItem.Enabled = false;
+            EnableGui(false);
             Jobs.Reset();
             grid1.RunSingle = -1;
             grid1.Running = true;
@@ -45,7 +45,7 @@ namespace JobRunner
                 return;
             }
             lblStatus.Text = @"Running...";
-            runToolStripMenuItem.Enabled = false;
+            EnableGui(false);
             Jobs.Reset();
             grid1.RunSingle = grid1.SelectedCells[0].RowIndex;
             grid1.Running = true;
@@ -68,9 +68,15 @@ namespace JobRunner
         private void RunJobsCompletedActions()
         {
             lblStatus.Text = @"Done.";
-            runToolStripMenuItem.Enabled = true;
+            EnableGui(true);
             grid1.Running = false;
             grid1.Invalidate();
+        }
+
+        private void EnableGui(bool enabled)
+        {
+            runToolStripMenuItem.Enabled = enabled;
+            runSelectedJobToolStripMenuItem.Enabled = enabled;
         }
 
         private void RunJobs()
