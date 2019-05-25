@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Configuration;
 using System.Windows.Forms;
 
 namespace JobRunner
 {
     public partial class MainWindow : Form
     {
+        private JobFileLocation JobFileLocation { get; }
         private JobList Jobs { get; } = new JobList();
 
         public MainWindow()
@@ -100,6 +102,11 @@ namespace JobRunner
 
         private void MainWindow_Shown(object sender, EventArgs e)
         {
+            if (!Config.Validate())
+            {
+                Close();
+                return;
+            }
             Jobs.Load();
             if (!Jobs.LoadSuccess)
             {

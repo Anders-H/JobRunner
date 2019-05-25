@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Xml;
 
 namespace JobRunner
@@ -16,8 +15,7 @@ namespace JobRunner
         {
             LoadSuccess = false;
             Clear();
-            var executingFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
-            var filename = Path.Combine(executingFile.Directory?.FullName ?? "", "jobs.xml");
+            var filename = Config.GetJobFilePath();
             if (!File.Exists(filename))
             {
                 LoadFailedMessage = $"The file {filename} does not exist.";
