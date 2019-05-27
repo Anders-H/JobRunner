@@ -2,14 +2,15 @@
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using System.Security.Principal;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace JobRunner
 {
     public static class Config
     {
         private static JobFileLocation? _jobFileLocation;
+        private static bool? _isAdministrator;
 
         public static bool Validate()
         {
@@ -29,7 +30,7 @@ namespace JobRunner
                     _jobFileLocation = JobFileLocation.UserSettings;
                     return true;
                 case "Application":
-                    _jobFileLocation = JobFileLocation.UserSettings;
+                    _jobFileLocation = JobFileLocation.Application;
                     return true;
                 default:
                     MessageBox.Show(
@@ -60,12 +61,25 @@ namespace JobRunner
                     return Path.Combine(executingFile.Directory?.FullName ?? "", "jobs.xml");
                 case JobFileLocation.UserSettings:
                     var profile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    var folder = new DirectoryInfo(Path.Combine(profile, "WinsoftJobRunnerJobSettingsFile"));
+                    var folder = new DirectoryInfo(Path.Combine(profile, "JobRunnerJobListFile"));
                     if (!folder.Exists)
                         folder.Create();
                     return Path.Combine(folder.FullName, "jobs.xml");
                 default:
                     throw new SystemException("Configuration error. Visit https://github.com/Anders-H/JobRunner for more information.");
+            }
+        }
+
+        public static bool IsAdministrator
+        {
+            get
+            {
+                if (_isAdministrator.HasValue)
+                    return _isAdministrator.Value;
+                using var identity = WindowsIdentity.GetCurrent();
+                var principal = new WindowsPrincipal(identity);
+                _isAdministrator = principal.IsInRole(WindowsBuiltInRole.Administrator);
+                return _isAdministrator.Value;
             }
         }
     }

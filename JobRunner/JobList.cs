@@ -18,6 +18,11 @@ namespace JobRunner
             var filename = Config.GetJobFilePath();
             if (!File.Exists(filename))
             {
+                if (Config.IsAdministrator)
+                {
+                    LoadSuccess = true;
+                    return;
+                }
                 LoadFailedMessage = $"The file {filename} does not exist.";
                 return;
             }
@@ -58,6 +63,11 @@ namespace JobRunner
                 Add(new Job(number, name, command, arguments, t, display == "hidden"));
             }
             LoadSuccess = true;
+        }
+
+        public bool Save()
+        {
+            return true;
         }
 
         public void Reset()

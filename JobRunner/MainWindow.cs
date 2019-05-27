@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Configuration;
+using System.Text;
 using System.Windows.Forms;
 
 namespace JobRunner
 {
     public partial class MainWindow : Form
     {
-        private JobFileLocation JobFileLocation { get; }
         private JobList Jobs { get; } = new JobList();
 
         public MainWindow()
@@ -115,13 +114,31 @@ namespace JobRunner
                 var failMessage = string.IsNullOrWhiteSpace(Jobs.LoadFailedMessage)
                     ? "An unknown error has occured."
                     : Jobs.LoadFailedMessage;
-                MessageBox.Show($@"{failMessage}
-
-The application will close.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var t = new StringBuilder();
+                t.Append(failMessage);
+                t.AppendLine();
+                t.AppendLine();
+                t.Append("The application will close.");
+                if (!Config.IsAdministrator)
+                {
+                    t.AppendLine();
+                    t.AppendLine();
+                    t.AppendLine("To be able to edit the job list, start JobRunner as administrator.");
+                }
+                MessageBox.Show(t.ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
             grid1.Initialize(Jobs);
-            lblStatus.Text = @"Done.";
+            if (Config.IsAdministrator)
+            {
+                Text = @"JobRunner (Administrator)";
+                lblStatus.Text = @"Done.";
+            }
+            else
+            {
+                Text = @"JobRunner";
+                lblStatus.Text = @"Done (read only).";
+            }
             Cursor = Cursors.Default;
         }
     }
