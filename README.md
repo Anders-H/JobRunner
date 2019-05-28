@@ -8,4 +8,3 @@ When **JobRunner** is started as administrator, the job list is editable from wi
 The default location for the job list file is:
 
 C:\Users\\*username*\AppData\Roaming\JobRunnerJobListFile\jobs.xml
-

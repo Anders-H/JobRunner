@@ -141,5 +141,13 @@ namespace JobRunner
             }
             Cursor = Cursors.Default;
         }
+
+        private void AddJobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var x = new AddJobDialog())
+            {
+                x.ShowDialog(this);
+            }
+        }
     }
 }
