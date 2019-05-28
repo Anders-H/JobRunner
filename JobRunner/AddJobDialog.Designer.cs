@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageBasic = new System.Windows.Forms.TabPage();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.lblName = new System.Windows.Forms.Label();
+            this.txtNumber = new System.Windows.Forms.TextBox();
+            this.lblNumber = new System.Windows.Forms.Label();
+            this.tabPageProcess = new System.Windows.Forms.TabPage();
+            this.tabPageOverview = new System.Windows.Forms.TabPage();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.tabPageBasic = new System.Windows.Forms.TabPage();
-            this.tabPageProcess = new System.Windows.Forms.TabPage();
-            this.lblNumber = new System.Windows.Forms.Label();
-            this.txtNumber = new System.Windows.Forms.TextBox();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.lblName = new System.Windows.Forms.Label();
-            this.tabPageOverview = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +54,72 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(468, 264);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.TabControl1_SelectedIndexChanged);
+            // 
+            // tabPageBasic
+            // 
+            this.tabPageBasic.Controls.Add(this.txtName);
+            this.tabPageBasic.Controls.Add(this.lblName);
+            this.tabPageBasic.Controls.Add(this.txtNumber);
+            this.tabPageBasic.Controls.Add(this.lblNumber);
+            this.tabPageBasic.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBasic.Name = "tabPageBasic";
+            this.tabPageBasic.Size = new System.Drawing.Size(460, 238);
+            this.tabPageBasic.TabIndex = 0;
+            this.tabPageBasic.Text = "Basic information";
+            this.tabPageBasic.UseVisualStyleBackColor = true;
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(8, 68);
+            this.txtName.MaxLength = 500;
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(440, 20);
+            this.txtName.TabIndex = 3;
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(8, 52);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(56, 13);
+            this.lblName.TabIndex = 2;
+            this.lblName.Text = "Job name:";
+            // 
+            // txtNumber
+            // 
+            this.txtNumber.Location = new System.Drawing.Point(8, 24);
+            this.txtNumber.MaxLength = 6;
+            this.txtNumber.Name = "txtNumber";
+            this.txtNumber.Size = new System.Drawing.Size(116, 20);
+            this.txtNumber.TabIndex = 1;
+            // 
+            // lblNumber
+            // 
+            this.lblNumber.AutoSize = true;
+            this.lblNumber.Location = new System.Drawing.Point(8, 8);
+            this.lblNumber.Name = "lblNumber";
+            this.lblNumber.Size = new System.Drawing.Size(97, 13);
+            this.lblNumber.TabIndex = 0;
+            this.lblNumber.Text = "Sequence number:";
+            // 
+            // tabPageProcess
+            // 
+            this.tabPageProcess.Location = new System.Drawing.Point(4, 22);
+            this.tabPageProcess.Name = "tabPageProcess";
+            this.tabPageProcess.Size = new System.Drawing.Size(460, 238);
+            this.tabPageProcess.TabIndex = 1;
+            this.tabPageProcess.Text = "Process";
+            this.tabPageProcess.UseVisualStyleBackColor = true;
+            // 
+            // tabPageOverview
+            // 
+            this.tabPageOverview.Location = new System.Drawing.Point(4, 22);
+            this.tabPageOverview.Name = "tabPageOverview";
+            this.tabPageOverview.Size = new System.Drawing.Size(460, 238);
+            this.tabPageOverview.TabIndex = 2;
+            this.tabPageOverview.Text = "Overview";
+            this.tabPageOverview.UseVisualStyleBackColor = true;
             // 
             // btnBack
             // 
@@ -64,6 +130,7 @@
             this.btnBack.TabIndex = 1;
             this.btnBack.Text = "< Back";
             this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // btnNext
             // 
@@ -73,6 +140,7 @@
             this.btnNext.TabIndex = 2;
             this.btnNext.Text = "Next >";
             this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.BtnNext_Click);
             // 
             // btnOk
             // 
@@ -93,71 +161,6 @@
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // tabPageBasic
-            // 
-            this.tabPageBasic.Controls.Add(this.txtName);
-            this.tabPageBasic.Controls.Add(this.lblName);
-            this.tabPageBasic.Controls.Add(this.txtNumber);
-            this.tabPageBasic.Controls.Add(this.lblNumber);
-            this.tabPageBasic.Location = new System.Drawing.Point(4, 22);
-            this.tabPageBasic.Name = "tabPageBasic";
-            this.tabPageBasic.Size = new System.Drawing.Size(460, 238);
-            this.tabPageBasic.TabIndex = 0;
-            this.tabPageBasic.Text = "Basic information";
-            this.tabPageBasic.UseVisualStyleBackColor = true;
-            // 
-            // tabPageProcess
-            // 
-            this.tabPageProcess.Location = new System.Drawing.Point(4, 22);
-            this.tabPageProcess.Name = "tabPageProcess";
-            this.tabPageProcess.Size = new System.Drawing.Size(460, 238);
-            this.tabPageProcess.TabIndex = 1;
-            this.tabPageProcess.Text = "Process";
-            this.tabPageProcess.UseVisualStyleBackColor = true;
-            // 
-            // lblNumber
-            // 
-            this.lblNumber.AutoSize = true;
-            this.lblNumber.Location = new System.Drawing.Point(8, 8);
-            this.lblNumber.Name = "lblNumber";
-            this.lblNumber.Size = new System.Drawing.Size(97, 13);
-            this.lblNumber.TabIndex = 0;
-            this.lblNumber.Text = "Sequence number:";
-            // 
-            // txtNumber
-            // 
-            this.txtNumber.Location = new System.Drawing.Point(8, 24);
-            this.txtNumber.MaxLength = 6;
-            this.txtNumber.Name = "txtNumber";
-            this.txtNumber.Size = new System.Drawing.Size(116, 20);
-            this.txtNumber.TabIndex = 1;
-            // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(8, 68);
-            this.txtName.MaxLength = 500;
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(440, 20);
-            this.txtName.TabIndex = 3;
-            // 
-            // lblName
-            // 
-            this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(8, 52);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(56, 13);
-            this.lblName.TabIndex = 2;
-            this.lblName.Text = "Job name:";
-            // 
-            // tabPageOverview
-            // 
-            this.tabPageOverview.Location = new System.Drawing.Point(4, 22);
-            this.tabPageOverview.Name = "tabPageOverview";
-            this.tabPageOverview.Size = new System.Drawing.Size(460, 238);
-            this.tabPageOverview.TabIndex = 2;
-            this.tabPageOverview.Text = "Overview";
-            this.tabPageOverview.UseVisualStyleBackColor = true;
             // 
             // AddJobDialog
             // 
