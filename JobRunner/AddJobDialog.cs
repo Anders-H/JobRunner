@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace JobRunner
@@ -10,43 +11,60 @@ namespace JobRunner
             InitializeComponent();
         }
 
-        private void AddJobDialog_Load(object sender, EventArgs e)
+        private void AddJobDialog_Shown(object sender, EventArgs e)
         {
+            Refresh();
             tabControl1.Focus();
             txtNumber.Focus();
         }
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MessageBox.Show("Hello!");
+            btnOk.Enabled = ValidateForm(true);
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedTab == tabPageBasic)
-            {
-                btnBack.Enabled = false;
-                btnNext.Enabled = true;
-                btnOk.Enabled = ValidateForm(true);
-            }
-            if (tabControl1.SelectedTab == tabPageProcess)
-            {
-                btnBack.Enabled = true;
-                btnNext.Enabled = true;
-                btnOk.Enabled = ValidateForm(true);
-            }
-            if (tabControl1.SelectedTab == tabPageOverview)
-            {
-                btnBack.Enabled = true;
-                btnNext.Enabled = false;
-                btnOk.Enabled = ValidateForm(true);
-            }
+            if (tabControl1.SelectedIndex <= 0)
+                return;
+            tabControl1.SelectedIndex--;
+            btnBack.Enabled = tabControl1.SelectedIndex > 0;
+            btnNext.Enabled = tabControl1.SelectedIndex < tabControl1.TabCount - 1;
         }
 
         private void BtnNext_Click(object sender, EventArgs e)
         {
-            if (!ValidateForm(false))
+            if (tabControl1.SelectedIndex >= tabControl1.TabCount - 1)
                 return;
+            tabControl1.SelectedIndex++;
+            btnBack.Enabled = tabControl1.SelectedIndex > 0;
+            btnNext.Enabled = tabControl1.SelectedIndex < tabControl1.TabCount - 1;
+        }
+
+        private bool ValidateForm(bool quiet)
+        {
+            if (!ValidateSequenceNumber(quiet))
+                return false;
+            if (!ValidateJobName(quiet))
+                return false;
+            return true;
+        }
+
+        private bool ValidateSequenceNumber(bool quiet)
+        {
+            if (int.TryParse(txtNumber.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out _))
+                return true;
+            MessageDisplayer.ShowValidationError("The field Sequence number must be an integer.", Text, quiet);
+            return false;
+        }
+
+        private bool ValidateJobName(bool quiet)
+        {
+            txtName.Text = txtName.Text.Trim();
+            if (!string.IsNullOrWhiteSpace(txtName.Text))
+                return true;
+            MessageDisplayer.ShowValidationError("The field Job name cannot be empty.", Text, quiet);
+            return false;
         }
     }
 }
