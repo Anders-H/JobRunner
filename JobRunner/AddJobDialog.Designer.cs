@@ -35,13 +35,21 @@
             this.txtNumber = new System.Windows.Forms.TextBox();
             this.lblNumber = new System.Windows.Forms.Label();
             this.tabPageProcess = new System.Windows.Forms.TabPage();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.txtArguments = new System.Windows.Forms.TextBox();
+            this.lblArguments = new System.Windows.Forms.Label();
+            this.txtProgram = new System.Windows.Forms.TextBox();
+            this.lblProgram = new System.Windows.Forms.Label();
             this.tabPageOverview = new System.Windows.Forms.TabPage();
+            this.tvOverview = new System.Windows.Forms.TreeView();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
+            this.tabPageProcess.SuspendLayout();
+            this.tabPageOverview.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -105,6 +113,11 @@
             // 
             // tabPageProcess
             // 
+            this.tabPageProcess.Controls.Add(this.btnBrowse);
+            this.tabPageProcess.Controls.Add(this.txtArguments);
+            this.tabPageProcess.Controls.Add(this.lblArguments);
+            this.tabPageProcess.Controls.Add(this.txtProgram);
+            this.tabPageProcess.Controls.Add(this.lblProgram);
             this.tabPageProcess.Location = new System.Drawing.Point(4, 22);
             this.tabPageProcess.Name = "tabPageProcess";
             this.tabPageProcess.Size = new System.Drawing.Size(460, 238);
@@ -112,14 +125,67 @@
             this.tabPageProcess.Text = "Process";
             this.tabPageProcess.UseVisualStyleBackColor = true;
             // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Location = new System.Drawing.Point(8, 48);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowse.TabIndex = 2;
+            this.btnBrowse.Text = "Browse...";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            // 
+            // txtArguments
+            // 
+            this.txtArguments.Location = new System.Drawing.Point(8, 100);
+            this.txtArguments.MaxLength = 500;
+            this.txtArguments.Name = "txtArguments";
+            this.txtArguments.Size = new System.Drawing.Size(440, 20);
+            this.txtArguments.TabIndex = 4;
+            // 
+            // lblArguments
+            // 
+            this.lblArguments.AutoSize = true;
+            this.lblArguments.Location = new System.Drawing.Point(8, 84);
+            this.lblArguments.Name = "lblArguments";
+            this.lblArguments.Size = new System.Drawing.Size(60, 13);
+            this.lblArguments.TabIndex = 3;
+            this.lblArguments.Text = "Arguments:";
+            // 
+            // txtProgram
+            // 
+            this.txtProgram.Location = new System.Drawing.Point(8, 24);
+            this.txtProgram.MaxLength = 500;
+            this.txtProgram.Name = "txtProgram";
+            this.txtProgram.Size = new System.Drawing.Size(440, 20);
+            this.txtProgram.TabIndex = 1;
+            // 
+            // lblProgram
+            // 
+            this.lblProgram.AutoSize = true;
+            this.lblProgram.Location = new System.Drawing.Point(8, 8);
+            this.lblProgram.Name = "lblProgram";
+            this.lblProgram.Size = new System.Drawing.Size(79, 13);
+            this.lblProgram.TabIndex = 0;
+            this.lblProgram.Text = "Program to run:";
+            // 
             // tabPageOverview
             // 
+            this.tabPageOverview.Controls.Add(this.tvOverview);
             this.tabPageOverview.Location = new System.Drawing.Point(4, 22);
             this.tabPageOverview.Name = "tabPageOverview";
             this.tabPageOverview.Size = new System.Drawing.Size(460, 238);
             this.tabPageOverview.TabIndex = 2;
             this.tabPageOverview.Text = "Overview";
             this.tabPageOverview.UseVisualStyleBackColor = true;
+            // 
+            // tvOverview
+            // 
+            this.tvOverview.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tvOverview.Location = new System.Drawing.Point(4, 4);
+            this.tvOverview.Name = "tvOverview";
+            this.tvOverview.ShowPlusMinus = false;
+            this.tvOverview.Size = new System.Drawing.Size(452, 228);
+            this.tvOverview.TabIndex = 0;
             // 
             // btnBack
             // 
@@ -185,6 +251,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageBasic.ResumeLayout(false);
             this.tabPageBasic.PerformLayout();
+            this.tabPageProcess.ResumeLayout(false);
+            this.tabPageProcess.PerformLayout();
+            this.tabPageOverview.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -203,5 +272,11 @@
         private System.Windows.Forms.Label lblNumber;
         private System.Windows.Forms.TabPage tabPageProcess;
         private System.Windows.Forms.TabPage tabPageOverview;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.TextBox txtArguments;
+        private System.Windows.Forms.Label lblArguments;
+        private System.Windows.Forms.TextBox txtProgram;
+        private System.Windows.Forms.Label lblProgram;
+        private System.Windows.Forms.TreeView tvOverview;
     }
 }

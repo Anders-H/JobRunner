@@ -144,10 +144,13 @@ namespace JobRunner
 
         private void AddJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var x = new AddJobDialog())
+            using var x = new AddJobDialog
             {
-                x.ShowDialog(this);
-            }
+                Jobs = Jobs
+            };
+            if (x.ShowDialog(this) != DialogResult.OK)
+                return;
+
         }
     }
 }
