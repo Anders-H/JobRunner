@@ -90,6 +90,11 @@ namespace JobRunner
 
         }
 
+        public void InsertJob(Job job)
+        {
+
+        }
+
         public int FirstSequenceNumber =>
             this.FirstOrDefault()?.Number ?? 1;
 

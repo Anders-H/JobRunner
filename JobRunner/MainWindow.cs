@@ -150,7 +150,7 @@ namespace JobRunner
             };
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
-
+            grid1.Initialize(Jobs);
         }
     }
 }

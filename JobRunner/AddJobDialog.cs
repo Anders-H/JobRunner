@@ -97,6 +97,8 @@ namespace JobRunner
                 return false;
             if (!ValidateProgram(quiet))
                 return false;
+            if (!ValidateTimeout(quiet))
+                return false;
             return true;
         }
 
@@ -124,6 +126,45 @@ namespace JobRunner
                 return true;
             MessageDisplayer.ShowValidationError(@"The field ""Program to run"" cannot be empty.", Text, quiet);
             return false;
+        }
+
+        private bool ValidateTimeout(bool quiet)
+        {
+            if (cboTimeout.SelectedItem != null)
+                return true;
+            MessageDisplayer.ShowValidationError(@"The field ""Timeout"" cannot be empty.", Text, quiet);
+            return false;
+        }
+
+        private void BtnOk_Click(object sender, EventArgs e)
+        {
+            if (!ValidateForm(false))
+                return;
+            Jobs.InsertJob(CreateJob());
+            DialogResult = DialogResult.OK;
+        }
+
+        private Job CreateJob()
+        {
+            int.TryParse(txtNumber.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out var nr);
+            return new Job(
+                nr,
+                txtName.Text,
+                txtProgram.Text,
+                txtArguments.Text,
+                (TimeSpan)cboTimeout.SelectedItem,
+                chkRunHidden.Checked);
+        }
+
+        private void AddJobDialog_Load(object sender, EventArgs e)
+        {
+            var timeout = new TimeSpan(0, 0, 0, 30, 0);
+            for (var i = 0; i < 100; i++)
+            {
+                cboTimeout.Items.Add(timeout);
+                timeout = timeout.Add(new TimeSpan(0, 0, 0, 30, 0));
+            }
+            cboTimeout.SelectedIndex = 1;
         }
     }
 }
