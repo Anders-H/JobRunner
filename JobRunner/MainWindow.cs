@@ -119,16 +119,19 @@ namespace JobRunner
                 t.Append(failMessage);
                 t.AppendLine();
                 t.AppendLine();
-                t.Append("The application will close.");
                 if (!Config.IsAdministrator)
                 {
+                    t.Append("The application will close.");
                     t.AppendLine();
                     t.AppendLine();
                     t.AppendLine("To be able to edit the job list, start JobRunner as administrator.");
                 }
                 MessageBox.Show(t.ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
+                if (!Config.IsAdministrator)
+                    Close();
             }
+            if (Config.IsAdministrator && !string.IsNullOrWhiteSpace(Jobs.LoadFailedMessage))
+                MessageDisplayer.Yell(Jobs.LoadFailedMessage, Text);
             grid1.Initialize(Jobs);
             if (Config.IsAdministrator)
             {
@@ -170,6 +173,11 @@ namespace JobRunner
             {
                 MessageDisplayer.Yell($@"Failed to save the file ""{Config.GetJobFilePath()}"".", Text);
             }
+        }
+
+        private void DeleteJobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

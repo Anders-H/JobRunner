@@ -88,6 +88,10 @@ namespace JobRunner
         public string GetXml() =>
             $@"    <job>
         <name>{System.Net.WebUtility.HtmlEncode(Name)}</name>
+        <command>{System.Net.WebUtility.HtmlEncode(Command)}</command>
+        <arguments>{System.Net.WebUtility.HtmlEncode(Arguments)}</arguments>
+        <timeout>{System.Net.WebUtility.HtmlEncode(Timeout.ToString())}</timeout>
+        <display>{(Hidden ? "Hidden" : "Visible")}</display>
     </job>";
     }
 }
