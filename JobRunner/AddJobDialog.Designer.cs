@@ -30,7 +30,6 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageBasic = new System.Windows.Forms.TabPage();
-            this.lblTimeout = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.txtNumber = new System.Windows.Forms.TextBox();
@@ -47,8 +46,9 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkHidden = new System.Windows.Forms.CheckBox();
             this.cboTimeout = new System.Windows.Forms.ComboBox();
-            this.chkRunHidden = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.tabPageProcess.SuspendLayout();
@@ -69,9 +69,6 @@
             // 
             // tabPageBasic
             // 
-            this.tabPageBasic.Controls.Add(this.chkRunHidden);
-            this.tabPageBasic.Controls.Add(this.cboTimeout);
-            this.tabPageBasic.Controls.Add(this.lblTimeout);
             this.tabPageBasic.Controls.Add(this.txtName);
             this.tabPageBasic.Controls.Add(this.lblName);
             this.tabPageBasic.Controls.Add(this.txtNumber);
@@ -82,15 +79,6 @@
             this.tabPageBasic.TabIndex = 0;
             this.tabPageBasic.Text = "Basic information";
             this.tabPageBasic.UseVisualStyleBackColor = true;
-            // 
-            // lblTimeout
-            // 
-            this.lblTimeout.AutoSize = true;
-            this.lblTimeout.Location = new System.Drawing.Point(8, 92);
-            this.lblTimeout.Name = "lblTimeout";
-            this.lblTimeout.Size = new System.Drawing.Size(48, 13);
-            this.lblTimeout.TabIndex = 4;
-            this.lblTimeout.Text = "Timeout:";
             // 
             // txtName
             // 
@@ -128,6 +116,9 @@
             // 
             // tabPageProcess
             // 
+            this.tabPageProcess.Controls.Add(this.chkHidden);
+            this.tabPageProcess.Controls.Add(this.cboTimeout);
+            this.tabPageProcess.Controls.Add(this.label1);
             this.tabPageProcess.Controls.Add(this.btnBrowse);
             this.tabPageProcess.Controls.Add(this.txtArguments);
             this.tabPageProcess.Controls.Add(this.lblArguments);
@@ -244,24 +235,33 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // chkHidden
+            // 
+            this.chkHidden.AutoSize = true;
+            this.chkHidden.Location = new System.Drawing.Point(8, 216);
+            this.chkHidden.Name = "chkHidden";
+            this.chkHidden.Size = new System.Drawing.Size(81, 17);
+            this.chkHidden.TabIndex = 7;
+            this.chkHidden.Text = "Run hidden";
+            this.chkHidden.UseVisualStyleBackColor = true;
+            // 
             // cboTimeout
             // 
             this.cboTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTimeout.FormattingEnabled = true;
-            this.cboTimeout.Location = new System.Drawing.Point(8, 108);
+            this.cboTimeout.Location = new System.Drawing.Point(8, 140);
             this.cboTimeout.Name = "cboTimeout";
-            this.cboTimeout.Size = new System.Drawing.Size(136, 21);
-            this.cboTimeout.TabIndex = 5;
+            this.cboTimeout.Size = new System.Drawing.Size(112, 21);
+            this.cboTimeout.TabIndex = 6;
             // 
-            // chkRunHidden
+            // label1
             // 
-            this.chkRunHidden.AutoSize = true;
-            this.chkRunHidden.Location = new System.Drawing.Point(12, 212);
-            this.chkRunHidden.Name = "chkRunHidden";
-            this.chkRunHidden.Size = new System.Drawing.Size(81, 17);
-            this.chkRunHidden.TabIndex = 6;
-            this.chkRunHidden.Text = "Run hidden";
-            this.chkRunHidden.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 124);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Timeout:";
             // 
             // AddJobDialog
             // 
@@ -314,8 +314,8 @@
         private System.Windows.Forms.TextBox txtProgram;
         private System.Windows.Forms.Label lblProgram;
         private System.Windows.Forms.TreeView tvOverview;
-        private System.Windows.Forms.Label lblTimeout;
+        private System.Windows.Forms.CheckBox chkHidden;
         private System.Windows.Forms.ComboBox cboTimeout;
-        private System.Windows.Forms.CheckBox chkRunHidden;
+        private System.Windows.Forms.Label label1;
     }
 }

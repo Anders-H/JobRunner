@@ -85,14 +85,25 @@ namespace JobRunner
             ForEach(x => x.Reset(startTime));
         }
 
-        public void SortList()
-        {
-
-        }
-
         public void InsertJob(Job job)
         {
+            foreach (var j in this)
+            {
+                if (job.Number >= j.Number)
+                {
+                    Insert(IndexOf(j), job);
+                    Renumber();
+                    return;
+                }
+            }
+            Add(job);
+            Renumber();
+        }
 
+        private void Renumber()
+        {
+            for (var i = 0; i < Count; i++)
+                this[i].Number = i + 1;
         }
 
         public int FirstSequenceNumber =>

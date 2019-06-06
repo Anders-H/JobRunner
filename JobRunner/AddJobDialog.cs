@@ -25,11 +25,12 @@ namespace JobRunner
             btnOk.Enabled = ValidateForm(true);
             if (tabControl1.SelectedTab == tabPageOverview)
                 ConstructOverview();
+            btnBack.Enabled = tabControl1.SelectedIndex > 0;
+            btnNext.Enabled = tabControl1.SelectedIndex < tabControl1.TabCount - 1;
         }
 
         private void ConstructOverview()
         {
-            Jobs.SortList();
             tvOverview.BeginUpdate();
             tvOverview.Nodes.Clear();
             AddItemToOverview("Sequence:",
@@ -45,6 +46,11 @@ namespace JobRunner
                 string.IsNullOrWhiteSpace(txtArguments.Text)
                     ? "(No arguments)"
                     : txtArguments.Text);
+            AddItemToOverview("Timeout:",
+                ValidateTimeout(true)
+                    ? ((TimeSpan)cboTimeout.SelectedItem).ToString()
+                    : "(Invalid value - must be corrected)");
+            AddItemToOverview("Window:", chkHidden.Checked ? "Hidden" : "Visible");
             tvOverview.ExpandAll();
             tvOverview.EndUpdate();
         }
@@ -153,16 +159,28 @@ namespace JobRunner
                 txtProgram.Text,
                 txtArguments.Text,
                 (TimeSpan)cboTimeout.SelectedItem,
-                chkRunHidden.Checked);
+                chkHidden.Checked);
         }
 
         private void AddJobDialog_Load(object sender, EventArgs e)
         {
             var timeout = new TimeSpan(0, 0, 0, 30, 0);
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 30; i++)
             {
                 cboTimeout.Items.Add(timeout);
-                timeout = timeout.Add(new TimeSpan(0, 0, 0, 30, 0));
+                if (i < 29)
+                    timeout = timeout.Add(new TimeSpan(0, 0, 0, 30, 0));
+            }
+            for (var i = 0; i < 30; i++)
+            {
+                timeout = timeout.Add(new TimeSpan(0, 0, 1, 0, 0));
+                cboTimeout.Items.Add(timeout);
+            }
+            timeout = new TimeSpan(0, 1, 0, 0, 0);
+            for (var i = 0; i < 20; i++)
+            {
+                cboTimeout.Items.Add(timeout);
+                timeout = timeout.Add(new TimeSpan(0, 1, 0, 0, 0));
             }
             cboTimeout.SelectedIndex = 1;
         }

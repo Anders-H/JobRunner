@@ -6,7 +6,7 @@ namespace JobRunner
 {
     public class Job
     {
-        public int Number { get; }
+        public int Number { get; internal set; }
         public string Name { get; }
         public string Command { get; }
         public string Arguments { get; }
