@@ -9,5 +9,8 @@ namespace JobRunner
             if (!quiet)
                 MessageBox.Show(message, text, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        public static void Yell(string message, string text) =>
+            MessageBox.Show(message, text, MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 }

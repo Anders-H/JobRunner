@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -156,7 +157,19 @@ namespace JobRunner
 
         private void SaveJobs()
         {
-
+            try
+            {
+                using(var sw = new StreamWriter(Config.GetJobFilePath(), false, Encoding.UTF8))
+                {
+                    sw.Write(Jobs.GetXml());
+                    sw.Flush();
+                    sw.Close();
+                }
+            }
+            catch
+            {
+                MessageDisplayer.Yell($@"Failed to save the file ""{Config.GetJobFilePath()}"".", Text);
+            }
         }
     }
 }

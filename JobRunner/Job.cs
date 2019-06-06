@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading;
 
 namespace JobRunner
@@ -83,5 +84,10 @@ namespace JobRunner
                 FailMessage = e.Message;
             }
         }
+
+        public string GetXml() =>
+            $@"    <job>
+        <name>{System.Net.WebUtility.HtmlEncode(Name)}</name>
+    </job>";
     }
 }

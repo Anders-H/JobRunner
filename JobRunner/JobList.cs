@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 
 namespace JobRunner
@@ -74,9 +75,14 @@ namespace JobRunner
             LoadSuccess = true;
         }
 
-        public bool Save()
+        public string GetXml()
         {
-            return true;
+            var s = new StringBuilder();
+            s.AppendLine(@"<?xml version=""1.0"" encoding=""utf-8"" ?>");
+            s.AppendLine("<jobs>");
+            ForEach(x => s.AppendLine(x.GetXml()));
+            s.AppendLine("</jobs>");
+            return s.ToString();
         }
 
         public void Reset()
