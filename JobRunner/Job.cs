@@ -8,9 +8,9 @@ namespace JobRunner
     public class Job
     {
         public int Number { get; internal set; }
-        public string Name { get; }
-        public string Command { get; }
-        public string Arguments { get; }
+        public string Name { get; internal set; }
+        public string Command { get; internal set; }
+        public string Arguments { get; internal set; }
         public JobStatus Status { get; set; }
         public int RowIndex { get; set; }
         public int ExitCode { get; private set; }
@@ -18,8 +18,8 @@ namespace JobRunner
         public DateTime? EndTime { get; private set; }
         public DateTime? AllJobsStartTime { get; private set; }
         public string FailMessage { get; private set; }
-        public TimeSpan Timeout { get; }
-        public bool Hidden { get; }
+        public TimeSpan Timeout { get; internal set; }
+        public bool Hidden { get; internal set; }
 
         public Job(int number, string name, string command, string arguments, TimeSpan timeout, bool hidden)
         {

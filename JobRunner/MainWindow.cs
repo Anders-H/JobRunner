@@ -151,6 +151,8 @@ namespace JobRunner
 
         private void AddJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!Config.IsAdministrator)
+                return;
             using var x = new AddJobDialog
             {
                 Jobs = Jobs
@@ -178,6 +180,8 @@ namespace JobRunner
 
         private void DeleteJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!Config.IsAdministrator)
+                return;
             var job = grid1.SelectedJob;
             if (job == null)
             {
@@ -188,6 +192,32 @@ namespace JobRunner
                 return;
             grid1.RemoveJob(grid1.SelectedRow);
             Jobs.RemoveJob(job);
+            grid1.Refresh();
+            SaveJobs();
+        }
+
+        private void Grid1_EditJob(object sender, EventArgs e)
+        {
+            if (!Config.IsAdministrator)
+                return;
+            EditJobToolStripMenuItem_Click(sender, e);
+        }
+
+        private void EditJobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!Config.IsAdministrator)
+                return;
+            if (grid1.SelectedJob == null)
+            {
+                MessageDisplayer.Tell("No job is selected.", "Edit job");
+                return;
+            }
+            using var x = new EditJobDialog
+            {
+                Job = grid1.SelectedJob
+            };
+            if (x.ShowDialog(this) != DialogResult.OK)
+                return;
             grid1.Refresh();
             SaveJobs();
         }

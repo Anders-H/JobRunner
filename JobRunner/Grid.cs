@@ -7,6 +7,7 @@ namespace JobRunner
 {
     public class Grid : DataGridView
     {
+        public event EventHandler EditJob;
         public bool CursorBlink { get; set; }
         public bool Running { get; set; }
         public int RunSingle { get; set; }
@@ -169,6 +170,13 @@ namespace JobRunner
 
         public void RemoveJob(int index) =>
             Rows.RemoveAt(index);
+
+        protected override void OnCellDoubleClick(DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < RowCount)
+                EditJob?.Invoke(this, new EventArgs());
+            base.OnCellDoubleClick(e);
+        }
 
         protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
         {

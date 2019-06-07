@@ -164,24 +164,8 @@ namespace JobRunner
 
         private void AddJobDialog_Load(object sender, EventArgs e)
         {
-            var timeout = new TimeSpan(0, 0, 0, 30, 0);
-            for (var i = 0; i < 30; i++)
-            {
-                cboTimeout.Items.Add(timeout);
-                if (i < 29)
-                    timeout = timeout.Add(new TimeSpan(0, 0, 0, 30, 0));
-            }
-            for (var i = 0; i < 30; i++)
-            {
-                timeout = timeout.Add(new TimeSpan(0, 0, 1, 0, 0));
-                cboTimeout.Items.Add(timeout);
-            }
-            timeout = new TimeSpan(0, 1, 0, 0, 0);
-            for (var i = 0; i < 20; i++)
-            {
-                cboTimeout.Items.Add(timeout);
-                timeout = timeout.Add(new TimeSpan(0, 1, 0, 0, 0));
-            }
+            foreach (var x in new TimeSpanList())
+                cboTimeout.Items.Add(x);
             cboTimeout.SelectedIndex = 1;
         }
 
