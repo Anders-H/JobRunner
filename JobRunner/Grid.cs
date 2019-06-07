@@ -178,6 +178,22 @@ namespace JobRunner
             base.OnCellDoubleClick(e);
         }
 
+        public void MoveUp(int index)
+        {
+            var x = Rows[index - 1].Tag;
+            Rows[index - 1].Tag = Rows[index].Tag;
+            Rows[index].Tag = x;
+            CurrentCell = Rows[index - 1].Cells[CurrentCell.ColumnIndex];
+        }
+
+        public void MoveDown(int index)
+        {
+            var x = Rows[index + 1].Tag;
+            Rows[index + 1].Tag = Rows[index].Tag;
+            Rows[index].Tag = x;
+            CurrentCell = Rows[index + 1].Cells[CurrentCell.ColumnIndex];
+        }
+
         protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
         {
             var centerY = CenterY(e.Graphics, e.CellBounds, out var width);

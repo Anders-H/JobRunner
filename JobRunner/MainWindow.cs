@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -165,15 +166,18 @@ namespace JobRunner
 
         private void SaveJobs()
         {
+            Cursor = Cursors.WaitCursor;
             try
             {
                 using var sw = new StreamWriter(Config.GetJobFilePath(), false, Encoding.UTF8);
                 sw.Write(Jobs.GetXml());
                 sw.Flush();
                 sw.Close();
+                Cursor = Cursors.Default;
             }
             catch
             {
+                Cursor = Cursors.Default;
                 MessageDisplayer.Yell($@"Failed to save the file ""{Config.GetJobFilePath()}"".", Text);
             }
         }
@@ -218,6 +222,48 @@ namespace JobRunner
             };
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
+            grid1.Refresh();
+            SaveJobs();
+        }
+
+        private void MoveJobUpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!Config.IsAdministrator)
+                return;
+            var job = grid1.SelectedJob;
+            if (job == null)
+            {
+                MessageDisplayer.Tell("No job is selected.", "Move job up");
+                return;
+            }
+            if (Jobs.First() == job)
+            {
+                MessageDisplayer.Tell("Selected job is already the first job.", "Move job up");
+                return;
+            }
+            grid1.MoveUp(grid1.SelectedRow);
+            Jobs.MoveUp(job);
+            grid1.Refresh();
+            SaveJobs();
+        }
+
+        private void MoveJobDownToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!Config.IsAdministrator)
+                return;
+            var job = grid1.SelectedJob;
+            if (job == null)
+            {
+                MessageDisplayer.Tell("No job is selected.", "Move job down");
+                return;
+            }
+            if (Jobs.Last() == job)
+            {
+                MessageDisplayer.Tell("Selected job is already the first job.", "Move job down");
+                return;
+            }
+            grid1.MoveDown(grid1.SelectedRow);
+            Jobs.MoveDown(job);
             grid1.Refresh();
             SaveJobs();
         }
