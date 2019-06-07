@@ -157,6 +157,19 @@ namespace JobRunner
             return (int)(cellBounds.Height / 2.0 - textSize.Height / 2.0) + 1;
         }
 
+        public Job SelectedJob =>
+            SelectedCells.Count <= 0
+                ? null
+                : (Job)Rows[SelectedCells[0].RowIndex].Tag;
+
+        public int SelectedRow =>
+            SelectedCells.Count > 0
+                ? SelectedCells[0].RowIndex
+                : -1;
+
+        public void RemoveJob(int index) =>
+            Rows.RemoveAt(index);
+
         protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
         {
             var centerY = CenterY(e.Graphics, e.CellBounds, out var width);

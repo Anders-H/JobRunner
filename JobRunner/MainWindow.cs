@@ -18,6 +18,9 @@ namespace JobRunner
         {
             lblStatus.Text = @"Initializing...";
             Cursor = Cursors.WaitCursor;
+            addJobToolStripMenuItem.Enabled = editJobToolStripMenuItem.Enabled = deleteJobToolStripMenuItem.Enabled =
+                moveJobUpToolStripMenuItem.Enabled = moveJobDownToolStripMenuItem.Enabled =
+                optionsToolStripMenuItem.Enabled = Config.IsAdministrator;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) =>
@@ -41,7 +44,7 @@ namespace JobRunner
         {
             if (!HasJobs())
                 return;
-            if (grid1.SelectedCells.Count <= 0)
+            if (grid1.SelectedJob == null)
             {
                 MessageBox.Show(@"No job is selected.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -162,12 +165,10 @@ namespace JobRunner
         {
             try
             {
-                using(var sw = new StreamWriter(Config.GetJobFilePath(), false, Encoding.UTF8))
-                {
-                    sw.Write(Jobs.GetXml());
-                    sw.Flush();
-                    sw.Close();
-                }
+                using var sw = new StreamWriter(Config.GetJobFilePath(), false, Encoding.UTF8);
+                sw.Write(Jobs.GetXml());
+                sw.Flush();
+                sw.Close();
             }
             catch
             {
@@ -177,7 +178,18 @@ namespace JobRunner
 
         private void DeleteJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            var job = grid1.SelectedJob;
+            if (job == null)
+            {
+                MessageDisplayer.Tell("No job is selected.", "Delete job");
+                return;
+            }
+            if (!MessageDisplayer.Ask($@"Are you sure you want to delete the job named ""{job.Name}""?", "Delete job"))
+                return;
+            grid1.RemoveJob(grid1.SelectedRow);
+            Jobs.RemoveJob(job);
+            grid1.Refresh();
+            SaveJobs();
         }
     }
 }

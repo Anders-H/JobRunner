@@ -104,6 +104,12 @@ namespace JobRunner
             Renumber();
         }
 
+        public void RemoveJob(Job job)
+        {
+            Remove(job);
+            Renumber();
+        }
+
         private void Renumber()
         {
             for (var i = 0; i < Count; i++)
