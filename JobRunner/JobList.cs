@@ -93,12 +93,11 @@ namespace JobRunner
         {
             foreach (var j in this)
             {
-                if (job.Number >= j.Number)
-                {
-                    Insert(IndexOf(j), job);
-                    Renumber();
-                    return;
-                }
+                if (j.Number < job.Number)
+                    continue;
+                Insert(IndexOf(j), job);
+                Renumber();
+                return;
             }
             Add(job);
             Renumber();

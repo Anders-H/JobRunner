@@ -35,6 +35,9 @@
             this.txtNumber = new System.Windows.Forms.TextBox();
             this.lblNumber = new System.Windows.Forms.Label();
             this.tabPageProcess = new System.Windows.Forms.TabPage();
+            this.chkHidden = new System.Windows.Forms.CheckBox();
+            this.cboTimeout = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.txtArguments = new System.Windows.Forms.TextBox();
             this.lblArguments = new System.Windows.Forms.Label();
@@ -46,9 +49,6 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.chkHidden = new System.Windows.Forms.CheckBox();
-            this.cboTimeout = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.tabPageProcess.SuspendLayout();
@@ -131,6 +131,34 @@
             this.tabPageProcess.Text = "Process";
             this.tabPageProcess.UseVisualStyleBackColor = true;
             // 
+            // chkHidden
+            // 
+            this.chkHidden.AutoSize = true;
+            this.chkHidden.Location = new System.Drawing.Point(8, 216);
+            this.chkHidden.Name = "chkHidden";
+            this.chkHidden.Size = new System.Drawing.Size(81, 17);
+            this.chkHidden.TabIndex = 7;
+            this.chkHidden.Text = "Run hidden";
+            this.chkHidden.UseVisualStyleBackColor = true;
+            // 
+            // cboTimeout
+            // 
+            this.cboTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTimeout.FormattingEnabled = true;
+            this.cboTimeout.Location = new System.Drawing.Point(8, 140);
+            this.cboTimeout.Name = "cboTimeout";
+            this.cboTimeout.Size = new System.Drawing.Size(112, 21);
+            this.cboTimeout.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 124);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Timeout:";
+            // 
             // btnBrowse
             // 
             this.btnBrowse.Location = new System.Drawing.Point(8, 48);
@@ -139,6 +167,7 @@
             this.btnBrowse.TabIndex = 2;
             this.btnBrowse.Text = "Browse...";
             this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.BtnBrowse_Click);
             // 
             // txtArguments
             // 
@@ -234,34 +263,6 @@
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // chkHidden
-            // 
-            this.chkHidden.AutoSize = true;
-            this.chkHidden.Location = new System.Drawing.Point(8, 216);
-            this.chkHidden.Name = "chkHidden";
-            this.chkHidden.Size = new System.Drawing.Size(81, 17);
-            this.chkHidden.TabIndex = 7;
-            this.chkHidden.Text = "Run hidden";
-            this.chkHidden.UseVisualStyleBackColor = true;
-            // 
-            // cboTimeout
-            // 
-            this.cboTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTimeout.FormattingEnabled = true;
-            this.cboTimeout.Location = new System.Drawing.Point(8, 140);
-            this.cboTimeout.Name = "cboTimeout";
-            this.cboTimeout.Size = new System.Drawing.Size(112, 21);
-            this.cboTimeout.TabIndex = 6;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 124);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Timeout:";
             // 
             // AddJobDialog
             // 
