@@ -117,6 +117,14 @@ namespace JobRunner
             Renumber();
         }
 
+        public void MoveDown(Job job)
+        {
+            var currentIndex = IndexOf(job);
+            Remove(job);
+            Insert(currentIndex + 1, job);
+            Renumber();
+        }
+
         private void Renumber()
         {
             for (var i = 0; i < Count; i++)

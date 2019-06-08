@@ -259,7 +259,7 @@ namespace JobRunner
             }
             if (Jobs.Last() == job)
             {
-                MessageDisplayer.Tell("Selected job is already the first job.", "Move job down");
+                MessageDisplayer.Tell("Selected job is already the last job.", "Move job down");
                 return;
             }
             grid1.MoveDown(grid1.SelectedRow);

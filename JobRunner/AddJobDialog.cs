@@ -41,7 +41,10 @@ namespace JobRunner
                 ValidateJobName(true)
                     ? txtName.Text
                     : "(Invalid name - must be corrected)");
-            AddItemToOverview("Program:", txtProgram.Text);
+            AddItemToOverview("Program:",
+                ValidateProgram(true)
+                    ? txtProgram.Text
+                    : "(Invalid value - must be corrected)");
             AddItemToOverview("Arguments:",
                 string.IsNullOrWhiteSpace(txtArguments.Text)
                     ? "(No arguments)"
