@@ -267,5 +267,13 @@ namespace JobRunner
             grid1.Refresh();
             SaveJobs();
         }
+
+        private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var x = new OptionsDialog();
+            if (x.ShowDialog(this) != DialogResult.OK)
+                return;
+            SaveJobs();
+        }
     }
 }
