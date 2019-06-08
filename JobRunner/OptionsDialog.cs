@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace JobRunner
@@ -15,6 +8,17 @@ namespace JobRunner
         public OptionsDialog()
         {
             InitializeComponent();
+        }
+
+        private void OptionsDialog_Load(object sender, EventArgs e)
+        {
+            chkAutoStart.Checked = Config.AutoStart;
+            chkAutoExit.Checked = Config.AutoClose;
+        }
+
+        private void BtnOk_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

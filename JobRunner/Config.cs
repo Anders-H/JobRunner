@@ -11,6 +11,8 @@ namespace JobRunner
     {
         private static JobFileLocation? _jobFileLocation;
         private static bool? _isAdministrator;
+        public static bool AutoStart { get; set; }
+        public static bool AutoClose { get; set; }
 
         public static bool Validate()
         {
