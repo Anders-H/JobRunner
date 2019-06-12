@@ -18,7 +18,9 @@ namespace JobRunner
 
         private void BtnOk_Click(object sender, EventArgs e)
         {
-
+            Config.AutoStart = chkAutoStart.Checked;
+            Config.AutoClose = chkAutoExit.Checked;
+            DialogResult = DialogResult.OK;
         }
     }
 }

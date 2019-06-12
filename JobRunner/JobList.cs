@@ -32,9 +32,14 @@ namespace JobRunner
 
             var dom = new XmlDocument();
             dom.Load(filename);
-            var jobsXml = dom.DocumentElement?.SelectNodes("job");
+            var doc = dom.DocumentElement;
+            if (doc == null)
+                return;
+            var jobsXml = doc.SelectNodes("job");
             if (jobsXml == null)
                 return;
+            Config.AutoStart = GetBoolFromAttribute(doc, "AutoStart");
+            Config.AutoClose = GetBoolFromAttribute(doc, "AutoClose");
             var number = 0;
             foreach (XmlElement jobXml in jobsXml)
             {
@@ -77,10 +82,19 @@ namespace JobRunner
         {
             var s = new StringBuilder();
             s.AppendLine(@"<?xml version=""1.0"" encoding=""utf-8"" ?>");
-            s.AppendLine("<jobs>");
+            s.AppendLine($@"<jobs AutoStart=""{(Config.AutoStart ? "1" : "0")}"" AutoClose=""{(Config.AutoClose ? "1" : "0")}"">");
             ForEach(x => s.AppendLine(x.GetXml()));
             s.AppendLine("</jobs>");
             return s.ToString();
+        }
+
+        private bool GetBoolFromAttribute(XmlElement e, string attributeName)
+        {
+            if (e == null)
+                return false;
+            var att = e.Attributes.GetNamedItem(attributeName);
+            var v = att?.Value?.ToLower() ?? "";
+            return v == "1" || v == "true";
         }
 
         public void Reset()
