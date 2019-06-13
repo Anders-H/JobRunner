@@ -40,6 +40,7 @@
             this.lblProgram = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkBreakOnError = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txtName
@@ -135,7 +136,7 @@
             this.btnOk.Location = new System.Drawing.Point(288, 260);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 10;
+            this.btnOk.TabIndex = 11;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
@@ -146,9 +147,19 @@
             this.btnCancel.Location = new System.Drawing.Point(372, 260);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 11;
+            this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // chkBreakOnError
+            // 
+            this.chkBreakOnError.AutoSize = true;
+            this.chkBreakOnError.Location = new System.Drawing.Point(8, 228);
+            this.chkBreakOnError.Name = "chkBreakOnError";
+            this.chkBreakOnError.Size = new System.Drawing.Size(93, 17);
+            this.chkBreakOnError.TabIndex = 10;
+            this.chkBreakOnError.Text = "Break on error";
+            this.chkBreakOnError.UseVisualStyleBackColor = true;
             // 
             // EditJobDialog
             // 
@@ -157,6 +168,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(456, 289);
+            this.Controls.Add(this.chkBreakOnError);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.chkHidden);
@@ -196,5 +208,6 @@
         private System.Windows.Forms.Label lblProgram;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.CheckBox chkBreakOnError;
     }
 }

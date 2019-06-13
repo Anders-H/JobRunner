@@ -56,6 +56,7 @@ namespace JobRunner.Dialogs
                     ? ((TimeSpan)cboTimeout.SelectedItem).ToString()
                     : "(Invalid value - must be corrected)");
             AddItemToOverview("Window:", chkHidden.Checked ? "Hidden" : "Visible");
+            AddItemToOverview("Flow control:", chkBreakOnError.Checked ? "Break on error" : "Continue on error");
             tvOverview.ExpandAll();
             tvOverview.EndUpdate();
         }
@@ -164,11 +165,13 @@ namespace JobRunner.Dialogs
                 txtProgram.Text,
                 txtArguments.Text,
                 (TimeSpan)cboTimeout.SelectedItem,
-                chkHidden.Checked);
+                chkHidden.Checked,
+                chkBreakOnError.Checked);
         }
 
         private void AddJobDialog_Load(object sender, EventArgs e)
         {
+            tvOverview.BackColor = tvOverview.Parent.BackColor;
             foreach (var x in new TimeSpanList())
                 cboTimeout.Items.Add(x);
             cboTimeout.SelectedIndex = 1;

@@ -49,16 +49,20 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.tabFlowControl = new System.Windows.Forms.TabPage();
+            this.chkBreakOnError = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.tabPageProcess.SuspendLayout();
             this.tabPageOverview.SuspendLayout();
+            this.tabFlowControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageBasic);
             this.tabControl1.Controls.Add(this.tabPageProcess);
+            this.tabControl1.Controls.Add(this.tabFlowControl);
             this.tabControl1.Controls.Add(this.tabPageOverview);
             this.tabControl1.Location = new System.Drawing.Point(4, 4);
             this.tabControl1.Name = "tabControl1";
@@ -264,6 +268,26 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // tabFlowControl
+            // 
+            this.tabFlowControl.Controls.Add(this.chkBreakOnError);
+            this.tabFlowControl.Location = new System.Drawing.Point(4, 22);
+            this.tabFlowControl.Name = "tabFlowControl";
+            this.tabFlowControl.Size = new System.Drawing.Size(460, 238);
+            this.tabFlowControl.TabIndex = 3;
+            this.tabFlowControl.Text = "Flow control";
+            this.tabFlowControl.UseVisualStyleBackColor = true;
+            // 
+            // chkBreakOnError
+            // 
+            this.chkBreakOnError.AutoSize = true;
+            this.chkBreakOnError.Location = new System.Drawing.Point(8, 8);
+            this.chkBreakOnError.Name = "chkBreakOnError";
+            this.chkBreakOnError.Size = new System.Drawing.Size(93, 17);
+            this.chkBreakOnError.TabIndex = 0;
+            this.chkBreakOnError.Text = "Break on error";
+            this.chkBreakOnError.UseVisualStyleBackColor = true;
+            // 
             // AddJobDialog
             // 
             this.AcceptButton = this.btnOk;
@@ -291,6 +315,8 @@
             this.tabPageProcess.ResumeLayout(false);
             this.tabPageProcess.PerformLayout();
             this.tabPageOverview.ResumeLayout(false);
+            this.tabFlowControl.ResumeLayout(false);
+            this.tabFlowControl.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -318,5 +344,7 @@
         private System.Windows.Forms.CheckBox chkHidden;
         private System.Windows.Forms.ComboBox cboTimeout;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabPage tabFlowControl;
+        private System.Windows.Forms.CheckBox chkBreakOnError;
     }
 }

@@ -74,7 +74,8 @@ namespace JobRunner.ObjectModel
                         return;
                 }
                 var arguments = jobXml.SelectSingleNode("arguments")?.InnerText ?? "";
-                Add(new Job(number, name, command, arguments, t, display == "hidden"));
+                var breakOnError = (jobXml.SelectSingleNode("breakOnError")?.InnerText ?? "").ToLower();
+                Add(new Job(number, name, command, arguments, t, display == "hidden", breakOnError == "true" || breakOnError == "1"));
             }
             LoadSuccess = true;
         }
@@ -114,6 +115,15 @@ namespace JobRunner.ObjectModel
                 return true;
             }
         }
+
+        public int Completed =>
+            this.Count(x => x.Status == JobStatus.Completed);
+
+        public int Error =>
+            this.Count(x => x.Status == JobStatus.Failed || x.Status == JobStatus.Timeout);
+
+        public int Pending =>
+            this.Count(x => x.Status == JobStatus.Pending);
 
         public void InsertJob(Job job)
         {

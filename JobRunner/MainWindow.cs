@@ -12,6 +12,7 @@ namespace JobRunner
     public partial class MainWindow : Form
     {
         private JobList Jobs { get; } = new JobList();
+        private bool CleanExit { get; set; }
 
         public MainWindow()
         {
@@ -76,7 +77,9 @@ namespace JobRunner
 
         private void RunJobsCompletedActions()
         {
-            lblStatus.Text = @"Done.";
+            lblStatus.Text = CleanExit
+                ? @"Done."
+                : $@"Break. Completed: {Jobs.Completed}, error: {Jobs.Error}, no action: {Jobs.Pending}";
             EnableGui(true);
             grid1.Running = false;
             grid1.Invalidate();
@@ -92,6 +95,7 @@ namespace JobRunner
 
         private void RunJobs()
         {
+            CleanExit = true;
             var jobIndex = 0;
             foreach (var job in Jobs)
             {
@@ -104,6 +108,11 @@ namespace JobRunner
                     grid1.Invalidate();
                     job.Run(grid1);
                     grid1.Invalidate();
+                    if (job.BreakOnError && job.Status != JobStatus.Completed)
+                    {
+                        CleanExit = false;
+                        return;
+                    }
                 }
                 jobIndex++;
             }

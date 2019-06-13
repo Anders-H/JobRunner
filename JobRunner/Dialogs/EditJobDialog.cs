@@ -34,6 +34,7 @@ namespace JobRunner.Dialogs
             txtProgram.Text = Job.Command;
             txtArguments.Text = Job.Arguments;
             chkHidden.Checked = Job.Hidden;
+            chkBreakOnError.Checked = Job.BreakOnError;
         }
 
         private bool ValidateForm(bool quiet)
@@ -82,6 +83,7 @@ namespace JobRunner.Dialogs
             Job.Arguments = txtArguments.Text;
             Job.Timeout = (TimeSpan)cboTimeout.SelectedItem;
             Job.Hidden = chkHidden.Checked;
+            Job.BreakOnError = chkBreakOnError.Checked;
             DialogResult = DialogResult.OK;
         }
     }

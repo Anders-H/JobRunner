@@ -20,8 +20,9 @@ namespace JobRunner.ObjectModel
         public string FailMessage { get; private set; }
         public TimeSpan Timeout { get; internal set; }
         public bool Hidden { get; internal set; }
+        public bool BreakOnError { get; internal set; }
 
-        public Job(int number, string name, string command, string arguments, TimeSpan timeout, bool hidden)
+        public Job(int number, string name, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError)
         {
             Number = number;
             Name = name;
@@ -30,6 +31,7 @@ namespace JobRunner.ObjectModel
             Timeout = timeout;
             Status = JobStatus.Pending;
             Hidden = hidden;
+            BreakOnError = breakOnError;
         }
 
         public void Reset(DateTime allJobsStartTime)
@@ -92,6 +94,7 @@ namespace JobRunner.ObjectModel
         <arguments>{System.Net.WebUtility.HtmlEncode(Arguments)}</arguments>
         <timeout>{System.Net.WebUtility.HtmlEncode(Timeout.ToString())}</timeout>
         <display>{(Hidden ? "Hidden" : "Visible")}</display>
+        <breakOnError>{(BreakOnError ? "true" : "false")}</breakOnError>
     </job>";
     }
 }
