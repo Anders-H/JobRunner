@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using JobRunner.ObjectModel;
 
-namespace JobRunner
+namespace JobRunner.GuiComponents
 {
     public class Grid : DataGridView
     {

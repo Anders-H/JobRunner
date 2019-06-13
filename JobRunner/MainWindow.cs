@@ -3,6 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using JobRunner.Dialogs;
+using JobRunner.ObjectModel;
+using JobRunner.Utils;
 
 namespace JobRunner
 {

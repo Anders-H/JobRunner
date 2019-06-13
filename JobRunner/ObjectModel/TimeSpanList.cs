@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace JobRunner
+namespace JobRunner.ObjectModel
 {
     public class TimeSpanList : List<TimeSpan>
     {

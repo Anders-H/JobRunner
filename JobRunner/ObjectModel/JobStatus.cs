@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JobRunner
+namespace JobRunner.ObjectModel
 {
     public enum JobStatus
     {

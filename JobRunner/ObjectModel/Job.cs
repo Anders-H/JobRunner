@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Text;
 using System.Threading;
+using JobRunner.GuiComponents;
 
-namespace JobRunner
+namespace JobRunner.ObjectModel
 {
     public class Job
     {

@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using JobRunner.Utils;
 
-namespace JobRunner
+namespace JobRunner.ObjectModel
 {
     public class JobList : List<Job>
     {

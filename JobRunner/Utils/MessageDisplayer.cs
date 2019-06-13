@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace JobRunner
+namespace JobRunner.Utils
 {
     public static class MessageDisplayer
     {

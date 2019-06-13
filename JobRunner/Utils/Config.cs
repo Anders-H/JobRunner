@@ -4,8 +4,9 @@ using System.IO;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
+using JobRunner.ObjectModel;
 
-namespace JobRunner
+namespace JobRunner.Utils
 {
     public static class Config
     {

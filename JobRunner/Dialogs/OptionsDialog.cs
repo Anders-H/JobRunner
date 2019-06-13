@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using JobRunner.Utils;
 
-namespace JobRunner
+namespace JobRunner.Dialogs
 {
     public partial class OptionsDialog : Form
     {
