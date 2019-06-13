@@ -80,6 +80,8 @@ namespace JobRunner
             EnableGui(true);
             grid1.Running = false;
             grid1.Invalidate();
+            if (Config.AutoClose && Jobs.RunSuccess && AutoActionDialog.CheckAutoClose(this))
+                Close();
         }
 
         private void EnableGui(bool enabled)
@@ -114,6 +116,7 @@ namespace JobRunner
                 Close();
                 return;
             }
+            Refresh();
             Jobs.Load();
             if (!Jobs.LoadSuccess)
             {
@@ -151,6 +154,8 @@ namespace JobRunner
                 lblStatus.Text = @"Done (read only).";
             }
             Cursor = Cursors.Default;
+            if (Config.AutoStart && AutoActionDialog.CheckAutoStart(this))
+                runToolStripMenuItem_Click(this, new EventArgs());
         }
 
         private void AddJobToolStripMenuItem_Click(object sender, EventArgs e)

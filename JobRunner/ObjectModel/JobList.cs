@@ -104,6 +104,17 @@ namespace JobRunner.ObjectModel
             ForEach(x => x.Reset(startTime));
         }
 
+        public bool RunSuccess
+        {
+            get
+            {
+                foreach (var job in this)
+                    if (job.Status != JobStatus.Completed)
+                        return false;
+                return true;
+            }
+        }
+
         public void InsertJob(Job job)
         {
             foreach (var j in this)

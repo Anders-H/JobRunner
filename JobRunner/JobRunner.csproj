@@ -59,6 +59,12 @@
     <Compile Include="Dialogs\AddJobDialog.Designer.cs">
       <DependentUpon>AddJobDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\AutoActionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AutoActionDialog.Designer.cs">
+      <DependentUpon>AutoActionDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Dialogs\EditJobDialog.cs">
       <SubType>Form</SubType>
@@ -91,6 +97,9 @@
     <Compile Include="ObjectModel\TimeSpanList.cs" />
     <EmbeddedResource Include="Dialogs\AddJobDialog.resx">
       <DependentUpon>AddJobDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AutoActionDialog.resx">
+      <DependentUpon>AutoActionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EditJobDialog.resx">
       <DependentUpon>EditJobDialog.cs</DependentUpon>
