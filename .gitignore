@@ -12,7 +12,7 @@ PublishProfiles/
 *.cache
 *.docstates
 _ReSharper.*
-nuget.exe
+*.exe
 *net45.csproj
 *net451.csproj
 *k10.csproj
