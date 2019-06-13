@@ -39,11 +39,12 @@ namespace JobRunner.ObjectModel
             Status = JobStatus.Pending;
             ExitCode = 0;
             StartTime = null;
+            EndTime = null;
             AllJobsStartTime = allJobsStartTime;
             FailMessage = "";
         }
 
-        public void Run(Grid grid)
+        public void Run(IGridVisualFeedback grid)
         {
             try
             {

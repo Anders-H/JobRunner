@@ -6,14 +6,14 @@ using JobRunner.ObjectModel;
 
 namespace JobRunner.GuiComponents
 {
-    public class Grid : DataGridView
+    public class Grid : DataGridView, IGridVisualFeedback
     {
         public event EventHandler EditJob;
         public bool CursorBlink { get; set; }
         public bool Running { get; set; }
         public int RunSingle { get; set; }
 
-        public void Initialize(JobList jobs)
+        public void Initialize(IJobList jobs)
         {
             ConfigureGrid();
             RefreshList(jobs);
@@ -84,12 +84,12 @@ namespace JobRunner.GuiComponents
             });
         }
 
-        private void RefreshList(JobList jobs)
+        private void RefreshList(IJobList jobs)
         {
             Rows.Clear();
             var rows = new List<DataGridViewRow>();
             var rowIndex = 0;
-            foreach (var job in jobs)
+            foreach (var job in jobs.All)
             {
                 var row = new DataGridViewRow
                 {

@@ -8,7 +8,7 @@ namespace JobRunner.Dialogs
 {
     public partial class AddJobDialog : Form
     {
-        public JobList Jobs { private get; set; }
+        public IJobList Jobs { private get; set; }
 
         public AddJobDialog()
         {

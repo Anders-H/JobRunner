@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using JobRunner.Dialogs;
@@ -11,7 +10,7 @@ namespace JobRunner
 {
     public partial class MainWindow : Form
     {
-        private JobList Jobs { get; } = new JobList();
+        private IJobList Jobs { get; } = new JobList();
         private bool CleanExit { get; set; }
 
         public MainWindow()
@@ -37,7 +36,7 @@ namespace JobRunner
                 return;
             lblStatus.Text = @"Running...";
             EnableGui(false);
-            Jobs.Reset();
+            Jobs.ResetJobs();
             grid1.RunSingle = -1;
             grid1.Running = true;
             grid1.Invalidate();
@@ -56,7 +55,7 @@ namespace JobRunner
             }
             lblStatus.Text = @"Running...";
             EnableGui(false);
-            Jobs.Reset();
+            Jobs.ResetJobs();
             grid1.RunSingle = grid1.SelectedCells[0].RowIndex;
             grid1.Running = true;
             grid1.Invalidate();
@@ -97,7 +96,7 @@ namespace JobRunner
         {
             CleanExit = true;
             var jobIndex = 0;
-            foreach (var job in Jobs)
+            foreach (var job in Jobs.All)
             {
                 if (grid1.RunSingle < 0 || grid1.RunSingle == jobIndex)
                 {
@@ -253,7 +252,7 @@ namespace JobRunner
                 MessageDisplayer.Tell("No job is selected.", "Move job up");
                 return;
             }
-            if (Jobs.First() == job)
+            if (Jobs.FirstJob == job)
             {
                 MessageDisplayer.Tell("Selected job is already the first job.", "Move job up");
                 return;
@@ -274,7 +273,7 @@ namespace JobRunner
                 MessageDisplayer.Tell("No job is selected.", "Move job down");
                 return;
             }
-            if (Jobs.Last() == job)
+            if (Jobs.LastJob == job)
             {
                 MessageDisplayer.Tell("Selected job is already the last job.", "Move job down");
                 return;

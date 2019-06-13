@@ -9,15 +9,16 @@ using JobRunner.Utils;
 
 namespace JobRunner.ObjectModel
 {
-    public class JobList : List<Job>
+    public class JobList : IJobList
     {
+        public List<Job> All { get; } = new List<Job>();
         public bool LoadSuccess { get; private set; }
         public string LoadFailedMessage { get; private set; }
 
         public void Load()
         {
             LoadSuccess = false;
-            Clear();
+            All.Clear();
             var filename = Config.GetJobFilePath();
             if (!File.Exists(filename))
             {
@@ -30,7 +31,6 @@ namespace JobRunner.ObjectModel
                 LoadFailedMessage = $"The file {filename} does not exist.";
                 return;
             }
-
             var dom = new XmlDocument();
             dom.Load(filename);
             var doc = dom.DocumentElement;
@@ -39,77 +39,101 @@ namespace JobRunner.ObjectModel
             var jobsXml = doc.SelectNodes("job");
             if (jobsXml == null)
                 return;
-            Config.AutoStart = GetBoolFromAttribute(doc, "AutoStart");
-            Config.AutoClose = GetBoolFromAttribute(doc, "AutoClose");
+            Config.AutoStart = doc.GetBoolFromAttribute("AutoStart");
+            Config.AutoClose = doc.GetBoolFromAttribute("AutoClose");
             var number = 0;
             foreach (XmlElement jobXml in jobsXml)
             {
                 number++;
-                var name = jobXml.SelectSingleNode("name")?.InnerText ?? "";
-                var command = jobXml.SelectSingleNode("command")?.InnerText ?? "";
+                var command = jobXml.GetChildString("command");
                 if (string.IsNullOrWhiteSpace(command))
                 {
                     LoadFailedMessage = "At least one job is missing <command> value.";
                     if (!Config.IsAdministrator)
                         return;
                 }
-                var timeout = jobXml.SelectSingleNode("timeout")?.InnerText ?? "";
-                if (string.IsNullOrWhiteSpace(timeout))
+                var timeoutString = jobXml.GetChildString("timeout");
+                if (string.IsNullOrWhiteSpace(timeoutString))
                 {
                     LoadFailedMessage = "At least one job is missing <timeout> value.";
                     if (!Config.IsAdministrator)
                         return;
                 }
-                if (!TimeSpan.TryParse(timeout, CultureInfo.CurrentCulture, out var t))
+                if (!TimeSpan.TryParse(timeoutString, CultureInfo.CurrentCulture, out var timeout))
                 {
-                    LoadFailedMessage = $"Failed to parse timeout: {timeout}";
+                    LoadFailedMessage = $"Failed to parse timeout: {timeoutString}";
                     if (!Config.IsAdministrator)
                         return;
                 }
-                var display = (jobXml.SelectSingleNode("display")?.InnerText ?? "").ToLower();
+                var display = jobXml.GetChildString("display").ToLower();
                 if (!(display == "visible" || display == "hidden"))
                 {
                     LoadFailedMessage = "At least one job is missing a correct <display> value. Possible values are Visible or Hidden.";
                     if (!Config.IsAdministrator)
                         return;
                 }
-                var arguments = jobXml.SelectSingleNode("arguments")?.InnerText ?? "";
-                var breakOnError = (jobXml.SelectSingleNode("breakOnError")?.InnerText ?? "").ToLower();
-                Add(new Job(number, name, command, arguments, t, display == "hidden", breakOnError == "true" || breakOnError == "1"));
+                var arguments = jobXml.GetChildString("arguments");
+                var breakOnError = jobXml.GetChildString("breakOnError").ToLower();
+                Add(
+                    number,
+                    jobXml.GetChildString("name"),
+                    command,
+                    arguments,
+                    timeout,
+                    display,
+                    breakOnError);
             }
             LoadSuccess = true;
         }
+
+        private void Add(
+            int number,
+            string name,
+            string command,
+            string arguments,
+            TimeSpan timeout,
+            string display,
+            string breakOnError) =>
+            All.Add(new Job(
+                number,
+                name,
+                command,
+                arguments,
+                timeout,
+                display == "hidden",
+                breakOnError == "true" || breakOnError == "1"
+            ));
+
+        public Job FirstJob =>
+            All.FirstOrDefault();
+
+        public Job LastJob =>
+            All.LastOrDefault();
+
+        public int Count =>
+            All.Count;
 
         public string GetXml()
         {
             var s = new StringBuilder();
             s.AppendLine(@"<?xml version=""1.0"" encoding=""utf-8"" ?>");
             s.AppendLine($@"<jobs AutoStart=""{(Config.AutoStart ? "1" : "0")}"" AutoClose=""{(Config.AutoClose ? "1" : "0")}"">");
-            ForEach(x => s.AppendLine(x.GetXml()));
+            All.ForEach(x => s.AppendLine(x.GetXml()));
             s.AppendLine("</jobs>");
             return s.ToString();
         }
 
-        private bool GetBoolFromAttribute(XmlElement e, string attributeName)
-        {
-            if (e == null)
-                return false;
-            var att = e.Attributes.GetNamedItem(attributeName);
-            var v = att?.Value?.ToLower() ?? "";
-            return v == "1" || v == "true";
-        }
-
-        public void Reset()
+        public void ResetJobs()
         {
             var startTime = DateTime.Now;
-            ForEach(x => x.Reset(startTime));
+            All.ForEach(x => x.Reset(startTime));
         }
 
         public bool RunSuccess
         {
             get
             {
-                foreach (var job in this)
+                foreach (var job in All)
                     if (job.Status != JobStatus.Completed)
                         return false;
                 return true;
@@ -117,60 +141,58 @@ namespace JobRunner.ObjectModel
         }
 
         public int Completed =>
-            this.Count(x => x.Status == JobStatus.Completed);
+            All.Count(x => x.Status == JobStatus.Completed);
 
         public int Error =>
-            this.Count(x => x.Status == JobStatus.Failed || x.Status == JobStatus.Timeout);
+            All.Count(x => x.Status == JobStatus.Failed || x.Status == JobStatus.Timeout);
 
         public int Pending =>
-            this.Count(x => x.Status == JobStatus.Pending);
+            All.Count(x => x.Status == JobStatus.Pending);
 
         public void InsertJob(Job job)
         {
-            foreach (var j in this)
+            foreach (var j in All)
             {
                 if (j.Number < job.Number)
                     continue;
-                Insert(IndexOf(j), job);
+                All.Insert(All.IndexOf(j), job);
                 Renumber();
                 return;
             }
-            Add(job);
+            All.Add(job);
             Renumber();
         }
 
         public void RemoveJob(Job job)
         {
-            Remove(job);
+            All.Remove(job);
             Renumber();
         }
 
-        public void MoveUp(Job job)
-        {
-            var currentIndex = IndexOf(job);
-            Remove(job);
-            Insert(currentIndex - 1, job);
-            Renumber();
-        }
+        public void MoveUp(Job job) =>
+            Move(job, -1);
 
-        public void MoveDown(Job job)
+        public void MoveDown(Job job) =>
+            Move(job, 1);
+
+        private void Move(Job job, int offset)
         {
-            var currentIndex = IndexOf(job);
-            Remove(job);
-            Insert(currentIndex + 1, job);
+            var currentIndex = All.IndexOf(job);
+            All.Remove(job);
+            All.Insert(currentIndex + offset, job);
             Renumber();
         }
 
         private void Renumber()
         {
-            for (var i = 0; i < Count; i++)
-                this[i].Number = i + 1;
+            for (var i = 0; i < All.Count; i++)
+                All[i].Number = i + 1;
         }
 
         public int FirstSequenceNumber =>
-            this.FirstOrDefault()?.Number ?? 1;
+            All.FirstOrDefault()?.Number ?? 1;
 
         public int LastSequenceNumber =>
-            this.LastOrDefault()?.Number ?? Count + 1;
+            All.LastOrDefault()?.Number ?? All.Count + 1;
     }
 }
