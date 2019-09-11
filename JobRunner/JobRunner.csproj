@@ -67,6 +67,9 @@
     </Compile>
     <Compile Include="GuiComponents\IGridVisualFeedback.cs" />
     <Compile Include="ObjectModel\IJobList.cs" />
+    <Compile Include="ObjectModel\IVariableList.cs" />
+    <Compile Include="ObjectModel\Variable.cs" />
+    <Compile Include="ObjectModel\VariableList.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Dialogs\EditJobDialog.cs">
       <SubType>Form</SubType>
@@ -141,6 +144,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Settings %2825%29.ico" />
+    <Content Include="variables.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

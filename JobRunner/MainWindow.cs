@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Forms;
 using JobRunner.Dialogs;
@@ -11,6 +12,7 @@ namespace JobRunner
     public partial class MainWindow : Form
     {
         private IJobList Jobs { get; } = new JobList();
+        private IVariableList Variables { get; } = new VariableList();
         private bool CleanExit { get; set; }
 
         public MainWindow()
@@ -126,6 +128,7 @@ namespace JobRunner
             }
             Refresh();
             Jobs.Load();
+            Variables.Load();
             if (!Jobs.LoadSuccess)
             {
                 Cursor = Cursors.Default;

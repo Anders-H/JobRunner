@@ -34,9 +34,7 @@ namespace JobRunner.ObjectModel
             var dom = new XmlDocument();
             dom.Load(filename);
             var doc = dom.DocumentElement;
-            if (doc == null)
-                return;
-            var jobsXml = doc.SelectNodes("job");
+            var jobsXml = doc?.SelectNodes("job");
             if (jobsXml == null)
                 return;
             Config.AutoStart = doc.GetBoolFromAttribute("AutoStart");
