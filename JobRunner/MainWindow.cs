@@ -296,5 +296,24 @@ namespace JobRunner
                 return;
             SaveJobs();
         }
+
+        private void jobsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var about = new StringBuilder();
+            about.AppendLine("Changes in version 1.1:");
+            about.AppendLine("- Bug fix: Application crash when opening the Add job dialog.");
+            about.AppendLine("- Bug fix: Browse button didn't work in the Edit job dialog.");
+            MessageDisplayer.Tell(about.ToString(), $"About JobRunner {Application.ProductVersion}");
+        }
     }
 }

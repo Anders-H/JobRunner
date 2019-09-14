@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using JobRunner.ObjectModel;
@@ -171,7 +172,8 @@ namespace JobRunner.Dialogs
 
         private void AddJobDialog_Load(object sender, EventArgs e)
         {
-            tvOverview.BackColor = tvOverview.Parent.BackColor;
+            var p = tvOverview.Parent.BackColor;
+            tvOverview.BackColor = Color.FromArgb(p.R, p.G, p.B);
             foreach (var x in new TimeSpanList())
                 cboTimeout.Items.Add(x);
             cboTimeout.SelectedIndex = 1;

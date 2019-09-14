@@ -86,5 +86,17 @@ namespace JobRunner.Dialogs
             Job.BreakOnError = chkBreakOnError.Checked;
             DialogResult = DialogResult.OK;
         }
+
+        private void BtnBrowse_Click(object sender, EventArgs e)
+        {
+            using var x = new OpenFileDialog
+            {
+                Filter = @"Executables (*.exe)|*.exe|All files (*.*)|*.*",
+                Title = @"Select an executable file"
+            };
+            if (x.ShowDialog(this) != DialogResult.OK)
+                return;
+            txtProgram.Text = x.FileName;
+        }
     }
 }
