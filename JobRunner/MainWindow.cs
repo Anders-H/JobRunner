@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Forms;
 using JobRunner.Dialogs;
+using JobRunner.Dialogs.ViewList;
 using JobRunner.ObjectModel;
 using JobRunner.Utils;
 
@@ -304,13 +304,24 @@ namespace JobRunner
 
         private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            var listDescriptor = new SimpleListDescriptor
+            {
+                PrimaryColumnTitle = "Variable",
+                SecondaryColumnTitle = "Usage (job name)"
+            };
+            foreach (var variable in Variables.All)
+            {
+                var jobs = Jobs.GetVariableUsage(variable);
+                listDescriptor.Add(new SimpleListItem($"\"{variable.Name}\"=\"{variable.Value}\"", jobs.NameList));
+            }
+            SimpleListDialog.ShowListDialog(this, listDescriptor);
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var about = new StringBuilder();
             about.AppendLine("Changes in version 1.1:");
+            about.AppendLine("- Added support for variables in job configuration.");
             about.AppendLine("- Bug fix: Application crash when opening the Add job dialog.");
             about.AppendLine("- Bug fix: Browse button didn't work in the Edit job dialog.");
             MessageDisplayer.Tell(about.ToString(), $"About JobRunner {Application.ProductVersion}");
