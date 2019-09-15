@@ -32,10 +32,10 @@ namespace JobRunner.Dialogs.ViewList
         private void InitializeComponent()
         {
             this.listView1 = new System.Windows.Forms.ListView();
-            this.btnCopy = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
@@ -51,6 +51,14 @@ namespace JobRunner.Dialogs.ViewList
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 160;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Width = 160;
             // 
             // btnCopy
             // 
@@ -70,14 +78,6 @@ namespace JobRunner.Dialogs.ViewList
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 100;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Width = 200;
             // 
             // SimpleListDialog
             // 

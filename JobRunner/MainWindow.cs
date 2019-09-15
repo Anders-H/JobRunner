@@ -306,13 +306,14 @@ namespace JobRunner
         {
             var listDescriptor = new SimpleListDescriptor
             {
+                WindowTitle = "Variables",
                 PrimaryColumnTitle = "Variable",
                 SecondaryColumnTitle = "Usage (job name)"
             };
             foreach (var variable in Variables.All)
             {
                 var jobs = Jobs.GetVariableUsage(variable);
-                listDescriptor.Add(new SimpleListItem($"\"{variable.Name}\"=\"{variable.Value}\"", jobs.NameList));
+                listDescriptor.Add(new SimpleListItem($"\"{variable.Name}\"=\"{variable.Value}\"", jobs.Names));
             }
             SimpleListDialog.ShowListDialog(this, listDescriptor);
         }

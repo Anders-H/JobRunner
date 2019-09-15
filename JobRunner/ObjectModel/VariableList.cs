@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Xml;
+using JobRunner.Utils;
 
 namespace JobRunner.ObjectModel
 {
@@ -10,7 +16,32 @@ namespace JobRunner.ObjectModel
 
         public void Load()
         {
-            
+            LoadSuccess = false;
+            All.Clear();
+            var filename = Config.GetVariableFilePath();
+            if (!File.Exists(filename))
+            {
+                if (Config.IsAdministrator)
+                {
+                    LoadSuccess = true;
+                    return;
+                }
+                LoadFailedMessage = $"The file {filename} does not exist.";
+                return;
+            }
+            var dom = new XmlDocument();
+            dom.Load(filename);
+            var doc = dom.DocumentElement;
+            var variablesXml = doc?.SelectNodes("variable");
+            if (variablesXml == null)
+                return;
+            foreach (XmlElement variableXml in variablesXml)
+            {
+                var name = variableXml.GetChildString("name");
+                var value = variableXml.GetChildString("value");
+                All.Add(new Variable(name, value));
+            }
+            LoadSuccess = true;
         }
 
         public int Count =>

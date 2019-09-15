@@ -27,7 +27,6 @@ namespace JobRunner.ObjectModel
                     LoadSuccess = true;
                     return;
                 }
-
                 LoadFailedMessage = $"The file {filename} does not exist.";
                 return;
             }
@@ -192,5 +191,16 @@ namespace JobRunner.ObjectModel
 
         public int LastSequenceNumber =>
             All.LastOrDefault()?.Number ?? All.Count + 1;
+        
+        public IJobList GetVariableUsage(Variable variable)
+        {
+            var jobs = new JobList();
+            foreach (var job in All.Where(job => job.UsesVariable(variable)))
+                jobs.All.Add(job);
+            return jobs;
+        }
+        
+        public string Names =>
+            string.Join(", ", All.Select(job => job.Name).ToList());
     }
 }

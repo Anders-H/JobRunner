@@ -22,6 +22,7 @@ namespace JobRunner.Dialogs.ViewList
 
         private void SimpleListDialog_Load(object sender, System.EventArgs e)
         {
+            Text = _descriptor.WindowTitle; 
             listView1.BeginUpdate();
             listView1.Columns[0].Text = _descriptor.PrimaryColumnTitle;
             listView1.Columns[1].Text = _descriptor.SecondaryColumnTitle;

@@ -23,5 +23,7 @@ namespace JobRunner.ObjectModel
         void MoveUp(Job job);
         void RemoveJob(Job job);
         void ResetJobs();
+        IJobList GetVariableUsage(Variable variable);
+        string Names { get; }
     }
 }

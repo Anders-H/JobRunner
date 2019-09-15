@@ -45,7 +45,7 @@ namespace JobRunner.Utils
             }
         }
 
-        public static JobFileLocation JobFileLocation
+        private static JobFileLocation JobFileLocation
         {
             get
             {
@@ -68,6 +68,24 @@ namespace JobRunner.Utils
                     if (!folder.Exists)
                         folder.Create();
                     return Path.Combine(folder.FullName, "jobs.xml");
+                default:
+                    throw new SystemException("Configuration error. Visit https://github.com/Anders-H/JobRunner for more information.");
+            }
+        }
+        
+        public static string GetVariableFilePath()
+        {
+            switch (JobFileLocation)
+            {
+                case JobFileLocation.Application:
+                    var executingFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
+                    return Path.Combine(executingFile.Directory?.FullName ?? "", "variables.xml");
+                case JobFileLocation.UserSettings:
+                    var profile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                    var folder = new DirectoryInfo(Path.Combine(profile, "JobRunnerJobListFile"));
+                    if (!folder.Exists)
+                        folder.Create();
+                    return Path.Combine(folder.FullName, "variables.xml");
                 default:
                     throw new SystemException("Configuration error. Visit https://github.com/Anders-H/JobRunner for more information.");
             }
