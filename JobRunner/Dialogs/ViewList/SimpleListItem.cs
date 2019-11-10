@@ -6,16 +6,19 @@ namespace JobRunner.Dialogs.ViewList
     {
         private string PrimaryValue { get; }
         private string SecondaryValue { get; }
-
-        public SimpleListItem(string primaryValue, string secondaryValue)
+        public string ValueToCopy { get; }
+        
+        public SimpleListItem(string primaryValue, string secondaryValue, string valueToCopy)
         {
             PrimaryValue = primaryValue;
             SecondaryValue = secondaryValue;
+            ValueToCopy = valueToCopy;
         }
 
         public void Add(ListView listView)
         {
             var item = listView.Items.Add(PrimaryValue);
+            item.Tag = ValueToCopy;
             item.SubItems.Add(SecondaryValue);
         }
     }

@@ -8,6 +8,8 @@ namespace JobRunner.ObjectModel
         int Count { get; }
         string LoadFailedMessage { get; }
         bool LoadSuccess { get; }
+        IVariableList GetVariables(Job job);
+        string GetVariableNames(Job job);
         void Load();
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using JobRunner.Utils;
 
 namespace JobRunner.Dialogs.ViewList
 {
@@ -6,7 +8,7 @@ namespace JobRunner.Dialogs.ViewList
     {
         private SimpleListDescriptor _descriptor;
 
-        public SimpleListDialog()
+        private SimpleListDialog()
         {
             InitializeComponent();
         }
@@ -20,7 +22,7 @@ namespace JobRunner.Dialogs.ViewList
             return x.ShowDialog(owner);
         }
 
-        private void SimpleListDialog_Load(object sender, System.EventArgs e)
+        private void SimpleListDialog_Load(object sender, EventArgs e)
         {
             Text = _descriptor.WindowTitle; 
             listView1.BeginUpdate();
@@ -29,6 +31,15 @@ namespace JobRunner.Dialogs.ViewList
             foreach (var item in _descriptor)
                 item.Add(listView1);
             listView1.EndUpdate();
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count <= 0)
+                return;
+            var valueToCopy = listView1.SelectedItems[0].Tag as string ?? "";
+            Clipboard.SetText(valueToCopy);
+            MessageDisplayer.Tell($"Copied to clipboard: {valueToCopy}", Text);
         }
     }
 }

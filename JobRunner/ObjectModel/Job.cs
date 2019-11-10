@@ -89,7 +89,7 @@ namespace JobRunner.ObjectModel
         }
 
         public bool UsesVariable(Variable variable) =>
-            Arguments.IndexOf($"{{{variable.Name}}}", StringComparison.Ordinal) > -1;
+            Arguments.IndexOf($"[{variable.Name}]", StringComparison.Ordinal) > -1;
         
         public string GetXml() =>
             $@"    <job>

@@ -194,7 +194,7 @@ namespace JobRunner.ObjectModel
         
         public IJobList GetVariableUsage(Variable variable)
         {
-            var jobs = new JobList();
+            IJobList jobs = new JobList();
             foreach (var job in All.Where(job => job.UsesVariable(variable)))
                 jobs.All.Add(job);
             return jobs;

@@ -32,49 +32,49 @@ namespace JobRunner.Dialogs.ViewList
         private void InitializeComponent()
         {
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+                {this.columnHeader1, this.columnHeader2});
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(4, 4);
+            this.listView1.Location = new System.Drawing.Point(5, 5);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(340, 284);
+            this.listView1.Size = new System.Drawing.Size(396, 327);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Width = 160;
+            this.columnHeader1.Width = 170;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Width = 160;
+            this.columnHeader2.Width = 170;
             // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(8, 292);
+            this.btnCopy.Location = new System.Drawing.Point(9, 337);
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(75, 23);
+            this.btnCopy.Size = new System.Drawing.Size(87, 27);
             this.btnCopy.TabIndex = 1;
             this.btnCopy.Text = "Copy";
             this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // btnClose
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(268, 292);
+            this.btnClose.Location = new System.Drawing.Point(313, 337);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.Size = new System.Drawing.Size(87, 27);
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -82,10 +82,10 @@ namespace JobRunner.Dialogs.ViewList
             // SimpleListDialog
             // 
             this.AcceptButton = this.btnClose;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(349, 322);
+            this.ClientSize = new System.Drawing.Size(407, 372);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.listView1);
@@ -98,7 +98,6 @@ namespace JobRunner.Dialogs.ViewList
             this.Text = "SimpleListDialog";
             this.Load += new System.EventHandler(this.SimpleListDialog_Load);
             this.ResumeLayout(false);
-
         }
 
         #endregion

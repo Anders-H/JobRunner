@@ -185,7 +185,6 @@
             // 
             // jobsToolStripMenuItem1
             // 
-            this.jobsToolStripMenuItem1.Enabled = false;
             this.jobsToolStripMenuItem1.Name = "jobsToolStripMenuItem1";
             this.jobsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.jobsToolStripMenuItem1.Text = "Jobs...";

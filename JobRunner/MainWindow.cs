@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using JobRunner.Dialogs;
@@ -299,7 +300,23 @@ namespace JobRunner
 
         private void jobsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            
+            var listDescriptor = new SimpleListDescriptor
+            {
+                WindowTitle = "Jobs",
+                PrimaryColumnTitle = "Job",
+                SecondaryColumnTitle = "Variables"
+            };
+            listDescriptor.AddRange(
+                from job
+                in Jobs.All
+                let variables = Variables.GetVariables(job)
+                select new SimpleListItem(
+                    job.Name,
+                    variables.GetVariableNames(job),
+                    job.Name
+                )
+            );
+            SimpleListDialog.ShowListDialog(this, listDescriptor);
         }
 
         private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -310,11 +327,16 @@ namespace JobRunner
                 PrimaryColumnTitle = "Variable",
                 SecondaryColumnTitle = "Usage (job name)"
             };
-            foreach (var variable in Variables.All)
-            {
-                var jobs = Jobs.GetVariableUsage(variable);
-                listDescriptor.Add(new SimpleListItem($"\"{variable.Name}\"=\"{variable.Value}\"", jobs.Names));
-            }
+            listDescriptor.AddRange(
+                from variable
+                in Variables.All
+                let jobs = Jobs.GetVariableUsage(variable)
+                select new SimpleListItem(
+                    $"\"{variable.Name}\"=\"{variable.Value}\"",
+                    jobs.Names,
+                    $"[{variable.Name}]"
+                )
+            );
             SimpleListDialog.ShowListDialog(this, listDescriptor);
         }
 
