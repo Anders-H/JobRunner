@@ -59,6 +59,12 @@
     <Compile Include="Dialogs\AddJobDialog.Designer.cs">
       <DependentUpon>AddJobDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\AddVariableDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddVariableDialog.Designer.cs">
+      <DependentUpon>AddVariableDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AutoActionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +117,9 @@
     <Compile Include="Utils\XmlTools.cs" />
     <EmbeddedResource Include="Dialogs\AddJobDialog.resx">
       <DependentUpon>AddJobDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddVariableDialog.resx">
+      <DependentUpon>AddVariableDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AutoActionDialog.resx">
       <DependentUpon>AutoActionDialog.cs</DependentUpon>

@@ -25,9 +25,16 @@ namespace JobRunner
         {
             lblStatus.Text = @"Initializing...";
             Cursor = Cursors.WaitCursor;
-            addJobToolStripMenuItem.Enabled = editJobToolStripMenuItem.Enabled = deleteJobToolStripMenuItem.Enabled =
-                moveJobUpToolStripMenuItem.Enabled = moveJobDownToolStripMenuItem.Enabled =
-                optionsToolStripMenuItem.Enabled = Config.IsAdministrator;
+            addJobToolStripMenuItem.Enabled
+                = editJobToolStripMenuItem.Enabled
+                = deleteJobToolStripMenuItem.Enabled
+                = moveJobUpToolStripMenuItem.Enabled
+                = moveJobDownToolStripMenuItem.Enabled
+                = optionsToolStripMenuItem.Enabled
+                = addVariableToolStripMenuItem.Enabled
+                = editVariableToolStripMenuItem.Enabled
+                = deleteVariableToolStripMenuItem.Enabled
+                = Config.IsAdministrator;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) =>
@@ -348,6 +355,19 @@ namespace JobRunner
             about.AppendLine("- Bug fix: Application crash when opening the Add job dialog.");
             about.AppendLine("- Bug fix: Browse button didn't work in the Edit job dialog.");
             MessageDisplayer.Tell(about.ToString(), $"About JobRunner {Application.ProductVersion}");
+        }
+
+        private void addVariableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!Config.IsAdministrator)
+                return;
+            using var x = new AddVariableDialog
+            {
+                Variables = Variables
+            };
+            if (x.ShowDialog(this) != DialogResult.OK)
+                return;
+            SaveJobs();
         }
     }
 }
