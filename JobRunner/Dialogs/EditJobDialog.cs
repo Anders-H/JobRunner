@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using JobRunner.ObjectModel;
+using JobRunner.Services;
 using JobRunner.Utils;
 
 namespace JobRunner.Dialogs
@@ -111,7 +112,8 @@ namespace JobRunner.Dialogs
                 return;
             if (Variables.Count <= 0)
                 return;
-
+            txtArgsEvaluated.Text = new ArgumentDecoder(Variables)
+                .GetDecodedText(txtArguments.Text);
         }
     }
 }

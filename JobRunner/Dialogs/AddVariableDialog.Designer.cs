@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.lblVariableName = new System.Windows.Forms.Label();
             this.txtVariableName = new System.Windows.Forms.TextBox();
             this.txtVariableValue = new System.Windows.Forms.TextBox();
@@ -41,14 +41,13 @@
             // 
             // listView1
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+                {this.columnHeader1, this.columnHeader2});
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(4, 4);
+            this.listView1.Location = new System.Drawing.Point(5, 5);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(340, 284);
+            this.listView1.Size = new System.Drawing.Size(396, 327);
             this.listView1.TabIndex = 6;
             this.listView1.TabStop = false;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -65,42 +64,44 @@
             // lblVariableName
             // 
             this.lblVariableName.AutoSize = true;
-            this.lblVariableName.Location = new System.Drawing.Point(8, 300);
+            this.lblVariableName.Location = new System.Drawing.Point(9, 346);
             this.lblVariableName.Name = "lblVariableName";
-            this.lblVariableName.Size = new System.Drawing.Size(38, 13);
+            this.lblVariableName.Size = new System.Drawing.Size(42, 15);
             this.lblVariableName.TabIndex = 0;
             this.lblVariableName.Text = "Name:";
             // 
             // txtVariableName
             // 
-            this.txtVariableName.Location = new System.Drawing.Point(60, 296);
+            this.txtVariableName.Location = new System.Drawing.Point(70, 342);
             this.txtVariableName.Name = "txtVariableName";
-            this.txtVariableName.Size = new System.Drawing.Size(284, 20);
+            this.txtVariableName.Size = new System.Drawing.Size(331, 23);
             this.txtVariableName.TabIndex = 1;
-            this.txtVariableName.Validating += new System.ComponentModel.CancelEventHandler(this.txtVariableName_Validating);
+            this.txtVariableName.Validating +=
+                new System.ComponentModel.CancelEventHandler(this.txtVariableName_Validating);
             // 
             // txtVariableValue
             // 
-            this.txtVariableValue.Location = new System.Drawing.Point(60, 320);
+            this.txtVariableValue.Location = new System.Drawing.Point(70, 369);
             this.txtVariableValue.Name = "txtVariableValue";
-            this.txtVariableValue.Size = new System.Drawing.Size(284, 20);
+            this.txtVariableValue.Size = new System.Drawing.Size(331, 23);
             this.txtVariableValue.TabIndex = 3;
-            this.txtVariableValue.Validating += new System.ComponentModel.CancelEventHandler(this.txtVariableValue_Validating);
+            this.txtVariableValue.Validating +=
+                new System.ComponentModel.CancelEventHandler(this.txtVariableValue_Validating);
             // 
             // lblValue
             // 
             this.lblValue.AutoSize = true;
-            this.lblValue.Location = new System.Drawing.Point(8, 324);
+            this.lblValue.Location = new System.Drawing.Point(9, 374);
             this.lblValue.Name = "lblValue";
-            this.lblValue.Size = new System.Drawing.Size(37, 13);
+            this.lblValue.Size = new System.Drawing.Size(38, 15);
             this.lblValue.TabIndex = 2;
             this.lblValue.Text = "Value:";
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(184, 348);
+            this.btnOk.Location = new System.Drawing.Point(215, 402);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.Size = new System.Drawing.Size(87, 27);
             this.btnOk.TabIndex = 4;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -109,9 +110,9 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(268, 348);
+            this.btnCancel.Location = new System.Drawing.Point(313, 402);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(87, 27);
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -119,10 +120,10 @@
             // AddVariableDialog
             // 
             this.AcceptButton = this.btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(349, 377);
+            this.ClientSize = new System.Drawing.Size(407, 435);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.txtVariableValue);
@@ -140,7 +141,6 @@
             this.Shown += new System.EventHandler(this.AddVariableDialog_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

@@ -84,6 +84,7 @@
     <Compile Include="ObjectModel\IVariableList.cs" />
     <Compile Include="ObjectModel\Variable.cs" />
     <Compile Include="ObjectModel\VariableList.cs" />
+    <Compile Include="Services\ArgumentDecoder.cs" />
     <Compile Include="Services\VariableName.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Dialogs\EditJobDialog.cs">
