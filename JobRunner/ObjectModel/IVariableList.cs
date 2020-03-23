@@ -9,7 +9,10 @@ namespace JobRunner.ObjectModel
         string LoadFailedMessage { get; }
         bool LoadSuccess { get; }
         IVariableList GetVariables(Job job);
+        string GetXml();
         string GetVariableNames(Job job);
         void Load();
+        bool HasVariable(string name);
+        void Add(string name, string value);
     }
 }

@@ -128,9 +128,9 @@
             this.tabPageProcess.Controls.Add(this.lblArguments);
             this.tabPageProcess.Controls.Add(this.txtProgram);
             this.tabPageProcess.Controls.Add(this.lblProgram);
-            this.tabPageProcess.Location = new System.Drawing.Point(4, 24);
+            this.tabPageProcess.Location = new System.Drawing.Point(4, 22);
             this.tabPageProcess.Name = "tabPageProcess";
-            this.tabPageProcess.Size = new System.Drawing.Size(538, 277);
+            this.tabPageProcess.Size = new System.Drawing.Size(538, 279);
             this.tabPageProcess.TabIndex = 1;
             this.tabPageProcess.Text = "Process";
             this.tabPageProcess.UseVisualStyleBackColor = true;
@@ -210,9 +210,9 @@
             // tabFlowControl
             // 
             this.tabFlowControl.Controls.Add(this.chkBreakOnError);
-            this.tabFlowControl.Location = new System.Drawing.Point(4, 24);
+            this.tabFlowControl.Location = new System.Drawing.Point(4, 22);
             this.tabFlowControl.Name = "tabFlowControl";
-            this.tabFlowControl.Size = new System.Drawing.Size(538, 277);
+            this.tabFlowControl.Size = new System.Drawing.Size(538, 279);
             this.tabFlowControl.TabIndex = 3;
             this.tabFlowControl.Text = "Flow control";
             this.tabFlowControl.UseVisualStyleBackColor = true;
@@ -230,9 +230,9 @@
             // tabPageOverview
             // 
             this.tabPageOverview.Controls.Add(this.tvOverview);
-            this.tabPageOverview.Location = new System.Drawing.Point(4, 24);
+            this.tabPageOverview.Location = new System.Drawing.Point(4, 22);
             this.tabPageOverview.Name = "tabPageOverview";
-            this.tabPageOverview.Size = new System.Drawing.Size(538, 277);
+            this.tabPageOverview.Size = new System.Drawing.Size(538, 279);
             this.tabPageOverview.TabIndex = 2;
             this.tabPageOverview.Text = "Overview";
             this.tabPageOverview.UseVisualStyleBackColor = true;

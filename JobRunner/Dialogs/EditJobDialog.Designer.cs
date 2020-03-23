@@ -41,32 +41,35 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.chkBreakOnError = new System.Windows.Forms.CheckBox();
+            this.lblVariables = new System.Windows.Forms.LinkLabel();
+            this.txtArgsEvaluated = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(9, 28);
+            this.txtName.Location = new System.Drawing.Point(8, 24);
             this.txtName.MaxLength = 500;
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(513, 23);
+            this.txtName.Size = new System.Drawing.Size(440, 20);
             this.txtName.TabIndex = 1;
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(9, 9);
+            this.lblName.Location = new System.Drawing.Point(8, 8);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(61, 15);
+            this.lblName.Size = new System.Drawing.Size(56, 13);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Job name:";
             // 
             // chkHidden
             // 
             this.chkHidden.AutoSize = true;
-            this.chkHidden.Location = new System.Drawing.Point(9, 240);
+            this.chkHidden.Location = new System.Drawing.Point(8, 248);
             this.chkHidden.Name = "chkHidden";
-            this.chkHidden.Size = new System.Drawing.Size(87, 19);
-            this.chkHidden.TabIndex = 9;
+            this.chkHidden.Size = new System.Drawing.Size(81, 17);
+            this.chkHidden.TabIndex = 10;
             this.chkHidden.Text = "Run hidden";
             this.chkHidden.UseVisualStyleBackColor = true;
             // 
@@ -74,25 +77,25 @@
             // 
             this.cboTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTimeout.FormattingEnabled = true;
-            this.cboTimeout.Location = new System.Drawing.Point(9, 208);
+            this.cboTimeout.Location = new System.Drawing.Point(8, 220);
             this.cboTimeout.Name = "cboTimeout";
-            this.cboTimeout.Size = new System.Drawing.Size(130, 23);
-            this.cboTimeout.TabIndex = 8;
+            this.cboTimeout.Size = new System.Drawing.Size(112, 21);
+            this.cboTimeout.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 189);
+            this.label1.Location = new System.Drawing.Point(8, 204);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 15);
-            this.label1.TabIndex = 7;
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 8;
             this.label1.Text = "Timeout:";
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(9, 102);
+            this.btnBrowse.Location = new System.Drawing.Point(8, 88);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(87, 27);
+            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnBrowse.TabIndex = 4;
             this.btnBrowse.Text = "Browse...";
             this.btnBrowse.UseVisualStyleBackColor = true;
@@ -100,44 +103,45 @@
             // 
             // txtArguments
             // 
-            this.txtArguments.Location = new System.Drawing.Point(9, 162);
+            this.txtArguments.Location = new System.Drawing.Point(8, 140);
             this.txtArguments.MaxLength = 500;
             this.txtArguments.Name = "txtArguments";
-            this.txtArguments.Size = new System.Drawing.Size(513, 23);
-            this.txtArguments.TabIndex = 6;
+            this.txtArguments.Size = new System.Drawing.Size(440, 20);
+            this.txtArguments.TabIndex = 7;
+            this.txtArguments.TextChanged += new System.EventHandler(this.txtArguments_TextChanged);
             // 
             // lblArguments
             // 
             this.lblArguments.AutoSize = true;
-            this.lblArguments.Location = new System.Drawing.Point(9, 143);
+            this.lblArguments.Location = new System.Drawing.Point(8, 124);
             this.lblArguments.Name = "lblArguments";
-            this.lblArguments.Size = new System.Drawing.Size(192, 15);
+            this.lblArguments.Size = new System.Drawing.Size(173, 13);
             this.lblArguments.TabIndex = 5;
             this.lblArguments.Text = "Arguments (variables can be used):";
             // 
             // txtProgram
             // 
-            this.txtProgram.Location = new System.Drawing.Point(9, 74);
+            this.txtProgram.Location = new System.Drawing.Point(8, 64);
             this.txtProgram.MaxLength = 500;
             this.txtProgram.Name = "txtProgram";
-            this.txtProgram.Size = new System.Drawing.Size(513, 23);
+            this.txtProgram.Size = new System.Drawing.Size(440, 20);
             this.txtProgram.TabIndex = 3;
             // 
             // lblProgram
             // 
             this.lblProgram.AutoSize = true;
-            this.lblProgram.Location = new System.Drawing.Point(9, 55);
+            this.lblProgram.Location = new System.Drawing.Point(8, 48);
             this.lblProgram.Name = "lblProgram";
-            this.lblProgram.Size = new System.Drawing.Size(91, 15);
+            this.lblProgram.Size = new System.Drawing.Size(79, 13);
             this.lblProgram.TabIndex = 2;
             this.lblProgram.Text = "Program to run:";
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(336, 300);
+            this.btnOk.Location = new System.Drawing.Point(288, 300);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(87, 27);
-            this.btnOk.TabIndex = 11;
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 12;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
@@ -145,30 +149,65 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(434, 300);
+            this.btnCancel.Location = new System.Drawing.Point(372, 300);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(87, 27);
-            this.btnCancel.TabIndex = 12;
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 13;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // chkBreakOnError
             // 
             this.chkBreakOnError.AutoSize = true;
-            this.chkBreakOnError.Location = new System.Drawing.Point(9, 263);
+            this.chkBreakOnError.Location = new System.Drawing.Point(8, 268);
             this.chkBreakOnError.Name = "chkBreakOnError";
-            this.chkBreakOnError.Size = new System.Drawing.Size(100, 19);
-            this.chkBreakOnError.TabIndex = 10;
+            this.chkBreakOnError.Size = new System.Drawing.Size(93, 17);
+            this.chkBreakOnError.TabIndex = 11;
             this.chkBreakOnError.Text = "Break on error";
             this.chkBreakOnError.UseVisualStyleBackColor = true;
+            // 
+            // lblVariables
+            // 
+            this.lblVariables.AutoSize = true;
+            this.lblVariables.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblVariables.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lblVariables.LinkColor = System.Drawing.Color.Navy;
+            this.lblVariables.Location = new System.Drawing.Point(388, 124);
+            this.lblVariables.Name = "lblVariables";
+            this.lblVariables.Size = new System.Drawing.Size(59, 13);
+            this.lblVariables.TabIndex = 6;
+            this.lblVariables.TabStop = true;
+            this.lblVariables.Text = "Variables...";
+            this.lblVariables.VisitedLinkColor = System.Drawing.Color.Navy;
+            this.lblVariables.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblVariables_LinkClicked);
+            // 
+            // txtArgsEvaluated
+            // 
+            this.txtArgsEvaluated.Location = new System.Drawing.Point(8, 180);
+            this.txtArgsEvaluated.Name = "txtArgsEvaluated";
+            this.txtArgsEvaluated.ReadOnly = true;
+            this.txtArgsEvaluated.Size = new System.Drawing.Size(440, 20);
+            this.txtArgsEvaluated.TabIndex = 15;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 164);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(110, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Arguments evaluated:";
             // 
             // EditJobDialog
             // 
             this.AcceptButton = this.btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(532, 333);
+            this.ClientSize = new System.Drawing.Size(456, 330);
+            this.Controls.Add(this.txtArgsEvaluated);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblVariables);
             this.Controls.Add(this.chkBreakOnError);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -192,6 +231,7 @@
             this.Load += new System.EventHandler(this.EditJobDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -209,5 +249,8 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.CheckBox chkBreakOnError;
+        private System.Windows.Forms.LinkLabel lblVariables;
+        private System.Windows.Forms.TextBox txtArgsEvaluated;
+        private System.Windows.Forms.Label label2;
     }
 }

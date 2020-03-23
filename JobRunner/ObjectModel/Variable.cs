@@ -10,5 +10,11 @@
             Name = name;
             Value = value;
         }
+
+        public string GetXml() =>
+            $@"   <variable>
+      <name>{System.Net.WebUtility.HtmlEncode(Name)}</name>
+      <value>{System.Net.WebUtility.HtmlEncode(Value)}</value>
+   </variable>";
     }
 }

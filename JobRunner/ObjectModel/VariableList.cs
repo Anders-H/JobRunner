@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using JobRunner.Utils;
 
@@ -18,6 +19,16 @@ namespace JobRunner.ObjectModel
             foreach (var v in All.Where(job.UsesVariable))
                 vl.All.Add(v);
             return vl;
+        }
+
+        public string GetXml()
+        {
+            var s = new StringBuilder();
+            s.AppendLine(@"<?xml version=""1.0"" encoding=""utf-8"" ?>");
+            s.AppendLine($@"<jobs AutoStart=""{(Config.AutoStart ? "1" : "0")}"" AutoClose=""{(Config.AutoClose ? "1" : "0")}"">");
+            All.ForEach(x => s.AppendLine(x.GetXml()));
+            s.AppendLine("</jobs>");
+            return s.ToString();
         }
 
         public string GetVariableNames(Job job)
@@ -60,6 +71,14 @@ namespace JobRunner.ObjectModel
             }
             LoadSuccess = true;
         }
+
+        public bool HasVariable(string name) =>
+            All.Exists(
+                x => string.Compare(x.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0
+            );
+
+        public void Add(string name, string value) =>
+            All.Add(new Variable(name, value));
 
         public int Count =>
             All.Count;

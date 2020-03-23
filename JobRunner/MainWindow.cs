@@ -209,6 +209,24 @@ namespace JobRunner
             }
         }
 
+        private void SaveVariables()
+        {
+            Cursor = Cursors.WaitCursor;
+            try
+            {
+                using var sw = new StreamWriter(Config.GetVariableFilePath(), false, Encoding.UTF8);
+                sw.Write(Variables.GetXml());
+                sw.Flush();
+                sw.Close();
+                Cursor = Cursors.Default;
+            }
+            catch
+            {
+                Cursor = Cursors.Default;
+                MessageDisplayer.Yell($@"Failed to save the file ""{Config.GetVariableFilePath()}"".", Text);
+            }
+        }
+        
         private void DeleteJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Config.IsAdministrator)
@@ -363,11 +381,12 @@ namespace JobRunner
                 return;
             using var x = new AddVariableDialog
             {
-                Variables = Variables
+                Variables = Variables,
+                Jobs = Jobs
             };
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
-            SaveJobs();
+            SaveVariables();
         }
     }
 }

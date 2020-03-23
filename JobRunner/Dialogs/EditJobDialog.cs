@@ -8,6 +8,7 @@ namespace JobRunner.Dialogs
     public partial class EditJobDialog : Form
     {
         public Job Job { get; set; }
+        public IVariableList Variables { get; set; }
 
         public EditJobDialog()
         {
@@ -97,6 +98,20 @@ namespace JobRunner.Dialogs
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
             txtProgram.Text = x.FileName;
+        }
+
+        private void lblVariables_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
+
+        private void txtArguments_TextChanged(object sender, EventArgs e)
+        {
+            if (Variables == null)
+                return;
+            if (Variables.Count <= 0)
+                return;
+
         }
     }
 }
