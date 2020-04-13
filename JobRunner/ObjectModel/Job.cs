@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using JobRunner.GuiComponents;
+using JobRunner.Services;
 
 namespace JobRunner.ObjectModel
 {
@@ -44,14 +45,14 @@ namespace JobRunner.ObjectModel
             FailMessage = "";
         }
 
-        public void Run(IGridVisualFeedback grid)
+        public void Run(IGridVisualFeedback grid, IVariableList variableList)
         {
             try
             {
                 StartTime = DateTime.Now;
                 var start = new ProcessStartInfo(Command)
                 {
-                    Arguments = Arguments,
+                    Arguments = new ArgumentDecoder(variableList).GetDecodedText(Arguments),
                     WindowStyle = Hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal
                 };
                 var process = Process.Start(start);

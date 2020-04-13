@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
+using JobRunner.Dialogs.ViewList;
 using JobRunner.ObjectModel;
 using JobRunner.Services;
 using JobRunner.Utils;
@@ -10,7 +12,8 @@ namespace JobRunner.Dialogs
     {
         public Job Job { get; set; }
         public IVariableList Variables { get; set; }
-
+        public IJobList Jobs { get; set; }
+        
         public EditJobDialog()
         {
             InitializeComponent();
@@ -103,7 +106,23 @@ namespace JobRunner.Dialogs
 
         private void lblVariables_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            var listDescriptor = new SimpleListDescriptor
+            {
+                WindowTitle = "Variables",
+                PrimaryColumnTitle = "Variable",
+                SecondaryColumnTitle = "Usage (job name)"
+            };
+            listDescriptor.AddRange(
+                from variable
+                in Variables.All
+                let jobs = Jobs.GetVariableUsage(variable)
+                select new SimpleListItem(
+                    $"\"{variable.Name}\"=\"{variable.Value}\"",
+                    jobs.Names,
+                    $"[{variable.Name}]"
+                )
+            );
+            SimpleListDialog.ShowListDialog(this, listDescriptor);
         }
 
         private void txtArguments_TextChanged(object sender, EventArgs e)

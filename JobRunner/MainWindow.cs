@@ -115,7 +115,7 @@ namespace JobRunner
                         ? $@"Running step {job.RowIndex + 1} of {Jobs.Count}..."
                         : "Running single job...";
                     grid1.Invalidate();
-                    job.Run(grid1);
+                    job.Run(grid1, Variables);
                     grid1.Invalidate();
                     if (job.BreakOnError && job.Status != JobStatus.Completed)
                     {
@@ -263,7 +263,9 @@ namespace JobRunner
             }
             using var x = new EditJobDialog
             {
-                Job = grid1.SelectedJob
+                Job = grid1.SelectedJob,
+                Variables = Variables,
+                Jobs = Jobs
             };
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;

@@ -11,6 +11,7 @@ namespace JobRunner.ObjectModel
         IVariableList GetVariables(Job job);
         string GetXml();
         string GetVariableNames(Job job);
+        Variable GetVariable(string name);
         void Load();
         bool HasVariable(string name);
         void Add(string name, string value);

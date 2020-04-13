@@ -82,5 +82,10 @@ namespace JobRunner.ObjectModel
 
         public int Count =>
             All.Count;
+
+        public Variable GetVariable(string name) =>
+            All.FirstOrDefault(
+                x => string.Compare(x.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0
+            );
     }
 }
