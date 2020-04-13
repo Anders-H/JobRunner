@@ -35,9 +35,6 @@
             this.txtNumber = new System.Windows.Forms.TextBox();
             this.lblNumber = new System.Windows.Forms.Label();
             this.tabPageProcess = new System.Windows.Forms.TabPage();
-            this.chkHidden = new System.Windows.Forms.CheckBox();
-            this.cboTimeout = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.txtArguments = new System.Windows.Forms.TextBox();
             this.lblArguments = new System.Windows.Forms.Label();
@@ -51,23 +48,32 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.tabOptions = new System.Windows.Forms.TabPage();
+            this.chkHidden = new System.Windows.Forms.CheckBox();
+            this.cboTimeout = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtArgsEvaluated = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblVariables = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.tabPageProcess.SuspendLayout();
             this.tabFlowControl.SuspendLayout();
             this.tabPageOverview.SuspendLayout();
+            this.tabOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageBasic);
             this.tabControl1.Controls.Add(this.tabPageProcess);
+            this.tabControl1.Controls.Add(this.tabOptions);
             this.tabControl1.Controls.Add(this.tabFlowControl);
             this.tabControl1.Controls.Add(this.tabPageOverview);
-            this.tabControl1.Location = new System.Drawing.Point(5, 5);
+            this.tabControl1.Location = new System.Drawing.Point(4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(546, 305);
+            this.tabControl1.Size = new System.Drawing.Size(468, 264);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.TabControl1_SelectedIndexChanged);
             // 
@@ -77,97 +83,69 @@
             this.tabPageBasic.Controls.Add(this.lblName);
             this.tabPageBasic.Controls.Add(this.txtNumber);
             this.tabPageBasic.Controls.Add(this.lblNumber);
-            this.tabPageBasic.Location = new System.Drawing.Point(4, 24);
+            this.tabPageBasic.Location = new System.Drawing.Point(4, 22);
             this.tabPageBasic.Name = "tabPageBasic";
-            this.tabPageBasic.Size = new System.Drawing.Size(538, 277);
+            this.tabPageBasic.Size = new System.Drawing.Size(460, 238);
             this.tabPageBasic.TabIndex = 0;
             this.tabPageBasic.Text = "Basic information";
             this.tabPageBasic.UseVisualStyleBackColor = true;
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(9, 78);
+            this.txtName.Location = new System.Drawing.Point(8, 68);
             this.txtName.MaxLength = 500;
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(513, 23);
+            this.txtName.Size = new System.Drawing.Size(440, 20);
             this.txtName.TabIndex = 3;
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(9, 60);
+            this.lblName.Location = new System.Drawing.Point(8, 52);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(61, 15);
+            this.lblName.Size = new System.Drawing.Size(56, 13);
             this.lblName.TabIndex = 2;
             this.lblName.Text = "Job name:";
             // 
             // txtNumber
             // 
-            this.txtNumber.Location = new System.Drawing.Point(9, 28);
+            this.txtNumber.Location = new System.Drawing.Point(8, 24);
             this.txtNumber.MaxLength = 6;
             this.txtNumber.Name = "txtNumber";
-            this.txtNumber.Size = new System.Drawing.Size(135, 23);
+            this.txtNumber.Size = new System.Drawing.Size(116, 20);
             this.txtNumber.TabIndex = 1;
             // 
             // lblNumber
             // 
             this.lblNumber.AutoSize = true;
-            this.lblNumber.Location = new System.Drawing.Point(9, 9);
+            this.lblNumber.Location = new System.Drawing.Point(8, 8);
             this.lblNumber.Name = "lblNumber";
-            this.lblNumber.Size = new System.Drawing.Size(106, 15);
+            this.lblNumber.Size = new System.Drawing.Size(97, 13);
             this.lblNumber.TabIndex = 0;
             this.lblNumber.Text = "Sequence number:";
             // 
             // tabPageProcess
             // 
-            this.tabPageProcess.Controls.Add(this.chkHidden);
-            this.tabPageProcess.Controls.Add(this.cboTimeout);
-            this.tabPageProcess.Controls.Add(this.label1);
+            this.tabPageProcess.Controls.Add(this.txtArgsEvaluated);
+            this.tabPageProcess.Controls.Add(this.label2);
             this.tabPageProcess.Controls.Add(this.btnBrowse);
             this.tabPageProcess.Controls.Add(this.txtArguments);
             this.tabPageProcess.Controls.Add(this.lblArguments);
             this.tabPageProcess.Controls.Add(this.txtProgram);
             this.tabPageProcess.Controls.Add(this.lblProgram);
+            this.tabPageProcess.Controls.Add(this.lblVariables);
             this.tabPageProcess.Location = new System.Drawing.Point(4, 22);
             this.tabPageProcess.Name = "tabPageProcess";
-            this.tabPageProcess.Size = new System.Drawing.Size(538, 279);
+            this.tabPageProcess.Size = new System.Drawing.Size(460, 238);
             this.tabPageProcess.TabIndex = 1;
             this.tabPageProcess.Text = "Process";
             this.tabPageProcess.UseVisualStyleBackColor = true;
             // 
-            // chkHidden
-            // 
-            this.chkHidden.AutoSize = true;
-            this.chkHidden.Location = new System.Drawing.Point(9, 249);
-            this.chkHidden.Name = "chkHidden";
-            this.chkHidden.Size = new System.Drawing.Size(87, 19);
-            this.chkHidden.TabIndex = 7;
-            this.chkHidden.Text = "Run hidden";
-            this.chkHidden.UseVisualStyleBackColor = true;
-            // 
-            // cboTimeout
-            // 
-            this.cboTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTimeout.FormattingEnabled = true;
-            this.cboTimeout.Location = new System.Drawing.Point(9, 162);
-            this.cboTimeout.Name = "cboTimeout";
-            this.cboTimeout.Size = new System.Drawing.Size(130, 23);
-            this.cboTimeout.TabIndex = 6;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 143);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 15);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Timeout:";
-            // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(9, 55);
+            this.btnBrowse.Location = new System.Drawing.Point(8, 48);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(87, 27);
+            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnBrowse.TabIndex = 2;
             this.btnBrowse.Text = "Browse...";
             this.btnBrowse.UseVisualStyleBackColor = true;
@@ -175,35 +153,36 @@
             // 
             // txtArguments
             // 
-            this.txtArguments.Location = new System.Drawing.Point(9, 115);
+            this.txtArguments.Location = new System.Drawing.Point(8, 164);
             this.txtArguments.MaxLength = 500;
             this.txtArguments.Name = "txtArguments";
-            this.txtArguments.Size = new System.Drawing.Size(513, 23);
-            this.txtArguments.TabIndex = 4;
+            this.txtArguments.Size = new System.Drawing.Size(440, 20);
+            this.txtArguments.TabIndex = 5;
+            this.txtArguments.TextChanged += new System.EventHandler(this.txtArguments_TextChanged);
             // 
             // lblArguments
             // 
             this.lblArguments.AutoSize = true;
-            this.lblArguments.Location = new System.Drawing.Point(9, 97);
+            this.lblArguments.Location = new System.Drawing.Point(8, 148);
             this.lblArguments.Name = "lblArguments";
-            this.lblArguments.Size = new System.Drawing.Size(192, 15);
+            this.lblArguments.Size = new System.Drawing.Size(173, 13);
             this.lblArguments.TabIndex = 3;
             this.lblArguments.Text = "Arguments (variables can be used):";
             // 
             // txtProgram
             // 
-            this.txtProgram.Location = new System.Drawing.Point(9, 28);
+            this.txtProgram.Location = new System.Drawing.Point(8, 24);
             this.txtProgram.MaxLength = 500;
             this.txtProgram.Name = "txtProgram";
-            this.txtProgram.Size = new System.Drawing.Size(513, 23);
+            this.txtProgram.Size = new System.Drawing.Size(440, 20);
             this.txtProgram.TabIndex = 1;
             // 
             // lblProgram
             // 
             this.lblProgram.AutoSize = true;
-            this.lblProgram.Location = new System.Drawing.Point(9, 9);
+            this.lblProgram.Location = new System.Drawing.Point(8, 8);
             this.lblProgram.Name = "lblProgram";
-            this.lblProgram.Size = new System.Drawing.Size(91, 15);
+            this.lblProgram.Size = new System.Drawing.Size(79, 13);
             this.lblProgram.TabIndex = 0;
             this.lblProgram.Text = "Program to run:";
             // 
@@ -212,7 +191,7 @@
             this.tabFlowControl.Controls.Add(this.chkBreakOnError);
             this.tabFlowControl.Location = new System.Drawing.Point(4, 22);
             this.tabFlowControl.Name = "tabFlowControl";
-            this.tabFlowControl.Size = new System.Drawing.Size(538, 279);
+            this.tabFlowControl.Size = new System.Drawing.Size(460, 238);
             this.tabFlowControl.TabIndex = 3;
             this.tabFlowControl.Text = "Flow control";
             this.tabFlowControl.UseVisualStyleBackColor = true;
@@ -220,9 +199,9 @@
             // chkBreakOnError
             // 
             this.chkBreakOnError.AutoSize = true;
-            this.chkBreakOnError.Location = new System.Drawing.Point(9, 9);
+            this.chkBreakOnError.Location = new System.Drawing.Point(8, 8);
             this.chkBreakOnError.Name = "chkBreakOnError";
-            this.chkBreakOnError.Size = new System.Drawing.Size(100, 19);
+            this.chkBreakOnError.Size = new System.Drawing.Size(93, 17);
             this.chkBreakOnError.TabIndex = 0;
             this.chkBreakOnError.Text = "Break on error";
             this.chkBreakOnError.UseVisualStyleBackColor = true;
@@ -232,7 +211,7 @@
             this.tabPageOverview.Controls.Add(this.tvOverview);
             this.tabPageOverview.Location = new System.Drawing.Point(4, 22);
             this.tabPageOverview.Name = "tabPageOverview";
-            this.tabPageOverview.Size = new System.Drawing.Size(538, 279);
+            this.tabPageOverview.Size = new System.Drawing.Size(460, 238);
             this.tabPageOverview.TabIndex = 2;
             this.tabPageOverview.Text = "Overview";
             this.tabPageOverview.UseVisualStyleBackColor = true;
@@ -240,18 +219,18 @@
             // tvOverview
             // 
             this.tvOverview.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tvOverview.Location = new System.Drawing.Point(5, 5);
+            this.tvOverview.Location = new System.Drawing.Point(4, 4);
             this.tvOverview.Name = "tvOverview";
             this.tvOverview.ShowPlusMinus = false;
-            this.tvOverview.Size = new System.Drawing.Size(527, 263);
+            this.tvOverview.Size = new System.Drawing.Size(452, 228);
             this.tvOverview.TabIndex = 0;
             // 
             // btnBack
             // 
             this.btnBack.Enabled = false;
-            this.btnBack.Location = new System.Drawing.Point(177, 314);
+            this.btnBack.Location = new System.Drawing.Point(152, 272);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(87, 27);
+            this.btnBack.Size = new System.Drawing.Size(75, 23);
             this.btnBack.TabIndex = 1;
             this.btnBack.Text = "< Back";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -259,9 +238,9 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(271, 314);
+            this.btnNext.Location = new System.Drawing.Point(232, 272);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(87, 27);
+            this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 2;
             this.btnNext.Text = "Next >";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -270,9 +249,9 @@
             // btnOk
             // 
             this.btnOk.Enabled = false;
-            this.btnOk.Location = new System.Drawing.Point(364, 314);
+            this.btnOk.Location = new System.Drawing.Point(312, 272);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(87, 27);
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 3;
             this.btnOk.Text = "Finish";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -281,20 +260,92 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(457, 314);
+            this.btnCancel.Location = new System.Drawing.Point(392, 272);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(87, 27);
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // tabOptions
+            // 
+            this.tabOptions.Controls.Add(this.chkHidden);
+            this.tabOptions.Controls.Add(this.cboTimeout);
+            this.tabOptions.Controls.Add(this.label1);
+            this.tabOptions.Location = new System.Drawing.Point(4, 22);
+            this.tabOptions.Name = "tabOptions";
+            this.tabOptions.Size = new System.Drawing.Size(460, 238);
+            this.tabOptions.TabIndex = 4;
+            this.tabOptions.Text = "Options";
+            this.tabOptions.UseVisualStyleBackColor = true;
+            // 
+            // chkHidden
+            // 
+            this.chkHidden.AutoSize = true;
+            this.chkHidden.Location = new System.Drawing.Point(8, 216);
+            this.chkHidden.Name = "chkHidden";
+            this.chkHidden.Size = new System.Drawing.Size(81, 17);
+            this.chkHidden.TabIndex = 2;
+            this.chkHidden.Text = "Run hidden";
+            this.chkHidden.UseVisualStyleBackColor = true;
+            // 
+            // cboTimeout
+            // 
+            this.cboTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTimeout.FormattingEnabled = true;
+            this.cboTimeout.Location = new System.Drawing.Point(8, 24);
+            this.cboTimeout.Name = "cboTimeout";
+            this.cboTimeout.Size = new System.Drawing.Size(112, 21);
+            this.cboTimeout.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Timeout:";
+            // 
+            // txtArgsEvaluated
+            // 
+            this.txtArgsEvaluated.Location = new System.Drawing.Point(8, 208);
+            this.txtArgsEvaluated.Name = "txtArgsEvaluated";
+            this.txtArgsEvaluated.ReadOnly = true;
+            this.txtArgsEvaluated.Size = new System.Drawing.Size(440, 20);
+            this.txtArgsEvaluated.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 192);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(110, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Arguments evaluated:";
+            // 
+            // lblVariables
+            // 
+            this.lblVariables.AutoSize = true;
+            this.lblVariables.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblVariables.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lblVariables.LinkColor = System.Drawing.Color.Navy;
+            this.lblVariables.Location = new System.Drawing.Point(388, 150);
+            this.lblVariables.Name = "lblVariables";
+            this.lblVariables.Size = new System.Drawing.Size(59, 13);
+            this.lblVariables.TabIndex = 4;
+            this.lblVariables.TabStop = true;
+            this.lblVariables.Text = "Variables...";
+            this.lblVariables.VisitedLinkColor = System.Drawing.Color.Navy;
+            this.lblVariables.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblVariables_LinkClicked);
+            // 
             // AddJobDialog
             // 
             this.AcceptButton = this.btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(554, 347);
+            this.ClientSize = new System.Drawing.Size(475, 301);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnNext);
@@ -317,7 +368,10 @@
             this.tabFlowControl.ResumeLayout(false);
             this.tabFlowControl.PerformLayout();
             this.tabPageOverview.ResumeLayout(false);
+            this.tabOptions.ResumeLayout(false);
+            this.tabOptions.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -340,10 +394,14 @@
         private System.Windows.Forms.TextBox txtProgram;
         private System.Windows.Forms.Label lblProgram;
         private System.Windows.Forms.TreeView tvOverview;
+        private System.Windows.Forms.TabPage tabFlowControl;
+        private System.Windows.Forms.CheckBox chkBreakOnError;
+        private System.Windows.Forms.TabPage tabOptions;
         private System.Windows.Forms.CheckBox chkHidden;
         private System.Windows.Forms.ComboBox cboTimeout;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabPage tabFlowControl;
-        private System.Windows.Forms.CheckBox chkBreakOnError;
+        private System.Windows.Forms.TextBox txtArgsEvaluated;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel lblVariables;
     }
 }

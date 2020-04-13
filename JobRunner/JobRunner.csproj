@@ -146,6 +146,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -165,6 +166,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Resources\112_UpArrowLong_Blue_16x16_72.png" />
+    <None Include="Resources\112_DownArrowLong_Blue_16x16_72.png" />
+    <None Include="Resources\112_DownArrowShort_Blue_16x16_72.png" />
+    <None Include="Resources\112_DownArrowShort_Blue_16x16_721.png" />
+    <None Include="Resources\112_UpArrowShort_Blue_16x16_72.png" />
+    <None Include="Resources\FormRunHS.png" />
+    <None Include="Resources\PropertiesHS.png" />
     <Content Include="Settings %2825%29.ico" />
     <Content Include="variables.xml" />
   </ItemGroup>

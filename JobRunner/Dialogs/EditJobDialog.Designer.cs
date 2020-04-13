@@ -205,9 +205,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(456, 330);
-            this.Controls.Add(this.txtArgsEvaluated);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.lblVariables);
             this.Controls.Add(this.chkBreakOnError);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -221,6 +218,9 @@
             this.Controls.Add(this.lblProgram);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblName);
+            this.Controls.Add(this.txtArgsEvaluated);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblVariables);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

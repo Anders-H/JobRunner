@@ -183,7 +183,8 @@ namespace JobRunner
                 return;
             using var x = new AddJobDialog
             {
-                Jobs = Jobs
+                Jobs = Jobs,
+                Variables = Variables
             };
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -370,6 +371,9 @@ namespace JobRunner
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var about = new StringBuilder();
+            about.AppendLine("Changes in version 1.2:");
+            about.AppendLine("- Minor improvments in the user interface (added icons, more options in the Add job dialog).");
+            about.AppendLine();
             about.AppendLine("Changes in version 1.1:");
             about.AppendLine("- Added support for variables in job configuration.");
             about.AppendLine("- Bug fix: Application crash when opening the Add job dialog.");

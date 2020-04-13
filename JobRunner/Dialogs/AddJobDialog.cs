@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
+using JobRunner.Dialogs.ViewList;
 using JobRunner.ObjectModel;
+using JobRunner.Services;
 using JobRunner.Utils;
 
 namespace JobRunner.Dialogs
@@ -10,6 +13,7 @@ namespace JobRunner.Dialogs
     public partial class AddJobDialog : Form
     {
         public IJobList Jobs { private get; set; }
+        public IVariableList Variables { get; set; }
 
         public AddJobDialog()
         {
@@ -189,6 +193,38 @@ namespace JobRunner.Dialogs
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
             txtProgram.Text = x.FileName;
+        }
+
+        private void txtArguments_TextChanged(object sender, EventArgs e)
+        {
+            if (Variables == null)
+                return;
+            if (Variables.Count <= 0)
+                return;
+            txtArgsEvaluated.Text = new ArgumentDecoder(Variables)
+                .GetDecodedText(txtArguments.Text);
+        }
+
+        private void lblVariables_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var listDescriptor = new SimpleListDescriptor
+            {
+                WindowTitle = "Variables",
+                PrimaryColumnTitle = "Variable",
+                SecondaryColumnTitle = "Usage (job name)"
+            };
+            listDescriptor.AddRange(
+                from variable
+                in Variables.All
+                let jobs = Jobs.GetVariableUsage(variable)
+                select new SimpleListItem(
+                    $"\"{variable.Name}\"=\"{variable.Value}\"",
+                    jobs.Names,
+                    $"[{variable.Name}]"
+                )
+            );
+            SimpleListDialog.ShowListDialog(this, listDescriptor);
+
         }
     }
 }
