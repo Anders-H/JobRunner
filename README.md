@@ -3,11 +3,13 @@
 
 ![JobRunner screenshot](http://imghost.winsoft.se/upload/857971586771823jobrunner.jpg "JobRunner screenshot")
 
-When **JobRunner** is started as administrator, the job list is editable from within the application. The application cannot run without a job list. If you don't want to start **JobRunner** as administrator, the job list can be edited manually.
+When **JobRunner** is started as administrator, the job list is editable from within the application. The application cannot run without a job list. If you don't want to start **JobRunner** as administrator, the job list can still be edited manually.
 
 The default location for the job list file is:
 
 C:\Users\\*username*\AppData\Roaming\JobRunnerJobListFile\jobs.xml
+
+This chan be changed by editing the `JobRunner.exe.config` file.
 
 Download version 1.1: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe)
 

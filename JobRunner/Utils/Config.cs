@@ -14,6 +14,9 @@ namespace JobRunner.Utils
         private static bool? _isAdministrator;
         public static bool AutoStart { get; set; }
         public static bool AutoClose { get; set; }
+        public static bool EnableLogging { get; set; }
+        public static bool TreatLoggingErrorsAsStepErrors { get; set; }
+
 
         public static bool Validate()
         {

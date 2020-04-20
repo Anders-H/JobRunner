@@ -394,5 +394,18 @@ namespace JobRunner
                 return;
             SaveVariables();
         }
+
+        private void openLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using var x = new ShowLogDialog();
+                x.ShowDialog(this);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Failed to open log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

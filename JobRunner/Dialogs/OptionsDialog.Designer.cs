@@ -32,6 +32,8 @@
             this.chkAutoExit = new System.Windows.Forms.CheckBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkLog = new System.Windows.Forms.CheckBox();
+            this.chkLogErrors = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // chkAutoStart
@@ -56,22 +58,44 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(92, 76);
+            this.btnOk.Location = new System.Drawing.Point(92, 112);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 2;
+            this.btnOk.TabIndex = 4;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(172, 76);
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(172, 112);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 3;
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // chkLog
+            // 
+            this.chkLog.AutoSize = true;
+            this.chkLog.Location = new System.Drawing.Point(8, 56);
+            this.chkLog.Name = "chkLog";
+            this.chkLog.Size = new System.Drawing.Size(96, 17);
+            this.chkLog.TabIndex = 2;
+            this.chkLog.Text = "Enable logging";
+            this.chkLog.UseVisualStyleBackColor = true;
+            // 
+            // chkLogErrors
+            // 
+            this.chkLogErrors.AutoSize = true;
+            this.chkLogErrors.Enabled = false;
+            this.chkLogErrors.Location = new System.Drawing.Point(8, 80);
+            this.chkLogErrors.Name = "chkLogErrors";
+            this.chkLogErrors.Size = new System.Drawing.Size(183, 17);
+            this.chkLogErrors.TabIndex = 3;
+            this.chkLogErrors.Text = "Treat logging errors as step errors";
+            this.chkLogErrors.UseVisualStyleBackColor = true;
             // 
             // OptionsDialog
             // 
@@ -79,7 +103,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(253, 104);
+            this.ClientSize = new System.Drawing.Size(253, 141);
+            this.Controls.Add(this.chkLogErrors);
+            this.Controls.Add(this.chkLog);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.chkAutoExit);
@@ -103,5 +129,7 @@
         private System.Windows.Forms.CheckBox chkAutoExit;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.CheckBox chkLog;
+        private System.Windows.Forms.CheckBox chkLogErrors;
     }
 }

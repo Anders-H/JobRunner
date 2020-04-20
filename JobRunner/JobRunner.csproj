@@ -71,6 +71,12 @@
     <Compile Include="Dialogs\AutoActionDialog.Designer.cs">
       <DependentUpon>AutoActionDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ShowLogDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ShowLogDialog.Designer.cs">
+      <DependentUpon>ShowLogDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ViewList\SimpleListDescriptor.cs" />
     <Compile Include="Dialogs\ViewList\SimpleListDialog.cs">
       <SubType>Form</SubType>
@@ -80,6 +86,8 @@
     </Compile>
     <Compile Include="Dialogs\ViewList\SimpleListItem.cs" />
     <Compile Include="GuiComponents\IGridVisualFeedback.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="ObjectModel\IJobList.cs" />
     <Compile Include="ObjectModel\IVariableList.cs" />
     <Compile Include="ObjectModel\Variable.cs" />
@@ -128,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EditJobDialog.resx">
       <DependentUpon>EditJobDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ShowLogDialog.resx">
+      <DependentUpon>ShowLogDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ViewList\SimpleListDialog.resx">
       <DependentUpon>SimpleListDialog.cs</DependentUpon>

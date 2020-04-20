@@ -15,12 +15,16 @@ namespace JobRunner.Dialogs
         {
             chkAutoStart.Checked = Config.AutoStart;
             chkAutoExit.Checked = Config.AutoClose;
+            chkLog.Checked = Config.EnableLogging;
+            chkLogErrors.Checked = Config.TreatLoggingErrorsAsStepErrors;
         }
 
         private void BtnOk_Click(object sender, EventArgs e)
         {
             Config.AutoStart = chkAutoStart.Checked;
             Config.AutoClose = chkAutoExit.Checked;
+            Config.EnableLogging = chkLog.Checked;
+            Config.TreatLoggingErrorsAsStepErrors = chkLogErrors.Checked;
             DialogResult = DialogResult.OK;
         }
     }
