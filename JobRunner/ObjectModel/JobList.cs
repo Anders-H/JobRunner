@@ -38,6 +38,8 @@ namespace JobRunner.ObjectModel
                 return;
             Config.AutoStart = doc.GetBoolFromAttribute("AutoStart");
             Config.AutoClose = doc.GetBoolFromAttribute("AutoClose");
+            Config.EnableLogging = doc.GetBoolFromAttribute("EnableLogging");
+            Config.TreatLoggingErrorsAsStepErrors = doc.GetBoolFromAttribute("TreatLoggingErrorsAsStepErrors");
             var number = 0;
             foreach (XmlElement jobXml in jobsXml)
             {

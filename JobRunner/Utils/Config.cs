@@ -3,7 +3,6 @@ using System.Configuration;
 using System.IO;
 using System.Reflection;
 using System.Security.Principal;
-using System.Windows.Forms;
 using JobRunner.ObjectModel;
 
 namespace JobRunner.Utils
@@ -16,18 +15,15 @@ namespace JobRunner.Utils
         public static bool AutoClose { get; set; }
         public static bool EnableLogging { get; set; }
         public static bool TreatLoggingErrorsAsStepErrors { get; set; }
-
-
+        
         public static bool Validate()
         {
             var x = ConfigurationManager.AppSettings.Get("JobFileLocation");
             if (string.IsNullOrWhiteSpace(x))
             {
-                MessageBox.Show(
+                MessageDisplayer.Yell(
                     @"Missing configuration setting: JobFileLocation. Visit https://github.com/Anders-H/JobRunner for more information.",
-                    @"Configuration error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    @"Configuration error");
                 return false;
             }
             switch (x)
@@ -39,11 +35,9 @@ namespace JobRunner.Utils
                     _jobFileLocation = JobFileLocation.Application;
                     return true;
                 default:
-                    MessageBox.Show(
+                    MessageDisplayer.Yell(
                         @"Configuration setting JobFileLocation has an invalid value. Visit https://github.com/Anders-H/JobRunner for more information.",
-                        @"Configuration error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                        @"Configuration error");
                     return false;
             }
         }
@@ -100,9 +94,11 @@ namespace JobRunner.Utils
             {
                 if (_isAdministrator.HasValue)
                     return _isAdministrator.Value;
+                
                 using var identity = WindowsIdentity.GetCurrent();
                 var principal = new WindowsPrincipal(identity);
                 _isAdministrator = principal.IsInRole(WindowsBuiltInRole.Administrator);
+                
                 return _isAdministrator.Value;
             }
         }

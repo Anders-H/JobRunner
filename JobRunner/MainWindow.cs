@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using JobRunner.Dialogs;
 using JobRunner.Dialogs.ViewList;
+using JobRunner.Logging;
 using JobRunner.ObjectModel;
 using JobRunner.Utils;
 
@@ -15,7 +16,8 @@ namespace JobRunner
         private IJobList Jobs { get; } = new JobList();
         private IVariableList Variables { get; } = new VariableList();
         private bool CleanExit { get; set; }
-
+        private ILogger _logger;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace JobRunner
                 = editVariableToolStripMenuItem.Enabled
                 = deleteVariableToolStripMenuItem.Enabled
                 = Config.IsAdministrator;
+            AssignLogger();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) =>
@@ -400,12 +403,19 @@ namespace JobRunner
             try
             {
                 using var x = new ShowLogDialog();
+                x.Log = _logger;
                 x.ShowDialog(this);
+                AssignLogger();
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, @"Failed to open log", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void AssignLogger()
+        {
+            
         }
     }
 }

@@ -120,16 +120,15 @@
             this.Load += new System.EventHandler(this.OptionsDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
-
-        private System.Windows.Forms.CheckBox chkAutoStart;
-        private System.Windows.Forms.CheckBox chkAutoExit;
-        private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.CheckBox chkAutoExit;
+        private System.Windows.Forms.CheckBox chkAutoStart;
         private System.Windows.Forms.CheckBox chkLog;
         private System.Windows.Forms.CheckBox chkLogErrors;
+
+        #endregion
     }
 }
