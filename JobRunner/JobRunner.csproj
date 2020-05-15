@@ -184,6 +184,7 @@
     <None Include="Resources\112_UpArrowShort_Blue_16x16_72.png" />
     <None Include="Resources\FormRunHS.png" />
     <None Include="Resources\PropertiesHS.png" />
+    <None Include="Resources\log.png" />
     <Content Include="Settings %2825%29.ico" />
     <Content Include="variables.xml" />
   </ItemGroup>

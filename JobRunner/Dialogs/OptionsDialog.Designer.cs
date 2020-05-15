@@ -85,6 +85,7 @@
             this.chkLog.TabIndex = 2;
             this.chkLog.Text = "Enable logging";
             this.chkLog.UseVisualStyleBackColor = true;
+            this.chkLog.CheckedChanged += new System.EventHandler(this.chkLog_CheckedChanged);
             // 
             // chkLogErrors
             // 

@@ -11,10 +11,12 @@ namespace JobRunner.Utils
     {
         private static JobFileLocation? _jobFileLocation;
         private static bool? _isAdministrator;
+        public const string JobRunnerFolderName = "JobRunnerJobListFile";
         public static bool AutoStart { get; set; }
         public static bool AutoClose { get; set; }
         public static bool EnableLogging { get; set; }
         public static bool TreatLoggingErrorsAsStepErrors { get; set; }
+        
         
         public static bool Validate()
         {
@@ -61,7 +63,7 @@ namespace JobRunner.Utils
                     return Path.Combine(executingFile.Directory?.FullName ?? "", "jobs.xml");
                 case JobFileLocation.UserSettings:
                     var profile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    var folder = new DirectoryInfo(Path.Combine(profile, "JobRunnerJobListFile"));
+                    var folder = new DirectoryInfo(Path.Combine(profile, JobRunnerFolderName));
                     if (!folder.Exists)
                         folder.Create();
                     return Path.Combine(folder.FullName, "jobs.xml");
@@ -79,7 +81,7 @@ namespace JobRunner.Utils
                     return Path.Combine(executingFile.Directory?.FullName ?? "", "variables.xml");
                 case JobFileLocation.UserSettings:
                     var profile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    var folder = new DirectoryInfo(Path.Combine(profile, "JobRunnerJobListFile"));
+                    var folder = new DirectoryInfo(Path.Combine(profile, JobRunnerFolderName));
                     if (!folder.Exists)
                         folder.Create();
                     return Path.Combine(folder.FullName, "variables.xml");

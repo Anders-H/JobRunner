@@ -17,15 +17,36 @@ namespace JobRunner.Dialogs
             chkAutoExit.Checked = Config.AutoClose;
             chkLog.Checked = Config.EnableLogging;
             chkLogErrors.Checked = Config.TreatLoggingErrorsAsStepErrors;
+            chkLogErrors.Enabled = Config.EnableLogging;
+
+            if (!Config.IsAdministrator)
+            {
+                chkAutoStart.Enabled = false;
+                chkAutoExit.Enabled = false;
+                chkLog.Enabled = false;
+                chkLogErrors.Enabled = false;
+                btnOk.Enabled = false;
+            }
         }
 
         private void BtnOk_Click(object sender, EventArgs e)
         {
+            if (!Config.IsAdministrator)
+                return;
+            
             Config.AutoStart = chkAutoStart.Checked;
             Config.AutoClose = chkAutoExit.Checked;
             Config.EnableLogging = chkLog.Checked;
             Config.TreatLoggingErrorsAsStepErrors = chkLogErrors.Checked;
             DialogResult = DialogResult.OK;
+        }
+
+        private void chkLog_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Config.IsAdministrator)
+                return;
+
+            chkLogErrors.Enabled = chkLog.Checked;
         }
     }
 }

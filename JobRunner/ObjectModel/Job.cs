@@ -2,7 +2,9 @@
 using System.Diagnostics;
 using System.Threading;
 using JobRunner.GuiComponents;
+using JobRunner.Logging;
 using JobRunner.Services;
+using JobRunner.Utils;
 
 namespace JobRunner.ObjectModel
 {
@@ -45,11 +47,22 @@ namespace JobRunner.ObjectModel
             FailMessage = "";
         }
 
-        public void Run(IGridVisualFeedback grid, IVariableList variableList)
+        public void Run(ILogger log, IGridVisualFeedback grid, IVariableList variableList)
         {
             try
             {
                 StartTime = DateTime.Now;
+                if (Config.EnableLogging)
+                {
+                    var s = StartTime.Value;
+                    var h = Hidden ? " (hidden)" : "";
+                    var n = Name.Trim();
+                    if (string.IsNullOrEmpty(n))
+                        n = Command;
+                    var result = log.AppendLog($"{s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00}{h}: {n}");
+                    if (!result && Config.TreatLoggingErrorsAsStepErrors)
+                        throw new SystemException("Logging failed.");
+                }
                 var start = new ProcessStartInfo(Command)
                 {
                     Arguments = new ArgumentDecoder(variableList).GetDecodedText(Arguments),
@@ -80,12 +93,29 @@ namespace JobRunner.ObjectModel
                 Status = ExitCode == 0
                     ? JobStatus.Completed
                     : JobStatus.Failed;
+                
+                if (Config.EnableLogging)
+                {
+                    var s = EndTime.Value;
+                    var result = log.AppendLog($"Ended at {s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00} with exit code: {ExitCode}.");
+                    if (!result && Config.TreatLoggingErrorsAsStepErrors)
+                        throw new SystemException("Logging failed.");
+                }
             }
             catch (Exception e)
             {
                 EndTime = DateTime.Now;
                 Status = JobStatus.Failed;
                 FailMessage = e.Message;
+                
+                if (string.IsNullOrWhiteSpace(FailMessage))
+                    FailMessage = e.GetType().Name;
+                
+                if (Config.EnableLogging)
+                {
+                    var s = EndTime.Value;
+                    log.AppendLog($"System error at {s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00}: {FailMessage}");
+                }
             }
         }
 

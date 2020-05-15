@@ -32,7 +32,6 @@ namespace JobRunner
                 = deleteJobToolStripMenuItem.Enabled
                 = moveJobUpToolStripMenuItem.Enabled
                 = moveJobDownToolStripMenuItem.Enabled
-                = optionsToolStripMenuItem.Enabled
                 = addVariableToolStripMenuItem.Enabled
                 = editVariableToolStripMenuItem.Enabled
                 = deleteVariableToolStripMenuItem.Enabled
@@ -118,7 +117,7 @@ namespace JobRunner
                         ? $@"Running step {job.RowIndex + 1} of {Jobs.Count}..."
                         : "Running single job...";
                     grid1.Invalidate();
-                    job.Run(grid1, Variables);
+                    job.Run(_logger, grid1, Variables);
                     grid1.Invalidate();
                     if (job.BreakOnError && job.Status != JobStatus.Completed)
                     {
@@ -376,6 +375,8 @@ namespace JobRunner
             var about = new StringBuilder();
             about.AppendLine("Changes in version 1.2:");
             about.AppendLine("- Minor improvments in the user interface (added icons, more options in the Add job dialog).");
+            about.AppendLine("- Non administrators can open the Options dialog in read only mode.");
+            about.AppendLine("- Logging to file added.");
             about.AppendLine();
             about.AppendLine("Changes in version 1.1:");
             about.AppendLine("- Added support for variables in job configuration.");
@@ -415,7 +416,7 @@ namespace JobRunner
 
         private void AssignLogger()
         {
-            
+            _logger = new Logger();
         }
     }
 }

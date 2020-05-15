@@ -58,6 +58,7 @@
             this.lblFolder.TabStop = true;
             this.lblFolder.Text = "   ";
             this.lblFolder.VisitedLinkColor = System.Drawing.Color.Navy;
+            this.lblFolder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblFolder_LinkClicked);
             // 
             // lblFile
             // 
@@ -72,6 +73,7 @@
             this.lblFile.TabStop = true;
             this.lblFile.Text = "   ";
             this.lblFile.VisitedLinkColor = System.Drawing.Color.Navy;
+            this.lblFile.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblFile_LinkClicked);
             // 
             // label2
             // 
@@ -126,13 +128,13 @@
 
         }
 
-        #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.LinkLabel lblFolder;
-        private System.Windows.Forms.LinkLabel lblFile;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel lblFile;
+        private System.Windows.Forms.LinkLabel lblFolder;
+        private System.Windows.Forms.Label lblStatus;
+
+        #endregion
     }
 }

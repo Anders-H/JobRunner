@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +57,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.grid1 = new JobRunner.GuiComponents.Grid();
-            this.openLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid1)).BeginInit();
@@ -84,6 +84,14 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // openLogToolStripMenuItem
+            // 
+            this.openLogToolStripMenuItem.Image = global::JobRunner.Properties.Resources.log;
+            this.openLogToolStripMenuItem.Name = "openLogToolStripMenuItem";
+            this.openLogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openLogToolStripMenuItem.Text = "Open log...";
+            this.openLogToolStripMenuItem.Click += new System.EventHandler(this.openLogToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -163,7 +171,6 @@
             // 
             // moveJobUpToolStripMenuItem
             // 
-            this.moveJobUpToolStripMenuItem.Image = global::JobRunner.Properties.Resources._112_UpArrowShort_Blue_16x16_72;
             this.moveJobUpToolStripMenuItem.Name = "moveJobUpToolStripMenuItem";
             this.moveJobUpToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.moveJobUpToolStripMenuItem.Text = "Move job up";
@@ -171,7 +178,6 @@
             // 
             // moveJobDownToolStripMenuItem
             // 
-            this.moveJobDownToolStripMenuItem.Image = global::JobRunner.Properties.Resources._112_DownArrowShort_Blue_16x16_72;
             this.moveJobDownToolStripMenuItem.Name = "moveJobDownToolStripMenuItem";
             this.moveJobDownToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.moveJobDownToolStripMenuItem.Text = "Move job down";
@@ -227,14 +233,14 @@
             // jobsToolStripMenuItem1
             // 
             this.jobsToolStripMenuItem1.Name = "jobsToolStripMenuItem1";
-            this.jobsToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
+            this.jobsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.jobsToolStripMenuItem1.Text = "Jobs...";
             this.jobsToolStripMenuItem1.Click += new System.EventHandler(this.jobsToolStripMenuItem1_Click);
             // 
             // variablesToolStripMenuItem
             // 
             this.variablesToolStripMenuItem.Name = "variablesToolStripMenuItem";
-            this.variablesToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.variablesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.variablesToolStripMenuItem.Text = "Variables...";
             this.variablesToolStripMenuItem.Click += new System.EventHandler(this.variablesToolStripMenuItem_Click);
             // 
@@ -249,7 +255,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -282,13 +288,6 @@
             this.grid1.TabIndex = 2;
             this.grid1.EditJob += new System.EventHandler(this.Grid1_EditJob);
             // 
-            // openLogToolStripMenuItem
-            // 
-            this.openLogToolStripMenuItem.Name = "openLogToolStripMenuItem";
-            this.openLogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openLogToolStripMenuItem.Text = "Open log...";
-            this.openLogToolStripMenuItem.Click += new System.EventHandler(this.openLogToolStripMenuItem_Click);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,36 +312,36 @@
 
         }
 
-        #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
-        private JobRunner.GuiComponents.Grid grid1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem jobsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem runSelectedJobToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addJobToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editJobToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteJobToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem moveJobUpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem moveJobDownToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem variablesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem jobsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem deleteVariableToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editVariableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addJobToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addVariableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteJobToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteVariableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editJobToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editVariableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private JobRunner.GuiComponents.Grid grid1;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem jobsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem jobsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem moveJobDownToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveJobUpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem runSelectedJobToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem variablesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+
+        #endregion
     }
 }
 
