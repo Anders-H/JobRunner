@@ -1,5 +1,5 @@
 #define MyAppName "JobRunner"
-#define MyAppVersion "1.1"
+#define MyAppVersion "1.2"
 #define MyAppPublisher "Anders Hesselbom"
 #define MyAppURL "http://winsoft.se/"
 #define MyAppExeName "JobRunner.exe"

@@ -11,13 +11,18 @@ C:\Users\\*username*\AppData\Roaming\JobRunnerJobListFile\jobs.xml
 
 This chan be changed by editing the `JobRunner.exe.config` file.
 
-Download version 1.1: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe)
+Download version 1.2: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe)
 
 **Version history:**
+
+Changes in version 1.2:
+
+- Minor improvments in the user interface (added icons, more options in the Add job dialog).
+- Non administrators can open the Options dialog in read only mode.
+- Logging to file added.
 
 Changes in version 1.1:
 
 - Added support for variables in job configuration.
 - Bug fix: Application crash when opening the Add job dialog.
 - Bug fix: Browse button didn't work in the Edit job dialog.
-
