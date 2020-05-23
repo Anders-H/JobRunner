@@ -123,13 +123,10 @@ namespace JobRunner.Dialogs
                     $"[{variable.Name}]"
                 )
             );
-            Action<SimpleListDescriptor> addVariable = null;
-            if (Config.IsAdministrator)
-                addVariable = AddVariable;
             SimpleListDialog.ShowListDialog(
                 this,
                 listDescriptor,
-                addVariable
+                Config.IsAdministrator ? (Action<SimpleListDescriptor>)AddVariable : null
             );
         }
 
