@@ -65,6 +65,12 @@
     <Compile Include="Dialogs\AddVariableDialog.Designer.cs">
       <DependentUpon>AddVariableDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\AddVariableDialogSmall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddVariableDialogSmall.Designer.cs">
+      <DependentUpon>AddVariableDialogSmall.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AutoActionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddVariableDialog.resx">
       <DependentUpon>AddVariableDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddVariableDialogSmall.resx">
+      <DependentUpon>AddVariableDialogSmall.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AutoActionDialog.resx">
       <DependentUpon>AutoActionDialog.cs</DependentUpon>

@@ -268,7 +268,8 @@ namespace JobRunner
             {
                 Job = grid1.SelectedJob,
                 Variables = Variables,
-                Jobs = Jobs
+                Jobs = Jobs,
+                SaveVariables = SaveVariables
             };
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -346,7 +347,7 @@ namespace JobRunner
                     job.Name
                 )
             );
-            SimpleListDialog.ShowListDialog(this, listDescriptor);
+            SimpleListDialog.ShowListDialog(this, listDescriptor, null);
         }
 
         private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -367,12 +368,43 @@ namespace JobRunner
                     $"[{variable.Name}]"
                 )
             );
-            SimpleListDialog.ShowListDialog(this, listDescriptor);
+            Action<SimpleListDescriptor> addVariable = null;
+            if (Config.IsAdministrator)
+                addVariable = AddVariable;
+            SimpleListDialog.ShowListDialog(
+                this,
+                listDescriptor,
+                addVariable
+            );
         }
 
+        private void AddVariable(SimpleListDescriptor descriptor)
+        {
+            using var x = new AddVariableDialogSmall
+            {
+                Variables = Variables
+            };
+            x.ShowDialog(this);
+            descriptor.Clear();
+            descriptor.AddRange(
+                from variable
+                    in Variables.All
+                let jobs = Jobs.GetVariableUsage(variable)
+                select new SimpleListItem(
+                    $"\"{variable.Name}\"=\"{variable.Value}\"",
+                    jobs.Names,
+                    $"[{variable.Name}]"
+                )
+            );
+            SaveVariables();
+        }
+        
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var about = new StringBuilder();
+            about.AppendLine("Changes in version 1.3:");
+            about.AppendLine("- Variables can be added on the fly, from any view.");
+            about.AppendLine();
             about.AppendLine("Changes in version 1.2:");
             about.AppendLine("- Minor improvments in the user interface (added icons, more options in the Add job dialog).");
             about.AppendLine("- Non administrators can open the Options dialog in read only mode.");

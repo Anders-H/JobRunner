@@ -13,6 +13,7 @@ namespace JobRunner.Dialogs
         public Job Job { get; set; }
         public IVariableList Variables { get; set; }
         public IJobList Jobs { get; set; }
+        public Action SaveVariables { get; set; }
         
         public EditJobDialog()
         {
@@ -122,9 +123,37 @@ namespace JobRunner.Dialogs
                     $"[{variable.Name}]"
                 )
             );
-            SimpleListDialog.ShowListDialog(this, listDescriptor);
+            Action<SimpleListDescriptor> addVariable = null;
+            if (Config.IsAdministrator)
+                addVariable = AddVariable;
+            SimpleListDialog.ShowListDialog(
+                this,
+                listDescriptor,
+                addVariable
+            );
         }
 
+        private void AddVariable(SimpleListDescriptor descriptor)
+        {
+            using var x = new AddVariableDialogSmall
+            {
+                Variables = Variables
+            };
+            x.ShowDialog(this);
+            descriptor.Clear();
+            descriptor.AddRange(
+                from variable
+                    in Variables.All
+                let jobs = Jobs.GetVariableUsage(variable)
+                select new SimpleListItem(
+                    $"\"{variable.Name}\"=\"{variable.Value}\"",
+                    jobs.Names,
+                    $"[{variable.Name}]"
+                )
+            );
+            SaveVariables();
+        }
+        
         private void txtArguments_TextChanged(object sender, EventArgs e)
         {
             if (Variables == null)

@@ -36,17 +36,17 @@ namespace JobRunner.Dialogs.ViewList
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
-                {this.columnHeader1, this.columnHeader2});
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {this.columnHeader1, this.columnHeader2});
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(5, 5);
+            this.listView1.Location = new System.Drawing.Point(4, 4);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(396, 327);
+            this.listView1.Size = new System.Drawing.Size(340, 284);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -61,9 +61,9 @@ namespace JobRunner.Dialogs.ViewList
             // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(9, 337);
+            this.btnCopy.Location = new System.Drawing.Point(8, 292);
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(87, 27);
+            this.btnCopy.Size = new System.Drawing.Size(75, 23);
             this.btnCopy.TabIndex = 1;
             this.btnCopy.Text = "Copy";
             this.btnCopy.UseVisualStyleBackColor = true;
@@ -72,20 +72,31 @@ namespace JobRunner.Dialogs.ViewList
             // btnClose
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(313, 337);
+            this.btnClose.Location = new System.Drawing.Point(268, 292);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(87, 27);
-            this.btnClose.TabIndex = 2;
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(88, 292);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 2;
+            this.btnAdd.Text = "Add...";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // SimpleListDialog
             // 
             this.AcceptButton = this.btnClose;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(407, 372);
+            this.ClientSize = new System.Drawing.Size(349, 322);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.listView1);
@@ -100,12 +111,13 @@ namespace JobRunner.Dialogs.ViewList
             this.ResumeLayout(false);
         }
 
-        #endregion
-
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ListView listView1;
+
+        #endregion
     }
 }

@@ -223,8 +223,7 @@ namespace JobRunner.Dialogs
                     $"[{variable.Name}]"
                 )
             );
-            SimpleListDialog.ShowListDialog(this, listDescriptor);
-
+            SimpleListDialog.ShowListDialog(this, listDescriptor, null);
         }
     }
 }
