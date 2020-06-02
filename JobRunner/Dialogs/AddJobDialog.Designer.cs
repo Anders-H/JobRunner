@@ -36,6 +36,7 @@
             this.txtNumber = new System.Windows.Forms.TextBox();
             this.lblNumber = new System.Windows.Forms.Label();
             this.tabPageProcess = new System.Windows.Forms.TabPage();
+            this.btnInProcess = new System.Windows.Forms.Button();
             this.txtArgsEvaluated = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
@@ -56,7 +57,6 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnInProcess = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteAFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,6 +147,16 @@
             this.tabPageProcess.TabIndex = 1;
             this.tabPageProcess.Text = "Process";
             this.tabPageProcess.UseVisualStyleBackColor = true;
+            // 
+            // btnInProcess
+            // 
+            this.btnInProcess.Location = new System.Drawing.Point(96, 48);
+            this.btnInProcess.Name = "btnInProcess";
+            this.btnInProcess.Size = new System.Drawing.Size(84, 23);
+            this.btnInProcess.TabIndex = 3;
+            this.btnInProcess.Text = "In progress...";
+            this.btnInProcess.UseVisualStyleBackColor = true;
+            this.btnInProcess.Click += new System.EventHandler(this.btnInProcess_Click);
             // 
             // txtArgsEvaluated
             // 
@@ -346,35 +356,23 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // btnInProcess
-            // 
-            this.btnInProcess.Location = new System.Drawing.Point(96, 48);
-            this.btnInProcess.Name = "btnInProcess";
-            this.btnInProcess.Size = new System.Drawing.Size(84, 23);
-            this.btnInProcess.TabIndex = 3;
-            this.btnInProcess.Text = "In progress...";
-            this.btnInProcess.UseVisualStyleBackColor = true;
-            this.btnInProcess.Click += new System.EventHandler(this.btnInProcess_Click);
-            // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteAFileToolStripMenuItem,
-            this.downloadTextToolStripMenuItem});
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.deleteAFileToolStripMenuItem, this.downloadTextToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(161, 48);
             // 
             // deleteAFileToolStripMenuItem
             // 
             this.deleteAFileToolStripMenuItem.Name = "deleteAFileToolStripMenuItem";
-            this.deleteAFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteAFileToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.deleteAFileToolStripMenuItem.Text = "Delete a file...";
             this.deleteAFileToolStripMenuItem.Click += new System.EventHandler(this.deleteAFileToolStripMenuItem_Click);
             // 
             // downloadTextToolStripMenuItem
             // 
             this.downloadTextToolStripMenuItem.Name = "downloadTextToolStripMenuItem";
-            this.downloadTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.downloadTextToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.downloadTextToolStripMenuItem.Text = "Download text...";
             this.downloadTextToolStripMenuItem.Click += new System.EventHandler(this.downloadTextToolStripMenuItem_Click);
             // 
@@ -411,41 +409,40 @@
             this.tabPageOverview.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
-        #endregion
-
-        private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnInProcess;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.TabPage tabPageBasic;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.TextBox txtNumber;
-        private System.Windows.Forms.Label lblNumber;
-        private System.Windows.Forms.TabPage tabPageProcess;
-        private System.Windows.Forms.TabPage tabPageOverview;
-        private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.TextBox txtArguments;
-        private System.Windows.Forms.Label lblArguments;
-        private System.Windows.Forms.TextBox txtProgram;
-        private System.Windows.Forms.Label lblProgram;
-        private System.Windows.Forms.TreeView tvOverview;
-        private System.Windows.Forms.TabPage tabFlowControl;
-        private System.Windows.Forms.CheckBox chkBreakOnError;
-        private System.Windows.Forms.TabPage tabOptions;
-        private System.Windows.Forms.CheckBox chkHidden;
         private System.Windows.Forms.ComboBox cboTimeout;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtArgsEvaluated;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.LinkLabel lblVariables;
-        private System.Windows.Forms.Button btnInProcess;
+        private System.Windows.Forms.CheckBox chkBreakOnError;
+        private System.Windows.Forms.CheckBox chkHidden;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem deleteAFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadTextToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblArguments;
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.Label lblNumber;
+        private System.Windows.Forms.Label lblProgram;
+        private System.Windows.Forms.LinkLabel lblVariables;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabFlowControl;
+        private System.Windows.Forms.TabPage tabOptions;
+        private System.Windows.Forms.TabPage tabPageBasic;
+        private System.Windows.Forms.TabPage tabPageOverview;
+        private System.Windows.Forms.TabPage tabPageProcess;
+        private System.Windows.Forms.TreeView tvOverview;
+        private System.Windows.Forms.TextBox txtArgsEvaluated;
+        private System.Windows.Forms.TextBox txtArguments;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.TextBox txtNumber;
+        private System.Windows.Forms.TextBox txtProgram;
+
+        #endregion
     }
 }

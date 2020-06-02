@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using JobRunner.Dialogs.InProcess;
 using JobRunner.Dialogs.ViewList;
 using JobRunner.ObjectModel;
 using JobRunner.Services;
@@ -238,7 +239,10 @@ namespace JobRunner.Dialogs
 
         private void downloadTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var x = new DownloadStringDialog();
+            if (x.ShowDialog(this) != DialogResult.OK)
+                return;
+            p
         }
     }
 }
