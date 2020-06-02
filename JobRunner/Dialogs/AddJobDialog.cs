@@ -225,5 +225,20 @@ namespace JobRunner.Dialogs
             );
             SimpleListDialog.ShowListDialog(this, listDescriptor, null);
         }
+
+        private void btnInProcess_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip1.Show(btnInProcess, 0, btnInProcess.Height);
+        }
+
+        private void deleteAFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void downloadTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

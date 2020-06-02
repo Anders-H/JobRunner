@@ -77,6 +77,12 @@
     <Compile Include="Dialogs\AutoActionDialog.Designer.cs">
       <DependentUpon>AutoActionDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\InProcess\DownloadStringDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\InProcess\DownloadStringDialog.Designer.cs">
+      <DependentUpon>DownloadStringDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ShowLogDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,7 @@
     <Compile Include="ObjectModel\Variable.cs" />
     <Compile Include="ObjectModel\VariableList.cs" />
     <Compile Include="Services\ArgumentDecoder.cs" />
+    <Compile Include="Services\ArgumentList.cs" />
     <Compile Include="Services\VariableName.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Dialogs\EditJobDialog.cs">
@@ -145,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EditJobDialog.resx">
       <DependentUpon>EditJobDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InProcess\DownloadStringDialog.resx">
+      <DependentUpon>DownloadStringDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ShowLogDialog.resx">
       <DependentUpon>ShowLogDialog.cs</DependentUpon>

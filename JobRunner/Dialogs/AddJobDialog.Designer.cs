@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageBasic = new System.Windows.Forms.TabPage();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -35,11 +36,18 @@
             this.txtNumber = new System.Windows.Forms.TextBox();
             this.lblNumber = new System.Windows.Forms.Label();
             this.tabPageProcess = new System.Windows.Forms.TabPage();
+            this.txtArgsEvaluated = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.txtArguments = new System.Windows.Forms.TextBox();
             this.lblArguments = new System.Windows.Forms.Label();
             this.txtProgram = new System.Windows.Forms.TextBox();
             this.lblProgram = new System.Windows.Forms.Label();
+            this.lblVariables = new System.Windows.Forms.LinkLabel();
+            this.tabOptions = new System.Windows.Forms.TabPage();
+            this.chkHidden = new System.Windows.Forms.CheckBox();
+            this.cboTimeout = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabFlowControl = new System.Windows.Forms.TabPage();
             this.chkBreakOnError = new System.Windows.Forms.CheckBox();
             this.tabPageOverview = new System.Windows.Forms.TabPage();
@@ -48,19 +56,17 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.tabOptions = new System.Windows.Forms.TabPage();
-            this.chkHidden = new System.Windows.Forms.CheckBox();
-            this.cboTimeout = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtArgsEvaluated = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblVariables = new System.Windows.Forms.LinkLabel();
+            this.btnInProcess = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteAFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.tabPageProcess.SuspendLayout();
+            this.tabOptions.SuspendLayout();
             this.tabFlowControl.SuspendLayout();
             this.tabPageOverview.SuspendLayout();
-            this.tabOptions.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -126,6 +132,7 @@
             // 
             // tabPageProcess
             // 
+            this.tabPageProcess.Controls.Add(this.btnInProcess);
             this.tabPageProcess.Controls.Add(this.txtArgsEvaluated);
             this.tabPageProcess.Controls.Add(this.label2);
             this.tabPageProcess.Controls.Add(this.btnBrowse);
@@ -141,11 +148,28 @@
             this.tabPageProcess.Text = "Process";
             this.tabPageProcess.UseVisualStyleBackColor = true;
             // 
+            // txtArgsEvaluated
+            // 
+            this.txtArgsEvaluated.Location = new System.Drawing.Point(8, 208);
+            this.txtArgsEvaluated.Name = "txtArgsEvaluated";
+            this.txtArgsEvaluated.ReadOnly = true;
+            this.txtArgsEvaluated.Size = new System.Drawing.Size(440, 20);
+            this.txtArgsEvaluated.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 192);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(110, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Arguments evaluated:";
+            // 
             // btnBrowse
             // 
             this.btnBrowse.Location = new System.Drawing.Point(8, 48);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowse.Size = new System.Drawing.Size(84, 23);
             this.btnBrowse.TabIndex = 2;
             this.btnBrowse.Text = "Browse...";
             this.btnBrowse.UseVisualStyleBackColor = true;
@@ -157,7 +181,7 @@
             this.txtArguments.MaxLength = 500;
             this.txtArguments.Name = "txtArguments";
             this.txtArguments.Size = new System.Drawing.Size(440, 20);
-            this.txtArguments.TabIndex = 5;
+            this.txtArguments.TabIndex = 6;
             this.txtArguments.TextChanged += new System.EventHandler(this.txtArguments_TextChanged);
             // 
             // lblArguments
@@ -166,7 +190,7 @@
             this.lblArguments.Location = new System.Drawing.Point(8, 148);
             this.lblArguments.Name = "lblArguments";
             this.lblArguments.Size = new System.Drawing.Size(173, 13);
-            this.lblArguments.TabIndex = 3;
+            this.lblArguments.TabIndex = 4;
             this.lblArguments.Text = "Arguments (variables can be used):";
             // 
             // txtProgram
@@ -185,6 +209,61 @@
             this.lblProgram.Size = new System.Drawing.Size(79, 13);
             this.lblProgram.TabIndex = 0;
             this.lblProgram.Text = "Program to run:";
+            // 
+            // lblVariables
+            // 
+            this.lblVariables.AutoSize = true;
+            this.lblVariables.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblVariables.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lblVariables.LinkColor = System.Drawing.Color.Navy;
+            this.lblVariables.Location = new System.Drawing.Point(388, 150);
+            this.lblVariables.Name = "lblVariables";
+            this.lblVariables.Size = new System.Drawing.Size(59, 13);
+            this.lblVariables.TabIndex = 5;
+            this.lblVariables.TabStop = true;
+            this.lblVariables.Text = "Variables...";
+            this.lblVariables.VisitedLinkColor = System.Drawing.Color.Navy;
+            this.lblVariables.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblVariables_LinkClicked);
+            // 
+            // tabOptions
+            // 
+            this.tabOptions.Controls.Add(this.chkHidden);
+            this.tabOptions.Controls.Add(this.cboTimeout);
+            this.tabOptions.Controls.Add(this.label1);
+            this.tabOptions.Location = new System.Drawing.Point(4, 22);
+            this.tabOptions.Name = "tabOptions";
+            this.tabOptions.Size = new System.Drawing.Size(460, 238);
+            this.tabOptions.TabIndex = 4;
+            this.tabOptions.Text = "Options";
+            this.tabOptions.UseVisualStyleBackColor = true;
+            // 
+            // chkHidden
+            // 
+            this.chkHidden.AutoSize = true;
+            this.chkHidden.Location = new System.Drawing.Point(8, 216);
+            this.chkHidden.Name = "chkHidden";
+            this.chkHidden.Size = new System.Drawing.Size(81, 17);
+            this.chkHidden.TabIndex = 2;
+            this.chkHidden.Text = "Run hidden";
+            this.chkHidden.UseVisualStyleBackColor = true;
+            // 
+            // cboTimeout
+            // 
+            this.cboTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTimeout.FormattingEnabled = true;
+            this.cboTimeout.Location = new System.Drawing.Point(8, 24);
+            this.cboTimeout.Name = "cboTimeout";
+            this.cboTimeout.Size = new System.Drawing.Size(112, 21);
+            this.cboTimeout.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Timeout:";
             // 
             // tabFlowControl
             // 
@@ -267,77 +346,37 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // tabOptions
+            // btnInProcess
             // 
-            this.tabOptions.Controls.Add(this.chkHidden);
-            this.tabOptions.Controls.Add(this.cboTimeout);
-            this.tabOptions.Controls.Add(this.label1);
-            this.tabOptions.Location = new System.Drawing.Point(4, 22);
-            this.tabOptions.Name = "tabOptions";
-            this.tabOptions.Size = new System.Drawing.Size(460, 238);
-            this.tabOptions.TabIndex = 4;
-            this.tabOptions.Text = "Options";
-            this.tabOptions.UseVisualStyleBackColor = true;
+            this.btnInProcess.Location = new System.Drawing.Point(96, 48);
+            this.btnInProcess.Name = "btnInProcess";
+            this.btnInProcess.Size = new System.Drawing.Size(84, 23);
+            this.btnInProcess.TabIndex = 3;
+            this.btnInProcess.Text = "In progress...";
+            this.btnInProcess.UseVisualStyleBackColor = true;
+            this.btnInProcess.Click += new System.EventHandler(this.btnInProcess_Click);
             // 
-            // chkHidden
+            // contextMenuStrip1
             // 
-            this.chkHidden.AutoSize = true;
-            this.chkHidden.Location = new System.Drawing.Point(8, 216);
-            this.chkHidden.Name = "chkHidden";
-            this.chkHidden.Size = new System.Drawing.Size(81, 17);
-            this.chkHidden.TabIndex = 2;
-            this.chkHidden.Text = "Run hidden";
-            this.chkHidden.UseVisualStyleBackColor = true;
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteAFileToolStripMenuItem,
+            this.downloadTextToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
             // 
-            // cboTimeout
+            // deleteAFileToolStripMenuItem
             // 
-            this.cboTimeout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTimeout.FormattingEnabled = true;
-            this.cboTimeout.Location = new System.Drawing.Point(8, 24);
-            this.cboTimeout.Name = "cboTimeout";
-            this.cboTimeout.Size = new System.Drawing.Size(112, 21);
-            this.cboTimeout.TabIndex = 1;
+            this.deleteAFileToolStripMenuItem.Name = "deleteAFileToolStripMenuItem";
+            this.deleteAFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteAFileToolStripMenuItem.Text = "Delete a file...";
+            this.deleteAFileToolStripMenuItem.Click += new System.EventHandler(this.deleteAFileToolStripMenuItem_Click);
             // 
-            // label1
+            // downloadTextToolStripMenuItem
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Timeout:";
-            // 
-            // txtArgsEvaluated
-            // 
-            this.txtArgsEvaluated.Location = new System.Drawing.Point(8, 208);
-            this.txtArgsEvaluated.Name = "txtArgsEvaluated";
-            this.txtArgsEvaluated.ReadOnly = true;
-            this.txtArgsEvaluated.Size = new System.Drawing.Size(440, 20);
-            this.txtArgsEvaluated.TabIndex = 7;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 192);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(110, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Arguments evaluated:";
-            // 
-            // lblVariables
-            // 
-            this.lblVariables.AutoSize = true;
-            this.lblVariables.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblVariables.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lblVariables.LinkColor = System.Drawing.Color.Navy;
-            this.lblVariables.Location = new System.Drawing.Point(388, 150);
-            this.lblVariables.Name = "lblVariables";
-            this.lblVariables.Size = new System.Drawing.Size(59, 13);
-            this.lblVariables.TabIndex = 4;
-            this.lblVariables.TabStop = true;
-            this.lblVariables.Text = "Variables...";
-            this.lblVariables.VisitedLinkColor = System.Drawing.Color.Navy;
-            this.lblVariables.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblVariables_LinkClicked);
+            this.downloadTextToolStripMenuItem.Name = "downloadTextToolStripMenuItem";
+            this.downloadTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.downloadTextToolStripMenuItem.Text = "Download text...";
+            this.downloadTextToolStripMenuItem.Click += new System.EventHandler(this.downloadTextToolStripMenuItem_Click);
             // 
             // AddJobDialog
             // 
@@ -365,11 +404,12 @@
             this.tabPageBasic.PerformLayout();
             this.tabPageProcess.ResumeLayout(false);
             this.tabPageProcess.PerformLayout();
+            this.tabOptions.ResumeLayout(false);
+            this.tabOptions.PerformLayout();
             this.tabFlowControl.ResumeLayout(false);
             this.tabFlowControl.PerformLayout();
             this.tabPageOverview.ResumeLayout(false);
-            this.tabOptions.ResumeLayout(false);
-            this.tabOptions.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -403,5 +443,9 @@
         private System.Windows.Forms.TextBox txtArgsEvaluated;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel lblVariables;
+        private System.Windows.Forms.Button btnInProcess;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem deleteAFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadTextToolStripMenuItem;
     }
 }
