@@ -28,13 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtSourceUrl = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Source URL:";
+            // 
+            // txtSourceUrl
+            // 
+            this.txtSourceUrl.Location = new System.Drawing.Point(8, 24);
+            this.txtSourceUrl.Name = "txtSourceUrl";
+            this.txtSourceUrl.Size = new System.Drawing.Size(528, 20);
+            this.txtSourceUrl.TabIndex = 1;
             // 
             // DownloadStringDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(636, 369);
+            this.ClientSize = new System.Drawing.Size(545, 309);
+            this.Controls.Add(this.txtSourceUrl);
+            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -43,9 +63,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "In process: Download string";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtSourceUrl;
     }
 }
