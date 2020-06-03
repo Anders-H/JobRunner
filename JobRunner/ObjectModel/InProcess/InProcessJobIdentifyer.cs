@@ -17,5 +17,13 @@ namespace JobRunner.ObjectModel.InProcess
                 InProcessJobIdentifyer.DeleteFile => "@deletefile",
                 _ => throw new ArgumentOutOfRangeException(nameof(j), j, null)
             };
+
+        public InProcessJobIdentifyer GetIdentifyerFromString(string j) =>
+            (j ?? "").ToLower().Trim() switch
+            {
+                "@downloadstring" => InProcessJobIdentifyer.DownloadString,
+                "@deletefile" => InProcessJobIdentifyer.DeleteFile,
+                _ => throw new ArgumentOutOfRangeException(nameof(j), j, null)
+            };
     }
 }

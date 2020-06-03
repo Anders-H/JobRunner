@@ -63,36 +63,13 @@ namespace JobRunner.ObjectModel
                     if (!result && Config.TreatLoggingErrorsAsStepErrors)
                         throw new SystemException("Logging failed.");
                 }
-                var start = new ProcessStartInfo(Command)
-                {
-                    Arguments = new ArgumentDecoder(variableList).GetDecodedText(Arguments),
-                    WindowStyle = Hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal
-                };
-                var process = Process.Start(start);
-                if (process == null)
-                {
-                    Status = JobStatus.Failed;
-                    return;
-                }
-                while (!process.HasExited)
-                {
-                    grid.CursorBlink = !grid.CursorBlink;
-                    grid.Invalidate();
-                    Thread.Sleep(1000);
-                    if (DateTime.Now.Subtract(StartTime.Value) <= Timeout)
-                        continue;
-                    process.Kill();
-                    EndTime = DateTime.Now;
-                    Status = JobStatus.Timeout;
-                    FailMessage = "Timeout";
-                    break;
-                }
+
+                if (Command.StartsWith("@"))
+                    InProcess(grid, variableList);
+                else
+                    OutOfProcess(grid, variableList);
 
                 EndTime = DateTime.Now;
-                ExitCode = process.ExitCode;
-                Status = ExitCode == 0
-                    ? JobStatus.Completed
-                    : JobStatus.Failed;
                 
                 if (Config.EnableLogging)
                 {
@@ -119,6 +96,43 @@ namespace JobRunner.ObjectModel
             }
         }
 
+        private void OutOfProcess(IGridVisualFeedback grid, IVariableList variableList)
+        {
+            var start = new ProcessStartInfo(Command)
+            {
+                Arguments = new ArgumentDecoder(variableList).GetDecodedText(Arguments),
+                WindowStyle = Hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal
+            };
+            var process = Process.Start(start);
+            if (process == null)
+            {
+                Status = JobStatus.Failed;
+                return;
+            }
+            while (!process.HasExited)
+            {
+                grid.CursorBlink = !grid.CursorBlink;
+                grid.Invalidate();
+                Thread.Sleep(1000);
+                if (DateTime.Now.Subtract(StartTime!.Value) <= Timeout)
+                    continue;
+                process.Kill();
+                EndTime = DateTime.Now;
+                Status = JobStatus.Timeout;
+                FailMessage = "Timeout";
+                break;
+            }
+            ExitCode = process.ExitCode;
+            Status = ExitCode == 0
+                ? JobStatus.Completed
+                : JobStatus.Failed;
+        }
+
+        private void InProcess(IGridVisualFeedback grid, IVariableList variableList)
+        {
+            
+        }
+        
         public bool UsesVariable(Variable variable) =>
             Arguments.IndexOf($"[{variable.Name}]", StringComparison.Ordinal) > -1;
         
