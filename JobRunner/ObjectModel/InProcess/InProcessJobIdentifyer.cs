@@ -1,4 +1,6 @@
-﻿namespace JobRunner.ObjectModel.InProcess
+﻿using System;
+
+namespace JobRunner.ObjectModel.InProcess
 {
     public enum InProcessJobIdentifyer
     {
@@ -8,6 +10,12 @@
 
     public class InProcessJobIdentifyerHelper
     {
-        
+        public string GetIdentifyerString(InProcessJobIdentifyer j) =>
+            j switch
+            {
+                InProcessJobIdentifyer.DownloadString => "@downloadstring",
+                InProcessJobIdentifyer.DeleteFile => "@deletefile",
+                _ => throw new ArgumentOutOfRangeException(nameof(j), j, null)
+            };
     }
 }

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using JobRunner.Dialogs.InProcess;
 using JobRunner.Dialogs.ViewList;
 using JobRunner.ObjectModel;
+using JobRunner.ObjectModel.InProcess;
 using JobRunner.Services;
 using JobRunner.Utils;
 
@@ -239,10 +240,19 @@ namespace JobRunner.Dialogs
 
         private void downloadTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var helper = new InProcessJobIdentifyerHelper();
+            var jobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.DownloadString);
+            var program = txtProgram.Text.Trim();
+
             var x = new DownloadStringDialog();
+
+            if (string.Compare(jobIdentiftyerString, program, StringComparison.InvariantCultureIgnoreCase) == 0)
+                x.Arguments = txtArguments.Text.Trim();
+
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
-            p
+            txtProgram.Text = x.JobIdentiftyerString;
+            txtArguments.Text = x.Arguments;
         }
     }
 }
