@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
 using JobRunner.Services;
 
 namespace JobRunner.ObjectModel.InProcess.Jobs
@@ -38,18 +37,28 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
                     break;
             }
             HasExited = false;
-            Action = new Action<string, string>(DownloadString);
-            AsyncResult = Action.BeginInvoke(SourceUrl, TargetFile, null, null);
+            Action = DownloadString;
+            Action.BeginInvoke(SourceUrl, TargetFile, CompletedCallback, null);
         }
 
         private void DownloadString(string source, string target)
         {
-            Thread.Sleep(5000);
+            try
+            {
+                throw new SystemException("Error!!!!!!");
+            }
+            catch (SystemException e)
+            {
+                Exception = e;
+            }
         }
-        
-        public override void Kill()
+
+        protected override void CompletedCallback(IAsyncResult result)
         {
-            
+            HasExited = true;
+            ExitCode = Exception == null
+                ? 0
+                : -1;
         }
     }
 }

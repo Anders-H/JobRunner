@@ -7,8 +7,8 @@ namespace JobRunner.ObjectModel.InProcess
     {
         public bool HasExited { get; protected set; }
         public int ExitCode { get; protected set; }
+        public SystemException Exception { get; protected set; }
         public abstract void Begin(ArgumentList args);
-        public abstract void Kill();
-        protected IAsyncResult AsyncResult { get; set; }
+        protected abstract void CompletedCallback(IAsyncResult result);
     }
 }

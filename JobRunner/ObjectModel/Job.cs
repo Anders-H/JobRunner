@@ -121,7 +121,7 @@ namespace JobRunner.ObjectModel
                 EndTime = DateTime.Now;
                 Status = JobStatus.Timeout;
                 FailMessage = "Timeout";
-                break;
+                return;
             }
             ExitCode = process.ExitCode;
             Status = ExitCode == 0
@@ -144,16 +144,18 @@ namespace JobRunner.ObjectModel
                 Thread.Sleep(1000);
                 if (DateTime.Now.Subtract(StartTime!.Value) <= Timeout)
                     continue;
-                job.Kill();
                 EndTime = DateTime.Now;
                 Status = JobStatus.Timeout;
                 FailMessage = "Timeout";
-                break;
+                ExitCode = -1;
+                return;
             }
             ExitCode = job.ExitCode;
             Status = ExitCode == 0
                 ? JobStatus.Completed
                 : JobStatus.Failed;
+            if (Status == JobStatus.Failed && job.Exception != null)
+                FailMessage = job.Exception.Message;
         }
         
         public bool UsesVariable(Variable variable) =>
