@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using JobRunner.GuiComponents;
 using JobRunner.Logging;
+using JobRunner.ObjectModel.InProcess;
 using JobRunner.Services;
 using JobRunner.Utils;
 
@@ -130,7 +131,29 @@ namespace JobRunner.ObjectModel
 
         private void InProcess(IGridVisualFeedback grid, IVariableList variableList)
         {
-            
+            var inProcessJobIdentifyerHelper = new InProcessJobIdentifyerHelper();
+            var jobId = inProcessJobIdentifyerHelper.GetIdentifyerFromString(Command);
+            var job = inProcessJobIdentifyerHelper.GetJob(jobId);
+            var args = new ArgumentList(Arguments);
+            args = args.Decode(variableList);
+            job.Begin(args);
+            while (!job.HasExited)
+            {
+                grid.CursorBlink = !grid.CursorBlink;
+                grid.Invalidate();
+                Thread.Sleep(1000);
+                if (DateTime.Now.Subtract(StartTime!.Value) <= Timeout)
+                    continue;
+                job.Kill();
+                EndTime = DateTime.Now;
+                Status = JobStatus.Timeout;
+                FailMessage = "Timeout";
+                break;
+            }
+            ExitCode = job.ExitCode;
+            Status = ExitCode == 0
+                ? JobStatus.Completed
+                : JobStatus.Failed;
         }
         
         public bool UsesVariable(Variable variable) =>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using JobRunner.ObjectModel;
 
 namespace JobRunner.Services
 {
@@ -45,6 +46,16 @@ namespace JobRunner.Services
             }
 
             return "";
+        }
+
+        public ArgumentList Decode(IVariableList variableList)
+        {
+            var result = new ArgumentList();
+            var argumentDecoder = new ArgumentDecoder(variableList);
+            result.AddRange(
+                this.Select(a => a.StartsWith("-") ? a : argumentDecoder.GetDecodedText(a))
+            );
+            return result;
         }
     }
 }

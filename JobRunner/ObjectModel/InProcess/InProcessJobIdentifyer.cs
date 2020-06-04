@@ -1,4 +1,5 @@
 ﻿using System;
+using JobRunner.ObjectModel.InProcess.Jobs;
 
 namespace JobRunner.ObjectModel.InProcess
 {
@@ -15,7 +16,7 @@ namespace JobRunner.ObjectModel.InProcess
             {
                 InProcessJobIdentifyer.DownloadString => "@downloadstring",
                 InProcessJobIdentifyer.DeleteFile => "@deletefile",
-                _ => throw new ArgumentOutOfRangeException(nameof(j), j, null)
+                _ => throw new SystemException($@"Unknown in-process job identifyer: {j}")
             };
 
         public InProcessJobIdentifyer GetIdentifyerFromString(string j) =>
@@ -23,7 +24,15 @@ namespace JobRunner.ObjectModel.InProcess
             {
                 "@downloadstring" => InProcessJobIdentifyer.DownloadString,
                 "@deletefile" => InProcessJobIdentifyer.DeleteFile,
-                _ => throw new ArgumentOutOfRangeException(nameof(j), j, null)
+                _ => throw new SystemException($@"Unknown in-process job identifyer: {j}")
+            };
+        
+        public InProcessJob GetJob(InProcessJobIdentifyer j) =>
+            j switch
+            {
+                InProcessJobIdentifyer.DownloadString => new DownloadStringJob(),
+                InProcessJobIdentifyer.DeleteFile => null,
+                _ => throw new SystemException($@"Failed to get in-process job: {j}")
             };
     }
 }

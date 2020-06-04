@@ -101,7 +101,9 @@
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="ObjectModel\IJobList.cs" />
+    <Compile Include="ObjectModel\InProcess\InProcessJob.cs" />
     <Compile Include="ObjectModel\InProcess\InProcessJobIdentifyer.cs" />
+    <Compile Include="ObjectModel\InProcess\Jobs\DownloadStringJob.cs" />
     <Compile Include="ObjectModel\IVariableList.cs" />
     <Compile Include="ObjectModel\Variable.cs" />
     <Compile Include="ObjectModel\VariableList.cs" />
