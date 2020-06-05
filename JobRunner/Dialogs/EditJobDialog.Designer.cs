@@ -188,6 +188,7 @@
             this.txtArgsEvaluated.ReadOnly = true;
             this.txtArgsEvaluated.Size = new System.Drawing.Size(440, 20);
             this.txtArgsEvaluated.TabIndex = 15;
+            this.txtArgsEvaluated.TabStop = false;
             // 
             // label2
             // 

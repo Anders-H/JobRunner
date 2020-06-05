@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
 using JobRunner.Services;
 
 namespace JobRunner.ObjectModel.InProcess.Jobs
@@ -45,7 +48,23 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
         {
             try
             {
-                throw new SystemException("Error!!!!!!");
+                using var client = new HttpClient();
+                var request = client.GetStringAsync(SourceUrl);
+                do
+                {
+                    Thread.Sleep(500);
+                    if (request.IsCanceled || request.IsFaulted)
+                        throw new SystemException("Download failed.");
+                    if (request.IsCompleted)
+                        break;
+                } while (true);
+
+                var result = request.Result;
+
+                using var sw = new StreamWriter(TargetFile, false, Encoding.UTF8);
+                sw.Write(result);
+                sw.Flush();
+                sw.Close();
             }
             catch (SystemException e)
             {

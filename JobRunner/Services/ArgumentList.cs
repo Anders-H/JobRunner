@@ -24,7 +24,7 @@ namespace JobRunner.Services
                 var p = part.Trim();
                 if (p.StartsWith("\"") && p.EndsWith("\""))
                     p = p.Substring(1, p.Length - 2).Trim();
-                if (p != "")
+                if (!string.IsNullOrWhiteSpace(p))
                     Add(p);
             }
         }

@@ -79,6 +79,7 @@
             this.btnBrowse.TabIndex = 4;
             this.btnBrowse.Text = "...";
             this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // label3
             // 

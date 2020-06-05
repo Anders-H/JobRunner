@@ -46,7 +46,7 @@ namespace JobRunner.Dialogs
                 ValidateSequenceNumber(true)
                     ? SequenceAsString(CalculateSequence())
                     : "(Invalid value - must be corrected)");
-            AddItemToOverview("Name:", 
+            AddItemToOverview("Name:",
                 ValidateJobName(true)
                     ? txtName.Text
                     : "(Invalid name - must be corrected)");
@@ -200,9 +200,17 @@ namespace JobRunner.Dialogs
         private void txtArguments_TextChanged(object sender, EventArgs e)
         {
             if (Variables == null)
+            {
+                txtArgsEvaluated.Text = "(Missing variable list.)";
                 return;
+            }
+
             if (Variables.Count <= 0)
+            {
+                txtArgsEvaluated.Text = txtArguments.Text.Trim();
                 return;
+            }
+
             txtArgsEvaluated.Text = new ArgumentDecoder(Variables)
                 .GetDecodedText(txtArguments.Text);
         }
@@ -235,7 +243,19 @@ namespace JobRunner.Dialogs
 
         private void deleteAFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var helper = new InProcessJobIdentifyerHelper();
+            var jobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.DeleteFile);
+            var program = txtProgram.Text.Trim();
 
+            var x = new DeleteFileDialog();
+
+            //if (string.Compare(jobIdentiftyerString, program, StringComparison.InvariantCultureIgnoreCase) == 0)
+            //    x.Arguments = txtArguments.Text.Trim();
+
+            //if (x.ShowDialog(this) != DialogResult.OK)
+            //    return;
+            //txtProgram.Text = x.JobIdentiftyerString;
+            //txtArguments.Text = x.Arguments;
         }
 
         private void downloadTextToolStripMenuItem_Click(object sender, EventArgs e)

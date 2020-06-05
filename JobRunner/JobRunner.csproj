@@ -77,6 +77,12 @@
     <Compile Include="Dialogs\AutoActionDialog.Designer.cs">
       <DependentUpon>AutoActionDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\InProcess\DeleteFileDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\InProcess\DeleteFileDialog.Designer.cs">
+      <DependentUpon>DeleteFileDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\InProcess\DownloadStringDialog.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -154,9 +154,17 @@ namespace JobRunner.Dialogs
         private void txtArguments_TextChanged(object sender, EventArgs e)
         {
             if (Variables == null)
+            {
+                txtArgsEvaluated.Text = "(Missing variable list.)";
                 return;
+            }
+
             if (Variables.Count <= 0)
+            {
+                txtArgsEvaluated.Text = txtArguments.Text.Trim();
                 return;
+            }
+
             txtArgsEvaluated.Text = new ArgumentDecoder(Variables)
                 .GetDecodedText(txtArguments.Text);
         }

@@ -154,7 +154,7 @@
             this.btnInProcess.Name = "btnInProcess";
             this.btnInProcess.Size = new System.Drawing.Size(84, 23);
             this.btnInProcess.TabIndex = 3;
-            this.btnInProcess.Text = "In progress...";
+            this.btnInProcess.Text = "In-process...";
             this.btnInProcess.UseVisualStyleBackColor = true;
             this.btnInProcess.Click += new System.EventHandler(this.btnInProcess_Click);
             // 
@@ -165,6 +165,7 @@
             this.txtArgsEvaluated.ReadOnly = true;
             this.txtArgsEvaluated.Size = new System.Drawing.Size(440, 20);
             this.txtArgsEvaluated.TabIndex = 8;
+            this.txtArgsEvaluated.TabStop = false;
             // 
             // label2
             // 
@@ -358,7 +359,9 @@
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.deleteAFileToolStripMenuItem, this.downloadTextToolStripMenuItem});
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteAFileToolStripMenuItem,
+            this.downloadTextToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(161, 48);
             // 
@@ -409,6 +412,7 @@
             this.tabPageOverview.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         private System.Windows.Forms.Button btnBack;

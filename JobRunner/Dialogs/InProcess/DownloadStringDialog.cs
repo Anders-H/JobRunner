@@ -88,5 +88,13 @@ namespace JobRunner.Dialogs.InProcess
                 1 => "overwrite",
                 _ => "fail"
             };
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            using var x = new OpenFileDialog();
+            x.Filter = "All files (*.*)|*.*";
+            if (x.ShowDialog(this) == DialogResult.OK)
+                txtTargetFile.Text = x.FileName;
+        }
     }
 }
