@@ -162,6 +162,9 @@
     <EmbeddedResource Include="Dialogs\EditJobDialog.resx">
       <DependentUpon>EditJobDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InProcess\DeleteFileDialog.resx">
+      <DependentUpon>DeleteFileDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\InProcess\DownloadStringDialog.resx">
       <DependentUpon>DownloadStringDialog.cs</DependentUpon>
     </EmbeddedResource>

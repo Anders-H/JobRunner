@@ -249,13 +249,14 @@ namespace JobRunner.Dialogs
 
             var x = new DeleteFileDialog();
 
-            //if (string.Compare(jobIdentiftyerString, program, StringComparison.InvariantCultureIgnoreCase) == 0)
-            //    x.Arguments = txtArguments.Text.Trim();
+            if (string.Compare(jobIdentiftyerString, program, StringComparison.InvariantCultureIgnoreCase) == 0)
+                x.Arguments = txtArguments.Text.Trim();
 
-            //if (x.ShowDialog(this) != DialogResult.OK)
-            //    return;
-            //txtProgram.Text = x.JobIdentiftyerString;
-            //txtArguments.Text = x.Arguments;
+            if (x.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            txtProgram.Text = x.JobIdentiftyerString;
+            txtArguments.Text = x.Arguments;
         }
 
         private void downloadTextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -271,6 +272,7 @@ namespace JobRunner.Dialogs
 
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
+
             txtProgram.Text = x.JobIdentiftyerString;
             txtArguments.Text = x.Arguments;
         }

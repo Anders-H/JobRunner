@@ -91,8 +91,12 @@ namespace JobRunner.Dialogs.InProcess
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            using var x = new OpenFileDialog();
-            x.Filter = "All files (*.*)|*.*";
+            using var x = new OpenFileDialog
+            {
+                Title = @"Target file",
+                Filter = @"All files (*.*)|*.*"
+            };
+
             if (x.ShowDialog(this) == DialogResult.OK)
                 txtTargetFile.Text = x.FileName;
         }
