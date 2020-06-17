@@ -201,7 +201,7 @@ namespace JobRunner.Dialogs
         {
             if (Variables == null)
             {
-                txtArgsEvaluated.Text = "(Missing variable list.)";
+                txtArgsEvaluated.Text = @"(Missing variable list.)";
                 return;
             }
 

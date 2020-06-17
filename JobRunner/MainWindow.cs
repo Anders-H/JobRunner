@@ -240,8 +240,10 @@ namespace JobRunner
                 MessageDisplayer.Tell("No job is selected.", "Delete job");
                 return;
             }
+
             if (!MessageDisplayer.Ask($@"Are you sure you want to delete the job named ""{job.Name}""?", "Delete job"))
                 return;
+
             grid1.RemoveJob(grid1.SelectedRow);
             Jobs.RemoveJob(job);
             grid1.Refresh();
@@ -250,9 +252,24 @@ namespace JobRunner
 
         private void Grid1_EditJob(object sender, EventArgs e)
         {
-            if (!Config.IsAdministrator)
+            if (!runToolStripMenuItem.Enabled)
                 return;
-            EditJobToolStripMenuItem_Click(sender, e);
+
+            if (Config.IsAdministrator)
+            {
+                EditJobToolStripMenuItem_Click(sender, e);
+                return;
+            }
+
+            if (grid1.SelectedJob == null)
+                return;
+
+            using var x = new ViewJobDialog();
+            x.Job = grid1.SelectedJob;
+            var result = x.ShowDialog(this);
+
+            if (result == DialogResult.OK)
+                RunSelectedJobToolStripMenuItem_Click(sender, e);
         }
 
         private void EditJobToolStripMenuItem_Click(object sender, EventArgs e)
@@ -402,6 +419,7 @@ namespace JobRunner
             about.AppendLine("Changes in version 1.3:");
             about.AppendLine("- Variables can be added on the fly, from any view.");
             about.AppendLine("- Two in-process tasks are added: \"Delete a file\" and \"Download text\".");
+            about.AppendLine("- Non-administrators can view or start a job by double clicking on it.");
             about.AppendLine();
             about.AppendLine("Changes in version 1.2:");
             about.AppendLine("- Minor improvments in the user interface (added icons, more options in the Add job dialog).");
