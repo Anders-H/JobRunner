@@ -145,19 +145,18 @@
             this.Load += new System.EventHandler(this.DownloadStringDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
-
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.ComboBox cboFileExistsBehaviour;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtSourceUrl;
         private System.Windows.Forms.TextBox txtTargetFile;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cboFileExistsBehaviour;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
+
+        #endregion
     }
 }

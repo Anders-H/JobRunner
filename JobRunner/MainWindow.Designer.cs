@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,14 +58,23 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.grid1 = new JobRunner.GuiComponents.Grid();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.viewJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editJobToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.grid1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.fileToolStripMenuItem, this.editToolStripMenuItem, this.jobsToolStripMenuItem, this.viewToolStripMenuItem, this.helpToolStripMenuItem});
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.jobsToolStripMenuItem,
+            this.viewToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -73,7 +83,9 @@
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.openLogToolStripMenuItem, this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openLogToolStripMenuItem,
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
@@ -95,7 +107,19 @@
             // 
             // editToolStripMenuItem
             // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.addJobToolStripMenuItem, this.editJobToolStripMenuItem, this.deleteJobToolStripMenuItem, this.toolStripMenuItem1, this.addVariableToolStripMenuItem, this.editVariableToolStripMenuItem, this.deleteVariableToolStripMenuItem, this.toolStripMenuItem3, this.moveJobUpToolStripMenuItem, this.moveJobDownToolStripMenuItem, this.toolStripMenuItem2, this.optionsToolStripMenuItem});
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addJobToolStripMenuItem,
+            this.editJobToolStripMenuItem,
+            this.deleteJobToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.addVariableToolStripMenuItem,
+            this.editVariableToolStripMenuItem,
+            this.deleteVariableToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.moveJobUpToolStripMenuItem,
+            this.moveJobDownToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.optionsToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -179,7 +203,9 @@
             // 
             // jobsToolStripMenuItem
             // 
-            this.jobsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.runToolStripMenuItem, this.runSelectedJobToolStripMenuItem});
+            this.jobsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.runToolStripMenuItem,
+            this.runSelectedJobToolStripMenuItem});
             this.jobsToolStripMenuItem.Name = "jobsToolStripMenuItem";
             this.jobsToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.jobsToolStripMenuItem.Text = "&Jobs";
@@ -202,7 +228,9 @@
             // 
             // viewToolStripMenuItem
             // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.jobsToolStripMenuItem1, this.variablesToolStripMenuItem});
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jobsToolStripMenuItem1,
+            this.variablesToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "&View";
@@ -223,7 +251,8 @@
             // 
             // helpToolStripMenuItem
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
@@ -237,7 +266,8 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.lblStatus});
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 428);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(800, 22);
@@ -262,6 +292,30 @@
             this.grid1.Size = new System.Drawing.Size(800, 404);
             this.grid1.TabIndex = 2;
             this.grid1.EditJob += new System.EventHandler(this.Grid1_EditJob);
+            this.grid1.ShowContextMenu += new JobRunner.GuiComponents.ContextMenuEventHandler(this.grid1_ShowContextMenu);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewJobToolStripMenuItem,
+            this.editJobToolStripMenuItem1});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(129, 48);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // viewJobToolStripMenuItem
+            // 
+            this.viewJobToolStripMenuItem.Name = "viewJobToolStripMenuItem";
+            this.viewJobToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.viewJobToolStripMenuItem.Text = "View job...";
+            this.viewJobToolStripMenuItem.Click += new System.EventHandler(this.viewJobToolStripMenuItem_Click);
+            // 
+            // editJobToolStripMenuItem1
+            // 
+            this.editJobToolStripMenuItem1.Name = "editJobToolStripMenuItem1";
+            this.editJobToolStripMenuItem1.Size = new System.Drawing.Size(128, 22);
+            this.editJobToolStripMenuItem1.Text = "Edit job...";
+            this.editJobToolStripMenuItem1.Click += new System.EventHandler(this.editJobToolStripMenuItem1_Click);
             // 
             // MainWindow
             // 
@@ -271,7 +325,7 @@
             this.Controls.Add(this.grid1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
-            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
             this.Text = "JobRunner";
@@ -281,9 +335,11 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.grid1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -316,6 +372,10 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
 
         #endregion
+
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem viewJobToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editJobToolStripMenuItem1;
     }
 }
 

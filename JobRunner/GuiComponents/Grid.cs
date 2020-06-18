@@ -9,6 +9,7 @@ namespace JobRunner.GuiComponents
     public class Grid : DataGridView, IGridVisualFeedback
     {
         public event EventHandler EditJob;
+        public event ContextMenuEventHandler ShowContextMenu;
         public bool CursorBlink { get; set; }
         public bool Running { get; set; }
         public int RunSingle { get; set; }
@@ -195,6 +196,23 @@ namespace JobRunner.GuiComponents
             CurrentCell = Rows[index + 1].Cells[CurrentCell.ColumnIndex];
         }
 
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hit = HitTest(e.X, e.Y);
+                if (hit != null && hit.Type == DataGridViewHitTestType.Cell)
+                {
+                    ClearSelection();
+                    Rows[hit.RowIndex].Cells[hit.ColumnIndex].Selected = true;
+                    base.OnMouseClick(e);
+                    ShowContextMenu?.Invoke(this, new ContextMenuEventArgs(e.X, e.Y));
+                    return;
+                }
+            }
+            base.OnMouseClick(e);
+        }
+        
         protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
         {
             var centerY = CenterY(e.Graphics, e.CellBounds, out var width);

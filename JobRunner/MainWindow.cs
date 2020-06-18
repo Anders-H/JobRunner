@@ -264,23 +264,32 @@ namespace JobRunner
             if (grid1.SelectedJob == null)
                 return;
 
-            using var x = new ViewJobDialog();
-            x.Job = grid1.SelectedJob;
+            ViewJob();
+        }
+
+        private void ViewJob()
+        {
+            using var x = new ViewJobDialog
+            {
+                Job = grid1.SelectedJob
+            };
             var result = x.ShowDialog(this);
 
             if (result == DialogResult.OK)
-                RunSelectedJobToolStripMenuItem_Click(sender, e);
+                RunSelectedJobToolStripMenuItem_Click(grid1, new EventArgs());
         }
-
+        
         private void EditJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Config.IsAdministrator)
                 return;
+
             if (grid1.SelectedJob == null)
             {
                 MessageDisplayer.Tell("No job is selected.", "Edit job");
                 return;
             }
+
             using var x = new EditJobDialog
             {
                 Job = grid1.SelectedJob,
@@ -288,6 +297,7 @@ namespace JobRunner
                 Jobs = Jobs,
                 SaveVariables = SaveVariables
             };
+
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
             grid1.Refresh();
@@ -420,6 +430,7 @@ namespace JobRunner
             about.AppendLine("- Variables can be added on the fly, from any view.");
             about.AppendLine("- Two in-process tasks are added: \"Delete a file\" and \"Download text\".");
             about.AppendLine("- Non-administrators can view or start a job by double clicking on it.");
+            about.AppendLine("- Context menu added.");
             about.AppendLine();
             about.AppendLine("Changes in version 1.2:");
             about.AppendLine("- Minor improvments in the user interface (added icons, more options in the Add job dialog).");
@@ -468,5 +479,30 @@ namespace JobRunner
         {
             _logger = new Logger();
         }
+
+        private void grid1_ShowContextMenu(object sender, GuiComponents.ContextMenuEventArgs e) =>
+            contextMenuStrip1.Show(grid1, new System.Drawing.Point(e.X, e.Y));
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var job = grid1.SelectedJob;
+
+            if (job == null)
+            {
+                viewJobToolStripMenuItem.Enabled = false;
+                editJobToolStripMenuItem1.Enabled = false;
+            }
+            else
+            {
+                viewJobToolStripMenuItem.Enabled = true;
+                editJobToolStripMenuItem1.Enabled = Config.IsAdministrator;
+            }
+        }
+
+        private void viewJobToolStripMenuItem_Click(object sender, EventArgs e) =>
+            ViewJob();
+
+        private void editJobToolStripMenuItem1_Click(object sender, EventArgs e) =>
+            EditJobToolStripMenuItem_Click(sender, e);
     }
 }

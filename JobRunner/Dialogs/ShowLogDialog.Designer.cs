@@ -125,7 +125,6 @@
             this.Shown += new System.EventHandler(this.ShowLogDialog_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         private System.Windows.Forms.Button btnClose;
