@@ -21,6 +21,7 @@ namespace JobRunner.Dialogs
 
             if (!Config.IsAdministrator)
             {
+                Text = @"Options (start JobRunner as administrator to edit)";
                 chkAutoStart.Enabled = false;
                 chkAutoExit.Enabled = false;
                 chkLog.Enabled = false;
