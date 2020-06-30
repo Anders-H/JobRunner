@@ -31,7 +31,7 @@ namespace JobRunner.ObjectModel.InProcess
             j switch
             {
                 InProcessJobIdentifyer.DownloadString => new DownloadStringJob(),
-                InProcessJobIdentifyer.DeleteFile => null,
+                InProcessJobIdentifyer.DeleteFile => new DeleteFileJob(),
                 _ => throw new SystemException($@"Failed to get in-process job: {j}")
             };
     }
