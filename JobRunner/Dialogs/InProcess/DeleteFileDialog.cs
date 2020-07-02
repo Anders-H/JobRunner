@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using JobRunner.ObjectModel.InProcess;
+using JobRunner.ObjectModel.InProcess.Jobs;
 using JobRunner.Services;
 using JobRunner.Utils;
 
@@ -26,11 +27,13 @@ namespace JobRunner.Dialogs.InProcess
             if (args.Count <= 0)
                 return;
 
-            txtTargetFile.Text = args.GetAfter("-file");
-            var notFoundBehaviour = args.GetAfter("-notfoundbehaviour");
-            cboFileNotFoundBehaviour.SelectedIndex = notFoundBehaviour.ToLower() switch
+            var deleteFileArguments = new DeleteFileArguments(args);
+
+            txtTargetFile.Text = deleteFileArguments.GetFilename();
+
+            cboFileNotFoundBehaviour.SelectedIndex = deleteFileArguments.TryGetFileNotFoundBehaviour() switch
             {
-                "fail" => 1,
+                FileNotFoundBehaviour.Fail => 1,
                 _ => 0
             };
         }

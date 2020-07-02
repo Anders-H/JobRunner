@@ -8,17 +8,17 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
     public class DeleteFileJob : InProcessJob
     {
         private string FileToDelete { get; set; }
-        private string FileNotFoundBehavour { get; set; }
         private Action<string> Action { get; set; }
 
         public override void Begin(ArgumentList args)
         {
-            FileToDelete = args.GetAfter("-file");
-            FileNotFoundBehavour = args.GetAfter("-notfoundbehaviour");
+            var deleteFileArguments = new DeleteFileArguments(args);
 
-            switch (FileNotFoundBehavour.ToLower())
+            FileToDelete = deleteFileArguments.GetFilename();
+
+            switch (deleteFileArguments.GetFileNotFoundBehaviour())
             {
-                case "skip":
+                case FileNotFoundBehaviour.Skip:
                     if (!File.Exists(FileToDelete))
                     {
                         HasExited = true;
@@ -26,7 +26,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
                         return;
                     }
                     break;
-                case "fail":
+                case FileNotFoundBehaviour.Fail:
                     if (!File.Exists(FileToDelete))
                     {
                         HasExited = true;

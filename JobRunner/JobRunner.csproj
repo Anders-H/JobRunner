@@ -116,6 +116,7 @@
     <Compile Include="ObjectModel\IJobList.cs" />
     <Compile Include="ObjectModel\InProcess\InProcessJob.cs" />
     <Compile Include="ObjectModel\InProcess\InProcessJobIdentifyer.cs" />
+    <Compile Include="ObjectModel\InProcess\Jobs\DeleteFileArguments.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\DeleteFileJob.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\DownloadStringJob.cs" />
     <Compile Include="ObjectModel\IVariableList.cs" />
