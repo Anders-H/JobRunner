@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
+using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
 
 namespace JobRunner.ObjectModel.InProcess.Jobs

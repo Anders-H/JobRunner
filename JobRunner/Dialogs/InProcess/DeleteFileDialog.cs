@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using JobRunner.ObjectModel.InProcess;
-using JobRunner.ObjectModel.InProcess.Jobs;
+using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
+using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
 using JobRunner.Utils;
 
@@ -75,15 +76,15 @@ namespace JobRunner.Dialogs.InProcess
 
             var helper = new InProcessJobIdentifyerHelper();
             JobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.DeleteFile);
-            Arguments = $@"-file ""{file}"" -notfoundbehaviour {GetFileNotFoundBehaviour()}";
+            Arguments = DeleteFileArguments.CreateArgumentString(file, GetFileNotFoundBehaviour());
             DialogResult = DialogResult.OK;
         }
 
-        public string GetFileNotFoundBehaviour() =>
+        public FileNotFoundBehaviour GetFileNotFoundBehaviour() =>
             cboFileNotFoundBehaviour.SelectedIndex switch
             {
-                0 => "skip",
-                _ => "fail"
+                0 => FileNotFoundBehaviour.Skip,
+                _ => FileNotFoundBehaviour.Fail
             };
     }
 }

@@ -114,9 +114,13 @@
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="ObjectModel\IJobList.cs" />
+    <Compile Include="ObjectModel\InProcess\Jobs\ArgumentOptions\FileExistsBehaviour.cs" />
+    <Compile Include="ObjectModel\InProcess\Jobs\ArgumentOptions\FileNotFoundBehaviour.cs" />
+    <Compile Include="ObjectModel\InProcess\Jobs\Arguments\DownloadStringArguments.cs" />
     <Compile Include="ObjectModel\InProcess\InProcessJob.cs" />
     <Compile Include="ObjectModel\InProcess\InProcessJobIdentifyer.cs" />
-    <Compile Include="ObjectModel\InProcess\Jobs\DeleteFileArguments.cs" />
+    <Compile Include="ObjectModel\InProcess\Jobs\Arguments\DeleteFileArguments.cs" />
+    <Compile Include="ObjectModel\InProcess\Jobs\Arguments\TypedArgumentsBase.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\DeleteFileJob.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\DownloadStringJob.cs" />
     <Compile Include="ObjectModel\IVariableList.cs" />
