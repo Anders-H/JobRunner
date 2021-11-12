@@ -241,40 +241,34 @@ namespace JobRunner.Dialogs
             contextMenuStrip1.Show(btnInProcess, 0, btnInProcess.Height);
         }
 
-        private void deleteAFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var helper = new InProcessJobIdentifyerHelper();
-            var jobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.DeleteFile);
-            var program = txtProgram.Text.Trim();
+        private void deleteAFileToolStripMenuItem_Click(object sender, EventArgs e) =>
+            ShowInProcessDialog(typeof(DeleteFileDialog));
 
-            var x = new DeleteFileDialog();
+        private void downloadTextToolStripMenuItem_Click(object sender, EventArgs e) =>
+            ShowInProcessDialog(typeof(DownloadStringDialog));
 
-            if (string.Compare(jobIdentiftyerString, program, StringComparison.InvariantCultureIgnoreCase) == 0)
-                x.Arguments = txtArguments.Text.Trim();
+        private void binaryUploadToolStripMenuItem_Click(object sender, EventArgs e) =>
+            ShowInProcessDialog(typeof(BinaryUploadDialog));
 
-            if (x.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            txtProgram.Text = x.JobIdentiftyerString;
-            txtArguments.Text = x.Arguments;
-        }
-
-        private void downloadTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowInProcessDialog(Type dialogType)
         {
             var helper = new InProcessJobIdentifyerHelper();
             var jobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.DownloadString);
             var program = txtProgram.Text.Trim();
 
-            var x = new DownloadStringDialog();
+            var x = (Form)Activator.CreateInstance(dialogType);
+
+            var argumentsProperty = x.GetType().GetProperty("Arguments");
 
             if (string.Compare(jobIdentiftyerString, program, StringComparison.InvariantCultureIgnoreCase) == 0)
-                x.Arguments = txtArguments.Text.Trim();
+                argumentsProperty!.SetValue(x, txtArguments.Text, null);
 
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            txtProgram.Text = x.JobIdentiftyerString;
-            txtArguments.Text = x.Arguments;
+            var jobIdentiftyerStringProperty = x.GetType().GetProperty("JobIdentiftyerString");
+            txtProgram.Text = (jobIdentiftyerStringProperty!.GetValue(x, null) as string ?? "").Trim();
+            txtArguments.Text = (argumentsProperty!.GetValue(x, null) as string ?? "").Trim();
         }
     }
 }

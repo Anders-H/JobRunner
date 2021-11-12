@@ -9,7 +9,7 @@ The default location for the job list file is:
 
 C:\Users\\*username*\AppData\Roaming\JobRunnerJobListFile\jobs.xml
 
-This chan be changed by editing the `JobRunner.exe.config` file.
+This can be changed by editing the `JobRunner.exe.config` file.
 
 Download version 1.2: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe)
 

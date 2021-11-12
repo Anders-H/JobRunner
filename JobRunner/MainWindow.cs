@@ -428,7 +428,7 @@ namespace JobRunner
             var about = new StringBuilder();
             about.AppendLine("Changes in version 1.3:");
             about.AppendLine("- Variables can be added on the fly, from any view.");
-            about.AppendLine("- Two in-process tasks are added: \"Delete a file\" and \"Download text\".");
+            about.AppendLine("- Two in-process tasks are added: \"Delete a file\", \"Download text\" and \"Binary upload\".");
             about.AppendLine("- Non-administrators can view or start a job by double clicking on it.");
             about.AppendLine("- Context menu added.");
             about.AppendLine();

@@ -3,26 +3,26 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
+using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
+using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
 
 namespace JobRunner.ObjectModel.InProcess.Jobs
 {
     public class DownloadStringJob : InProcessJob
     {
-        private string SourceUrl { get; set; }
         private string TargetFile { get; set; }
-        private string ExistsBehavour { get; set; }
         private Action<string, string> Action { get; set; }
         
         public override void Begin(ArgumentList args)
         {
-            SourceUrl = args.GetAfter("-source");
-            TargetFile = args.GetAfter("-target");
-            ExistsBehavour = args.GetAfter("-existsbehaviour");
+            var downloadStringArguments = new DownloadStringArguments(args);
 
-            switch (ExistsBehavour.ToLower())
+            TargetFile = downloadStringArguments.TargetFile;
+
+             switch (downloadStringArguments.GetFileExistsBehaviour())
             {
-                case "skip":
+                case FileExistsBehaviour.Skip:
                     if (File.Exists(TargetFile))
                     {
                         HasExited = true;
@@ -30,7 +30,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
                         return;
                     }
                     break;
-                case "fail":
+                case FileExistsBehaviour.Fail:
                     if (File.Exists(TargetFile))
                     {
                         HasExited = true;
@@ -41,7 +41,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
             }
             HasExited = false;
             Action = DownloadString;
-            Action.BeginInvoke(SourceUrl, TargetFile, CompletedCallback, null);
+            Action.BeginInvoke(downloadStringArguments.SourceUrl, TargetFile, CompletedCallback, null);
         }
 
         private void DownloadString(string source, string target)
@@ -49,7 +49,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
             try
             {
                 using var client = new HttpClient();
-                var request = client.GetStringAsync(SourceUrl);
+                var request = client.GetStringAsync(source);
                 do
                 {
                     Thread.Sleep(500);

@@ -1,4 +1,5 @@
-﻿using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
+﻿using System;
+using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.Services;
 
 namespace JobRunner.ObjectModel.InProcess.Jobs.Arguments
@@ -9,6 +10,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs.Arguments
         public const string Target = "-target";
         public const string ExistsBehaviour = "-existsbehaviour";
         public const string ExistsBehaviourOverwrite = "overwrite";
+        public const string ExistsBehaviourSkip = "skip";
         public const string ExistsBehaviourFail = "fail";
 
         public DownloadStringArguments(ArgumentList args) : base(args)
@@ -16,12 +18,37 @@ namespace JobRunner.ObjectModel.InProcess.Jobs.Arguments
         }
 
         public static string CreateArgumentString(string sourceUrl, string targetFile, FileExistsBehaviour fileExistsBehaviour) =>
-            $@"-source ""{sourceUrl}"" -target ""{targetFile}"" -existsbehaviour {fileExistsBehaviour.ToString().ToLower()}";
+            $@"{Source} ""{sourceUrl}"" {Target} ""{targetFile}"" {ExistsBehaviour} {fileExistsBehaviour.ToString().ToLower()}";
 
         public string SourceUrl =>
             Arguments.GetAfter(Source);
 
         public string TargetFile =>
             Arguments.GetAfter(Target);
+
+        public FileExistsBehaviour GetFileExistsBehaviour()
+        {
+            var v = Arguments.GetAfter(ExistsBehaviour);
+
+            return v.ToLower() switch
+            {
+                ExistsBehaviourOverwrite => FileExistsBehaviour.Overwrite,
+                ExistsBehaviourSkip => FileExistsBehaviour.Skip,
+                ExistsBehaviourFail => FileExistsBehaviour.Fail,
+                _ => throw new SystemException("Value out of range.")
+            };
+        }
+
+        public FileExistsBehaviour TryGetFileExistsBehaviour()
+        {
+            try
+            {
+                return GetFileExistsBehaviour();
+            }
+            catch
+            {
+                return FileExistsBehaviour.Skip;
+            }
+        }
     }
 }

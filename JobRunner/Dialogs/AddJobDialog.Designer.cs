@@ -60,6 +60,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteAFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.binaryUploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.tabPageProcess.SuspendLayout();
@@ -359,9 +360,12 @@
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.deleteAFileToolStripMenuItem, this.downloadTextToolStripMenuItem});
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteAFileToolStripMenuItem,
+            this.downloadTextToolStripMenuItem,
+            this.binaryUploadToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(161, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
             // 
             // deleteAFileToolStripMenuItem
             // 
@@ -376,6 +380,13 @@
             this.downloadTextToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.downloadTextToolStripMenuItem.Text = "Download text...";
             this.downloadTextToolStripMenuItem.Click += new System.EventHandler(this.downloadTextToolStripMenuItem_Click);
+            // 
+            // binaryUploadToolStripMenuItem
+            // 
+            this.binaryUploadToolStripMenuItem.Name = "binaryUploadToolStripMenuItem";
+            this.binaryUploadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.binaryUploadToolStripMenuItem.Text = "Binary upload...";
+            this.binaryUploadToolStripMenuItem.Click += new System.EventHandler(this.binaryUploadToolStripMenuItem_Click);
             // 
             // AddJobDialog
             // 
@@ -410,6 +421,7 @@
             this.tabPageOverview.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         private System.Windows.Forms.Button btnBack;
@@ -445,5 +457,7 @@
         private System.Windows.Forms.TextBox txtProgram;
 
         #endregion
+
+        private System.Windows.Forms.ToolStripMenuItem binaryUploadToolStripMenuItem;
     }
 }
