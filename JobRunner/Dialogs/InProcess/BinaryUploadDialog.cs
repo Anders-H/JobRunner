@@ -33,9 +33,9 @@ namespace JobRunner.Dialogs.InProcess
             txtSourceFile.Text = binaryUploadArguments.GetSourceFile();
             txtTarget.Text = binaryUploadArguments.GetTarget();
             txtUsername.Text = binaryUploadArguments.GetUsername();
-            txtPassword.Text = binaryUploadArguments.GetPassword;
+            txtPassword.Text = binaryUploadArguments.GetPassword();
 
-            cboUploadFailedBehaviour.SelectedIndex = binaryUploadArguments.TryGetFileNotFoundBehaviour() switch
+            cboUploadFailedBehaviour.SelectedIndex = binaryUploadArguments.TryGetFailedBehaviour() switch
             {
                 FileNotFoundBehaviour.Fail => 1,
                 _ => 0

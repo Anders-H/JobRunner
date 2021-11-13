@@ -1,4 +1,5 @@
-﻿using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
+﻿using System;
+using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.Services;
 
 namespace JobRunner.ObjectModel.InProcess.Jobs.Arguments
@@ -23,5 +24,37 @@ namespace JobRunner.ObjectModel.InProcess.Jobs.Arguments
         public string GetSourceFile() =>
             Arguments.GetAfter(SourceFile);
 
+        public string GetTarget() =>
+            Arguments.GetAfter(Target);
+
+        public string GetUsername() =>
+            Arguments.GetAfter(Username);
+
+        public string GetPassword() =>
+            Arguments.GetAfter(Password);
+
+        public FileNotFoundBehaviour GetFailedBehaviour()
+        {
+            var v = Arguments.GetAfter(FailedBehaviour);
+
+            return v.ToLower() switch
+            {
+                FailedBehaviourSkip => FileNotFoundBehaviour.Skip,
+                FailedBehaviourFail => FileNotFoundBehaviour.Fail,
+                _ => throw new SystemException("Value out of range.")
+            };
+        }
+
+        public FileNotFoundBehaviour TryGetFailedBehaviour()
+        {
+            try
+            {
+                return GetFailedBehaviour();
+            }
+            catch
+            {
+                return FileNotFoundBehaviour.Skip;
+            }
+        }
     }
 }
