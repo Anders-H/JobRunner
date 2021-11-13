@@ -52,6 +52,7 @@ namespace JobRunner.Dialogs.InProcess
             this.btnBrowse.TabIndex = 2;
             this.btnBrowse.Text = "...";
             this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // txtSourceFile
             // 
@@ -153,6 +154,7 @@ namespace JobRunner.Dialogs.InProcess
             this.btnOk.TabIndex = 11;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // BinaryUploadDialog
             // 

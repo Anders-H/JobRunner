@@ -44,7 +44,8 @@ namespace JobRunner.Dialogs.InProcess
             using var x = new OpenFileDialog
             {
                 Title = @"File to delete",
-                Filter = @"All files (*.*)|*.*"
+                Filter = @"All files (*.*)|*.*",
+                FileName = txtTargetFile.Text
             };
 
             if (x.ShowDialog(this) == DialogResult.OK)
