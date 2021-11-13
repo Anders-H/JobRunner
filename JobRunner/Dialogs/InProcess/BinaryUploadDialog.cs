@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using JobRunner.ObjectModel.InProcess;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
+using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
 using JobRunner.Utils;
 
@@ -29,10 +30,10 @@ namespace JobRunner.Dialogs.InProcess
 
             var binaryUploadArguments = new BinaryUploadArguments(args);
 
-            txtSourceFile.Text = binaryUploadArguments.SourceFile;
-            txtTarget.Text = binaryUploadArguments.Target;
-            txtUsername.Text = binaryUploadArguments.Username;
-            txtPassword.Text = binaryUploadArguments.Password;
+            txtSourceFile.Text = binaryUploadArguments.GetSourceFile();
+            txtTarget.Text = binaryUploadArguments.GetTarget();
+            txtUsername.Text = binaryUploadArguments.GetUsername();
+            txtPassword.Text = binaryUploadArguments.GetPassword;
 
             cboUploadFailedBehaviour.SelectedIndex = binaryUploadArguments.TryGetFileNotFoundBehaviour() switch
             {
@@ -82,6 +83,44 @@ namespace JobRunner.Dialogs.InProcess
             {
                 MessageDisplayer.Tell("Target should be a full FTP address.", Text);
                 txtTarget.Focus();
+                return;
+            }
+            if (txtTarget.Text.IndexOf("\"", StringComparison.Ordinal) >= 0)
+            {
+                MessageDisplayer.Tell("Target cannot contain quotes.", Text);
+                txtTarget.Focus();
+                return;
+            }
+            if (txtTarget.Text.StartsWith("-"))
+            {
+                MessageDisplayer.Tell("Target cannot start with \"-\".", Text);
+                txtTarget.Focus();
+                return;
+            }
+
+            if (txtUsername.Text.IndexOf("\"", StringComparison.Ordinal) >= 0)
+            {
+                MessageDisplayer.Tell("Username cannot contain quotes.", Text);
+                txtUsername.Focus();
+                return;
+            }
+            if (txtUsername.Text.StartsWith("-"))
+            {
+                MessageDisplayer.Tell("Username cannot start with \"-\".", Text);
+                txtUsername.Focus();
+                return;
+            }
+
+            if (txtPassword.Text.IndexOf("\"", StringComparison.Ordinal) >= 0)
+            {
+                MessageDisplayer.Tell("Password cannot contain quotes.", Text);
+                txtPassword.Focus();
+                return;
+            }
+            if (txtPassword.Text.StartsWith("-"))
+            {
+                MessageDisplayer.Tell("Password cannot start with \"-\".", Text);
+                txtPassword.Focus();
                 return;
             }
 

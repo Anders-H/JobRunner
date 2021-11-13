@@ -125,6 +125,7 @@
     <Compile Include="ObjectModel\InProcess\BinaryUploadJob.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\ArgumentOptions\FileExistsBehaviour.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\ArgumentOptions\FileNotFoundBehaviour.cs" />
+    <Compile Include="ObjectModel\InProcess\Jobs\Arguments\BinaryUploadArguments.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\Arguments\DownloadStringArguments.cs" />
     <Compile Include="ObjectModel\InProcess\InProcessJob.cs" />
     <Compile Include="ObjectModel\InProcess\InProcessJobIdentifyer.cs" />
