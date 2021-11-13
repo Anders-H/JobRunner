@@ -127,6 +127,7 @@ namespace JobRunner.Dialogs.InProcess
             var helper = new InProcessJobIdentifyerHelper();
             JobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.BinaryUpload);
             Arguments = BinaryUploadArguments.CreateArgumentString(sourceFile, txtTarget.Text, txtUsername.Text, txtPassword.Text, GetBinaryUploadFailedBehaviour());
+            DialogResult = DialogResult.OK;
         }
 
         private FileNotFoundBehaviour GetBinaryUploadFailedBehaviour() =>
