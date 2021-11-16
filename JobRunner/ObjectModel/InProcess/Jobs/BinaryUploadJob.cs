@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Net;
+using System.Text;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
@@ -8,8 +10,11 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
 {
     public class BinaryUploadJob : InProcessJob
     {
-        private string SourceFile { get; set; }
-
+        public string SourceFile { get; set; }
+        public string Target { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        private Action<string, string, string, string> Action { get; set; }
 
         public override void Begin(ArgumentList args)
         {
@@ -39,11 +44,34 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
                     }
                     break;
             }
+
+            HasExited = false;
+            Action = UploadFile;
+            Action.BeginInvoke(SourceFile, Target, Username, Password, CompletedCallback, null);
+        }
+
+        private void UploadFile(string sourceFile, string target, string username, string password)
+        {
+            try
+            {
+                using var client = new WebClient
+                {
+                    Credentials = new NetworkCredential(username, password)
+                };
+                client.UploadFile(target, WebRequestMethods.Ftp.UploadFile, sourceFile);
+            }
+            catch (SystemException e)
+            {
+                Exception = e;
+            }
         }
 
         protected override void CompletedCallback(IAsyncResult result)
         {
-            throw new NotImplementedException();
+            HasExited = true;
+            ExitCode = Exception == null
+                ? 0
+                : -1;
         }
     }
 }

@@ -79,12 +79,6 @@ namespace JobRunner.Dialogs.InProcess
             }
 
             txtTarget.Text = txtTarget.Text.Trim();
-            if (!txtTarget.Text.StartsWith("ftp://", StringComparison.CurrentCultureIgnoreCase))
-            {
-                MessageDisplayer.Tell("Target should be a full FTP address.", Text);
-                txtTarget.Focus();
-                return;
-            }
             if (txtTarget.Text.IndexOf("\"", StringComparison.Ordinal) >= 0)
             {
                 MessageDisplayer.Tell("Target cannot contain quotes.", Text);
