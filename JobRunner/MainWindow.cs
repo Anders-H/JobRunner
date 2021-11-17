@@ -13,6 +13,7 @@ namespace JobRunner
 {
     public partial class MainWindow : Form
     {
+        private readonly MainWindowController _controller;
         private IJobList Jobs { get; } = new JobList();
         private IVariableList Variables { get; } = new VariableList();
         private bool CleanExit { get; set; }
@@ -21,6 +22,7 @@ namespace JobRunner
         public MainWindow()
         {
             InitializeComponent();
+            _controller = new MainWindowController();
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -44,10 +46,11 @@ namespace JobRunner
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!HasJobs())
+            if (!_controller.TellUserIfProgramHasJobs(Jobs, Text))
                 return;
+
             lblStatus.Text = @"Running...";
-            EnableGui(false);
+            _controller.SetGuiToRunningState(runToolStripMenuItem, runSelectedJobToolStripMenuItem, true);
             Jobs.ResetJobs();
             grid1.RunSingle = -1;
             grid1.Running = true;
@@ -58,15 +61,17 @@ namespace JobRunner
 
         private void RunSelectedJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!HasJobs())
+            if (!_controller.TellUserIfProgramHasJobs(Jobs, Text))
                 return;
+
             if (grid1.SelectedJob == null)
             {
                 MessageBox.Show(@"No job is selected.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            
             lblStatus.Text = @"Running...";
-            EnableGui(false);
+            _controller.SetGuiToRunningState(runToolStripMenuItem, runSelectedJobToolStripMenuItem, true);
             Jobs.ResetJobs();
             grid1.RunSingle = grid1.SelectedCells[0].RowIndex;
             grid1.Running = true;
@@ -75,33 +80,13 @@ namespace JobRunner
             action.BeginInvoke(RunJobsCompleted, null);
         }
 
-        private bool HasJobs()
-        {
-            if (Jobs.Count > 0)
-                return true;
-            MessageBox.Show(@"Job list is empty.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            return false;
-        }
-
         public void RunJobsCompleted(IAsyncResult ar) =>
             Invoke(new Action(RunJobsCompletedActions));
 
         private void RunJobsCompletedActions()
         {
-            lblStatus.Text = CleanExit
-                ? @"Done."
-                : $@"Break. Completed: {Jobs.Completed}, error: {Jobs.Error}, no action: {Jobs.Pending}";
-            EnableGui(true);
-            grid1.Running = false;
-            grid1.Invalidate();
-            if (Config.AutoClose && Jobs.RunSuccess && AutoActionDialog.CheckAutoClose(this))
-                Close();
-        }
-
-        private void EnableGui(bool enabled)
-        {
-            runToolStripMenuItem.Enabled = enabled;
-            runSelectedJobToolStripMenuItem.Enabled = enabled;
+            _controller.RunJobsCompleted(this, CleanExit, lblStatus, Jobs, grid1);
+            _controller.SetGuiToRunningState(runToolStripMenuItem, runSelectedJobToolStripMenuItem, false);
         }
 
         private void RunJobs()
@@ -136,9 +121,11 @@ namespace JobRunner
                 Close();
                 return;
             }
+
             Refresh();
             Jobs.Load();
             Variables.Load();
+
             if (!Jobs.LoadSuccess)
             {
                 Cursor = Cursors.Default;
@@ -158,23 +145,19 @@ namespace JobRunner
                     t.AppendLine("To be able to edit the job list, start JobRunner as administrator.");
                 }
                 MessageBox.Show(t.ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
                 if (!Config.IsAdministrator)
                     Close();
             }
+
             if (Config.IsAdministrator && !string.IsNullOrWhiteSpace(Jobs.LoadFailedMessage))
                 MessageDisplayer.Yell(Jobs.LoadFailedMessage, Text);
+            
             grid1.Initialize(Jobs);
-            if (Config.IsAdministrator)
-            {
-                Text = @"JobRunner (Administrator)";
-                lblStatus.Text = @"Done.";
-            }
-            else
-            {
-                Text = @"JobRunner";
-                lblStatus.Text = @"Done (read only).";
-            }
+            _controller.InitializeStatus(this, lblStatus);
+
             Cursor = Cursors.Default;
+            
             if (Config.AutoStart && AutoActionDialog.CheckAutoStart(this))
                 runToolStripMenuItem_Click(this, new EventArgs());
         }
@@ -183,13 +166,16 @@ namespace JobRunner
         {
             if (!Config.IsAdministrator)
                 return;
+
             using var x = new AddJobDialog
             {
                 Jobs = Jobs,
                 Variables = Variables
             };
+
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
+
             grid1.Initialize(Jobs);
             SaveJobs();
         }
@@ -300,49 +286,20 @@ namespace JobRunner
 
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
+
             grid1.Refresh();
             SaveJobs();
         }
 
         private void MoveJobUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Config.IsAdministrator)
-                return;
-            var job = grid1.SelectedJob;
-            if (job == null)
-            {
-                MessageDisplayer.Tell("No job is selected.", "Move job up");
-                return;
-            }
-            if (Jobs.FirstJob == job)
-            {
-                MessageDisplayer.Tell("Selected job is already the first job.", "Move job up");
-                return;
-            }
-            grid1.MoveUp(grid1.SelectedRow);
-            Jobs.MoveUp(job);
-            grid1.Refresh();
+            _controller.MoveJobUp(Jobs, grid1);
             SaveJobs();
         }
 
         private void MoveJobDownToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Config.IsAdministrator)
-                return;
-            var job = grid1.SelectedJob;
-            if (job == null)
-            {
-                MessageDisplayer.Tell("No job is selected.", "Move job down");
-                return;
-            }
-            if (Jobs.LastJob == job)
-            {
-                MessageDisplayer.Tell("Selected job is already the last job.", "Move job down");
-                return;
-            }
-            grid1.MoveDown(grid1.SelectedRow);
-            Jobs.MoveDown(job);
-            grid1.Refresh();
+            _controller.MoveJobDown(Jobs, grid1);
             SaveJobs();
         }
 
@@ -423,38 +380,26 @@ namespace JobRunner
             SaveVariables();
         }
         
-        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var about = new StringBuilder();
-            about.AppendLine("Changes in version 1.3:");
-            about.AppendLine("- Variables can be added on the fly, from any view.");
-            about.AppendLine("- Two in-process tasks are added: \"Delete a file\", \"Download text\" and \"Binary upload\".");
-            about.AppendLine("- Non-administrators can view or start a job by double clicking on it.");
-            about.AppendLine("- Context menu added.");
-            about.AppendLine();
-            about.AppendLine("Changes in version 1.2:");
-            about.AppendLine("- Minor improvments in the user interface (added icons, more options in the Add job dialog).");
-            about.AppendLine("- Non administrators can open the Options dialog in read only mode.");
-            about.AppendLine("- Logging to file added.");
-            about.AppendLine();
-            about.AppendLine("Changes in version 1.1:");
-            about.AppendLine("- Added support for variables in job configuration.");
-            about.AppendLine("- Bug fix: Application crash when opening the Add job dialog.");
-            about.AppendLine("- Bug fix: Browse button didn't work in the Edit job dialog.");
-            MessageDisplayer.Tell(about.ToString(), $"About JobRunner {Application.ProductVersion}");
-        }
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e) =>
+            MessageDisplayer.Tell(
+                VersionHistory.GetVersionHistory(),
+                $"About JobRunner {Application.ProductVersion}"
+            );
 
         private void addVariableToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Config.IsAdministrator)
                 return;
+            
             using var x = new AddVariableDialog
             {
                 Variables = Variables,
                 Jobs = Jobs
             };
+            
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
+
             SaveVariables();
         }
 
@@ -491,11 +436,13 @@ namespace JobRunner
             {
                 viewJobToolStripMenuItem.Enabled = false;
                 editJobToolStripMenuItem1.Enabled = false;
+                runThisJobToolStripMenuItem.Enabled = false;
             }
             else
             {
                 viewJobToolStripMenuItem.Enabled = true;
                 editJobToolStripMenuItem1.Enabled = Config.IsAdministrator;
+                runThisJobToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -504,5 +451,8 @@ namespace JobRunner
 
         private void editJobToolStripMenuItem1_Click(object sender, EventArgs e) =>
             EditJobToolStripMenuItem_Click(sender, e);
+
+        private void runThisJobToolStripMenuItem_Click(object sender, EventArgs e) =>
+            RunSelectedJobToolStripMenuItem_Click(sender, e);
     }
 }
