@@ -119,6 +119,7 @@
     <Compile Include="Dialogs\ViewList\SimpleListItem.cs" />
     <Compile Include="GuiComponents\ContextMenuEventArgs.cs" />
     <Compile Include="GuiComponents\IGridVisualFeedback.cs" />
+    <Compile Include="GuiComponents\TextboxExtensions.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="ObjectModel\IJobList.cs" />

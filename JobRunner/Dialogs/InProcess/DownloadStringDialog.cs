@@ -2,6 +2,7 @@
 using JobRunner.Utils;
 using System;
 using System.Windows.Forms;
+using JobRunner.GuiComponents;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
@@ -44,45 +45,37 @@ namespace JobRunner.Dialogs.InProcess
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            var sourceUrl = txtSourceUrl.Text.Trim();
-            txtSourceUrl.Text = sourceUrl;
-            if (sourceUrl == "")
+            txtSourceUrl.Text = txtSourceUrl.Text.Trim();
+
+            if (string.IsNullOrEmpty(txtSourceUrl.Text))
             {
                 MessageDisplayer.Tell("Source URL is mandatory.", Text);
                 txtSourceUrl.Focus();
                 return;
             }
-            if (sourceUrl.IndexOf("\"", StringComparison.Ordinal) >= 0)
-            {
-                MessageDisplayer.Tell("Source URL cannot contain quotes.", Text);
-                txtSourceUrl.Focus();
-                return;
-            }
-            if (sourceUrl.StartsWith("-"))
-            {
-                MessageDisplayer.Tell("Source URL cannot start with \"-\".", Text);
-                txtSourceUrl.Focus();
-                return;
-            }
 
-            var targetFile = txtTargetFile.Text.Trim();
-            txtTargetFile.Text = targetFile;
-            if (targetFile == "")
+            if (!txtSourceUrl.ValidateDashAndQuotes("Source URL", Text))
+                return;
+
+            txtTargetFile.Text = txtTargetFile.Text.Trim();
+
+            if (string.IsNullOrEmpty(txtTargetFile.Text))
             {
                 MessageDisplayer.Tell("Target file is mandatory.", Text);
                 txtTargetFile.Focus();
                 return;
             }
-            if (targetFile.IndexOf("\"", StringComparison.Ordinal) >= 0)
-            {
-                MessageDisplayer.Tell("Target file cannot contain quotes.", Text);
-                txtTargetFile.Focus();
-                return;
-            }
 
-            var helper = new InProcessJobIdentifyerHelper();
-            JobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.DownloadString);
-            Arguments = DownloadStringArguments.CreateArgumentString(sourceUrl, targetFile, GetExistsBehaviour());
+            if (!txtTargetFile.ValidateDashAndQuotes("Target file", Text))
+                return;
+
+            JobIdentiftyerString = new InProcessJobIdentifyerHelper()
+                .GetIdentifyerString(
+                    InProcessJobIdentifyer.DownloadString
+                );
+
+            Arguments = DownloadStringArguments.CreateArgumentString(txtSourceUrl.Text, txtTargetFile.Text, GetExistsBehaviour());
+            
             DialogResult = DialogResult.OK;
         }
 

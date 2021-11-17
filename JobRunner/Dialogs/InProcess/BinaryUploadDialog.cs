@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using JobRunner.GuiComponents;
 using JobRunner.ObjectModel.InProcess;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
@@ -57,70 +58,41 @@ namespace JobRunner.Dialogs.InProcess
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            var sourceFile = txtSourceFile.Text.Trim();
-            txtSourceFile.Text = sourceFile;
-            if (sourceFile == "")
+            txtSourceFile.Text = txtSourceFile.Text.Trim();
+            if (string.IsNullOrEmpty(txtSourceFile.Text))
             {
                 MessageDisplayer.Tell("Source file is mandatory.", Text);
                 txtSourceFile.Focus();
                 return;
             }
-            if (sourceFile.IndexOf("\"", StringComparison.Ordinal) >= 0)
-            {
-                MessageDisplayer.Tell("Source file cannot contain quotes.", Text);
-                txtSourceFile.Focus();
+
+            if (!txtSourceFile.ValidateDashAndQuotes("Source file", Text))
                 return;
-            }
-            if (sourceFile.StartsWith("-"))
-            {
-                MessageDisplayer.Tell("Source file cannot start with \"-\".", Text);
-                txtSourceFile.Focus();
-                return;
-            }
 
             txtTarget.Text = txtTarget.Text.Trim();
-            if (txtTarget.Text.IndexOf("\"", StringComparison.Ordinal) >= 0)
-            {
-                MessageDisplayer.Tell("Target cannot contain quotes.", Text);
-                txtTarget.Focus();
+            if (!txtTarget.ValidateDashAndQuotes("Target", Text))
                 return;
-            }
-            if (txtTarget.Text.StartsWith("-"))
-            {
-                MessageDisplayer.Tell("Target cannot start with \"-\".", Text);
-                txtTarget.Focus();
-                return;
-            }
 
-            if (txtUsername.Text.IndexOf("\"", StringComparison.Ordinal) >= 0)
-            {
-                MessageDisplayer.Tell("Username cannot contain quotes.", Text);
-                txtUsername.Focus();
+            if (!txtUsername.ValidateDashAndQuotes("Username", Text))
                 return;
-            }
-            if (txtUsername.Text.StartsWith("-"))
-            {
-                MessageDisplayer.Tell("Username cannot start with \"-\".", Text);
-                txtUsername.Focus();
-                return;
-            }
 
-            if (txtPassword.Text.IndexOf("\"", StringComparison.Ordinal) >= 0)
-            {
-                MessageDisplayer.Tell("Password cannot contain quotes.", Text);
-                txtPassword.Focus();
+            if (!txtPassword.ValidateDashAndQuotes("Password", Text))
                 return;
-            }
-            if (txtPassword.Text.StartsWith("-"))
-            {
-                MessageDisplayer.Tell("Password cannot start with \"-\".", Text);
-                txtPassword.Focus();
-                return;
-            }
 
-            var helper = new InProcessJobIdentifyerHelper();
-            JobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.BinaryUpload);
-            Arguments = BinaryUploadArguments.CreateArgumentString(sourceFile, txtTarget.Text, txtUsername.Text, txtPassword.Text, GetBinaryUploadFailedBehaviour());
+            JobIdentiftyerString = new InProcessJobIdentifyerHelper()
+                .GetIdentifyerString(
+                    InProcessJobIdentifyer.BinaryUpload
+                );
+            
+            Arguments = BinaryUploadArguments
+                .CreateArgumentString(
+                    txtSourceFile.Text,
+                    txtTarget.Text,
+                    txtUsername.Text,
+                    txtPassword.Text,
+                    GetBinaryUploadFailedBehaviour()
+            );
+            
             DialogResult = DialogResult.OK;
         }
 

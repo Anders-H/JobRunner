@@ -59,6 +59,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
                     Credentials = new NetworkCredential(username, password)
                 };
                 client.UploadFile(target, WebRequestMethods.Ftp.UploadFile, sourceFile);
+                
             }
             catch (SystemException e)
             {

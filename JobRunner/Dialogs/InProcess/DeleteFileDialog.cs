@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using JobRunner.GuiComponents;
 using JobRunner.ObjectModel.InProcess;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
@@ -54,30 +55,21 @@ namespace JobRunner.Dialogs.InProcess
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            var file = txtTargetFile.Text.Trim();
-            txtTargetFile.Text = file;
-            if (file == "")
+            txtTargetFile.Text = txtTargetFile.Text.Trim();
+
+            if (string.IsNullOrEmpty(txtTargetFile.Text))
             {
                 MessageDisplayer.Tell("File to delete is mandatory.", Text);
                 txtTargetFile.Focus();
                 return;
             }
-            if (file.IndexOf("\"", StringComparison.Ordinal) >= 0)
-            {
-                MessageDisplayer.Tell("File to delete cannot contain quotes.", Text);
-                txtTargetFile.Focus();
+
+            if (!txtTargetFile.ValidateDashAndQuotes("File to delete", Text))
                 return;
-            }
-            if (file.StartsWith("-"))
-            {
-                MessageDisplayer.Tell("File to delete cannot start with \"-\".", Text);
-                txtTargetFile.Focus();
-                return;
-            }
 
             var helper = new InProcessJobIdentifyerHelper();
             JobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.DeleteFile);
-            Arguments = DeleteFileArguments.CreateArgumentString(file, GetFileNotFoundBehaviour());
+            Arguments = DeleteFileArguments.CreateArgumentString(txtTargetFile.Text, GetFileNotFoundBehaviour());
             DialogResult = DialogResult.OK;
         }
 
