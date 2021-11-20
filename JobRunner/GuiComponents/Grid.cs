@@ -108,6 +108,7 @@ namespace JobRunner.GuiComponents
                 rows.Add(row);
                 rowIndex++;
             }
+
             Rows.AddRange(rows.ToArray());
         }
 
@@ -156,16 +157,32 @@ namespace JobRunner.GuiComponents
         {
             const string text = "JjÖg";
             var textSize = g.MeasureString(text, Font);
-            width = (int)textSize.Width;
-            return (int)(cellBounds.Height / 2.0 - textSize.Height / 2.0) + 1;
+            width = (int) textSize.Width;
+            return (int) (cellBounds.Height / 2.0 - textSize.Height / 2.0) + 1;
         }
 
-        public Job SelectedJob =>
-            SelectedCells.Count <= 0
+        public Job SelectedJob
+        {
+            get => SelectedCells.Count <= 0
                 ? null
-                : (Job)Rows[SelectedCells[0].RowIndex].Tag;
+                : (Job) Rows[SelectedCells[0].RowIndex].Tag;
+            set
+            {
+                if (Rows.Count <= 0)
+                    return;
 
-        public int SelectedRow =>
+                for (var i = 0; i < Rows.Count; i++)
+                {
+                    if (Rows[i].Tag != value)
+                        continue;
+
+                    Rows[i].Cells[1].Selected = true;
+                    return;
+                }
+            }
+        }
+
+    public int SelectedRow =>
             SelectedCells.Count > 0
                 ? SelectedCells[0].RowIndex
                 : -1;

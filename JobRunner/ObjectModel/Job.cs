@@ -170,5 +170,8 @@ namespace JobRunner.ObjectModel
         <display>{(Hidden ? "Hidden" : "Visible")}</display>
         <breakOnError>{(BreakOnError ? "true" : "false")}</breakOnError>
     </job>";
+
+        public override string ToString() =>
+            $"{Number}. {Name}";
     }
 }

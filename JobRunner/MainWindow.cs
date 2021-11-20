@@ -218,22 +218,16 @@ namespace JobRunner
         
         private void DeleteJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Config.IsAdministrator)
-                return;
-            var job = grid1.SelectedJob;
-            if (job == null)
+            using var x = new DeleteJobDialog();
+            x.Jobs = Jobs;
+            x.InitiallySelectedJob = grid1.SelectedJob;
+            if (x.ShowDialog(this) == DialogResult.OK)
             {
-                MessageDisplayer.Tell("No job is selected.", "Delete job");
-                return;
+                grid1.RemoveJob(grid1.SelectedRow);
+                Jobs.RemoveJob(x.SelectedJob);
+                grid1.Refresh();
+                SaveJobs();
             }
-
-            if (!MessageDisplayer.Ask($@"Are you sure you want to delete the job named ""{job.Name}""?", "Delete job"))
-                return;
-
-            grid1.RemoveJob(grid1.SelectedRow);
-            Jobs.RemoveJob(job);
-            grid1.Refresh();
-            SaveJobs();
         }
 
         private void Grid1_EditJob(object sender, EventArgs e)

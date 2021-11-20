@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 
 namespace JobRunner.ObjectModel
 {
@@ -12,6 +13,7 @@ namespace JobRunner.ObjectModel
         int FirstSequenceNumber { get; }
         Job LastJob { get; }
         int LastSequenceNumber { get; }
+        Job? GetJob(int index);
         string LoadFailedMessage { get; }
         bool LoadSuccess { get; }
         int Pending { get; }

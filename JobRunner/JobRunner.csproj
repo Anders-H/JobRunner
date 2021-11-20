@@ -2,6 +2,7 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+  <Nullable>enable</Nullable>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B4E10D16-0D0B-49BF-8965-7880F05D7FE6}</ProjectGuid>
@@ -55,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeleteJobDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeleteJobDialog.Designer.cs">
+      <DependentUpon>DeleteJobDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AddJobDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +180,9 @@
     <Compile Include="ObjectModel\TimeSpanList.cs" />
     <Compile Include="Utils\XmlTools.cs" />
     <Compile Include="VersionHistory.cs" />
+    <EmbeddedResource Include="DeleteJobDialog.resx">
+      <DependentUpon>DeleteJobDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddJobDialog.resx">
       <DependentUpon>AddJobDialog.cs</DependentUpon>
     </EmbeddedResource>
