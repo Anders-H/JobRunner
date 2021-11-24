@@ -43,12 +43,25 @@ namespace JobRunner
         {
             if (!Config.IsAdministrator || SelectedJob == null)
             {
-                Close();
+                DialogResult = DialogResult.Cancel;
                 return;
             }
+
+            if (MessageDisplayer.Ask("Are you sure?", Text))
+                DialogResult = DialogResult.OK;
         }
 
-        private void lstJobs_SelectedIndexChanged(object sender, EventArgs e) =>
+        private void lstJobs_SelectedIndexChanged(object sender, EventArgs e)
+        {
             btnDelete.Enabled = Config.IsAdministrator && SelectedJob != null;
+
+            if (SelectedJob == null)
+            {
+                txtJob.Text = "";
+                return;
+            }
+
+            txtJob.Text = SelectedJob.GetDescription();
+        }
     }
 }

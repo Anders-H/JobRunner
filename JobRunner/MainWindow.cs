@@ -197,24 +197,6 @@ namespace JobRunner
                 MessageDisplayer.Yell($@"Failed to save the file ""{Config.GetJobFilePath()}"".", Text);
             }
         }
-
-        private void SaveVariables()
-        {
-            Cursor = Cursors.WaitCursor;
-            try
-            {
-                using var sw = new StreamWriter(Config.GetVariableFilePath(), false, Encoding.UTF8);
-                sw.Write(Variables.GetXml());
-                sw.Flush();
-                sw.Close();
-                Cursor = Cursors.Default;
-            }
-            catch
-            {
-                Cursor = Cursors.Default;
-                MessageDisplayer.Yell($@"Failed to save the file ""{Config.GetVariableFilePath()}"".", Text);
-            }
-        }
         
         private void DeleteJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -275,7 +257,7 @@ namespace JobRunner
                 Job = grid1.SelectedJob,
                 Variables = Variables,
                 Jobs = Jobs,
-                SaveVariables = SaveVariables
+                SaveVariables = _controller.SaveVariables
             };
 
             if (x.ShowDialog(this) != DialogResult.OK)
@@ -328,51 +310,8 @@ namespace JobRunner
             SimpleListDialog.ShowListDialog(this, listDescriptor, null);
         }
 
-        private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var listDescriptor = new SimpleListDescriptor
-            {
-                WindowTitle = "Variables",
-                PrimaryColumnTitle = "Variable",
-                SecondaryColumnTitle = "Usage (job name)"
-            };
-            listDescriptor.AddRange(
-                from variable
-                in Variables.All
-                let jobs = Jobs.GetVariableUsage(variable)
-                select new SimpleListItem(
-                    $"\"{variable.Name}\"=\"{variable.Value}\"",
-                    jobs.Names,
-                    $"[{variable.Name}]"
-                )
-            );
-            SimpleListDialog.ShowListDialog(
-                this,
-                listDescriptor,
-                Config.IsAdministrator ? (Action<SimpleListDescriptor>)AddVariable : null
-            );
-        }
-
-        private void AddVariable(SimpleListDescriptor descriptor)
-        {
-            using var x = new AddVariableDialogSmall
-            {
-                Variables = Variables
-            };
-            x.ShowDialog(this);
-            descriptor.Clear();
-            descriptor.AddRange(
-                from variable
-                    in Variables.All
-                let jobs = Jobs.GetVariableUsage(variable)
-                select new SimpleListItem(
-                    $"\"{variable.Name}\"=\"{variable.Value}\"",
-                    jobs.Names,
-                    $"[{variable.Name}]"
-                )
-            );
-            SaveVariables();
-        }
+        private void variablesToolStripMenuItem_Click(object sender, EventArgs e) =>
+            _controller.ShowVariables(this, Variables, Jobs);
         
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e) =>
             MessageDisplayer.Tell(
@@ -394,7 +333,7 @@ namespace JobRunner
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            SaveVariables();
+            _controller.SaveVariables(this, Variables);
         }
 
         private void openLogToolStripMenuItem_Click(object sender, EventArgs e)

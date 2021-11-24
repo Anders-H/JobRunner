@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Diagnostics;
 using System.Threading;
 using JobRunner.GuiComponents;
@@ -38,6 +39,15 @@ namespace JobRunner.ObjectModel
             BreakOnError = breakOnError;
         }
 
+        public string GetDescription()
+        {
+            var s = new StringBuilder();
+            s.AppendLine($"Command: {Command}");
+            s.AppendLine($"Arguments: {Arguments}");
+            s.AppendLine($"Timeout: {Timeout}");
+            return s.ToString();
+        }
+
         public void Reset(DateTime allJobsStartTime)
         {
             Status = JobStatus.Pending;
@@ -53,14 +63,18 @@ namespace JobRunner.ObjectModel
             try
             {
                 StartTime = DateTime.Now;
+
                 if (Config.EnableLogging)
                 {
                     var s = StartTime.Value;
                     var h = Hidden ? " (hidden)" : "";
                     var n = Name.Trim();
+
                     if (string.IsNullOrEmpty(n))
                         n = Command;
+
                     var result = log.AppendLog($"{s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00}{h}: {n}");
+
                     if (!result && Config.TreatLoggingErrorsAsStepErrors)
                         throw new SystemException("Logging failed.");
                 }
@@ -71,7 +85,7 @@ namespace JobRunner.ObjectModel
                     OutOfProcess(grid, variableList);
 
                 EndTime = DateTime.Now;
-                
+
                 if (Config.EnableLogging)
                 {
                     var s = EndTime.Value;
@@ -85,10 +99,10 @@ namespace JobRunner.ObjectModel
                 EndTime = DateTime.Now;
                 Status = JobStatus.Failed;
                 FailMessage = e.Message;
-                
+
                 if (string.IsNullOrWhiteSpace(FailMessage))
                     FailMessage = e.GetType().Name;
-                
+
                 if (Config.EnableLogging)
                 {
                     var s = EndTime.Value;
@@ -104,12 +118,15 @@ namespace JobRunner.ObjectModel
                 Arguments = new ArgumentDecoder(variableList).GetDecodedText(Arguments),
                 WindowStyle = Hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal
             };
+
             var process = Process.Start(start);
+
             if (process == null)
             {
                 Status = JobStatus.Failed;
                 return;
             }
+
             while (!process.HasExited)
             {
                 grid.CursorBlink = !grid.CursorBlink;
@@ -123,7 +140,9 @@ namespace JobRunner.ObjectModel
                 FailMessage = "Timeout";
                 return;
             }
+
             ExitCode = process.ExitCode;
+
             Status = ExitCode == 0
                 ? JobStatus.Completed
                 : JobStatus.Failed;
@@ -137,6 +156,7 @@ namespace JobRunner.ObjectModel
             var args = new ArgumentList(Arguments);
             args = args.Decode(variableList);
             job.Begin(args);
+
             while (!job.HasExited)
             {
                 grid.CursorBlink = !grid.CursorBlink;
@@ -150,17 +170,20 @@ namespace JobRunner.ObjectModel
                 ExitCode = -1;
                 return;
             }
+
             ExitCode = job.ExitCode;
+
             Status = ExitCode == 0
                 ? JobStatus.Completed
                 : JobStatus.Failed;
+
             if (Status == JobStatus.Failed && job.Exception != null)
                 FailMessage = job.Exception.Message;
         }
-        
+
         public bool UsesVariable(Variable variable) =>
             Arguments.IndexOf($"[{variable.Name}]", StringComparison.Ordinal) > -1;
-        
+
         public string GetXml() =>
             $@"    <job>
         <name>{System.Net.WebUtility.HtmlEncode(Name)}</name>

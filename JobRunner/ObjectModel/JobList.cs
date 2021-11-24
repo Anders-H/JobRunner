@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -205,7 +206,18 @@ namespace JobRunner.ObjectModel
                 jobs.All.Add(job);
             return jobs;
         }
-        
+
+        public Job? GetJob(int index)
+        {
+            if (Count <= 0)
+                return null;
+
+            if (index >= 0 && index < Count)
+                return All[index];
+
+            return null;
+        }
+
         public string Names =>
             string.Join(", ", All.Select(job => job.Name).ToList());
     }

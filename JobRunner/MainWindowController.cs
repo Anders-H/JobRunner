@@ -1,5 +1,10 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
 using JobRunner.Dialogs;
+using JobRunner.Dialogs.ViewList;
 using JobRunner.GuiComponents;
 using JobRunner.ObjectModel;
 using JobRunner.Utils;
@@ -95,6 +100,72 @@ namespace JobRunner
             grid.MoveDown(grid.SelectedRow);
             jobs.MoveDown(job);
             grid.Refresh();
+        }
+
+        public void ShowVariables(MainWindow parent, IVariableList variables, IJobList jobList)
+        {
+            var listDescriptor = new SimpleListDescriptor
+            {
+                WindowTitle = "Variables",
+                PrimaryColumnTitle = "Variable",
+                SecondaryColumnTitle = "Usage (job name)"
+            };
+
+            listDescriptor.AddRange(
+                from variable
+                in variables.All
+                let jobs = jobList.GetVariableUsage(variable)
+                select new SimpleListItem(
+                    $"\"{variable.Name}\"=\"{variable.Value}\"",
+                    jobs.Names,
+                    $"[{variable.Name}]"
+                )
+            );
+
+            SimpleListDialog.ShowListDialog(
+                parent,
+                listDescriptor,
+                Config.IsAdministrator ? (Action<MainWindow, IVariableList, IJobList, SimpleListDescriptor>)AddVariable : null
+            );
+        }
+
+        private void AddVariable(MainWindow parent, IVariableList variables, IJobList jobList, SimpleListDescriptor descriptor)
+        {
+            using var x = new AddVariableDialogSmall
+            {
+                Variables = variables
+            };
+            x.ShowDialog(parent);
+            descriptor.Clear();
+            descriptor.AddRange(
+                from variable
+                    in variables.All
+                let jobs = jobList.GetVariableUsage(variable)
+                select new SimpleListItem(
+                    $"\"{variable.Name}\"=\"{variable.Value}\"",
+                    jobs.Names,
+                    $"[{variable.Name}]"
+                )
+            );
+            SaveVariables(parent, variables);
+        }
+
+        public void SaveVariables(MainWindow parent, IVariableList variables)
+        {
+            parent.Cursor = Cursors.WaitCursor;
+            try
+            {
+                using var sw = new StreamWriter(Config.GetVariableFilePath(), false, Encoding.UTF8);
+                sw.Write(variables.GetXml());
+                sw.Flush();
+                sw.Close();
+                parent.Cursor = Cursors.Default;
+            }
+            catch
+            {
+                parent.Cursor = Cursors.Default;
+                MessageDisplayer.Yell($@"Failed to save the file ""{Config.GetVariableFilePath()}"".", parent.Text);
+            }
         }
     }
 }

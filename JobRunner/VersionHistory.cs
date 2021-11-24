@@ -12,7 +12,7 @@ namespace JobRunner
             @"Changes in version 1.3:
 
 - Variables can be added on the fly, from any view.
-- Two in-process tasks are added: ""Delete a file"", ""Download text"" and ""Binary upload"".
+- Three in-process tasks are added: ""Delete a file"", ""Download text"" and ""Binary upload"".
 - Non-administrators can view or start a job by double clicking on it.
 - Context menu added.
 

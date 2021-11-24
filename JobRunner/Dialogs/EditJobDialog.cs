@@ -13,7 +13,7 @@ namespace JobRunner.Dialogs
         public Job Job { get; set; }
         public IVariableList Variables { get; set; }
         public IJobList Jobs { get; set; }
-        public Action SaveVariables { get; set; }
+        public Action<MainWindow, IVariableList> SaveVariables { get; set; }
         
         public EditJobDialog()
         {
