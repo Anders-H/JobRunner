@@ -12,7 +12,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
     public class DownloadStringJob : InProcessJob
     {
         private string TargetFile { get; set; }
-        private Action<string, string> Action { get; set; }
+        private DownloadStringDelegate Action { get; set; }
         
         public override void Begin(ArgumentList args)
         {

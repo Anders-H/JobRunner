@@ -37,6 +37,7 @@ namespace JobRunner.ObjectModel
             Status = JobStatus.Pending;
             Hidden = hidden;
             BreakOnError = breakOnError;
+            FailMessage = "";
         }
 
         public string GetDescription()

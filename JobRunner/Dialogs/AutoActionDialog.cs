@@ -1,5 +1,4 @@
 ﻿#nullable enable
-
 using System.Windows.Forms;
 
 namespace JobRunner.Dialogs
@@ -36,10 +35,12 @@ namespace JobRunner.Dialogs
 
         private void Timer1_Tick(object sender, System.EventArgs e)
         {
-            lblTimer.Text = TimerText.Replace("¤", SecondsLeft.ToString());
+            lblTimer.Text = TimerText?.Replace("¤", SecondsLeft.ToString()) ?? "";
             SecondsLeft--;
+
             if (SecondsLeft > -1)
                 return;
+
             timer1.Enabled = false;
             DialogResult = DialogResult.OK;
         }

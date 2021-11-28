@@ -12,7 +12,8 @@ namespace JobRunner.ObjectModel
     {
         public List<Variable> All { get; } = new List<Variable>();
         public bool LoadSuccess { get; private set; }
-        
+        public string LoadFailedMessage { get; private set; }
+
         public IVariableList GetVariables(Job job)
         {
             IVariableList vl = new VariableList();
@@ -39,8 +40,6 @@ namespace JobRunner.ObjectModel
                 select v.Name;
             return string.Join(", ", names);
         }
-
-        public string LoadFailedMessage { get; private set; }
 
         public void Load()
         {

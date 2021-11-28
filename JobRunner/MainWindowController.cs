@@ -104,12 +104,11 @@ namespace JobRunner
 
         public void ShowVariables(MainWindow parent, IVariableList variables, IJobList jobList)
         {
-            var listDescriptor = new SimpleListDescriptor
-            {
-                WindowTitle = "Variables",
-                PrimaryColumnTitle = "Variable",
-                SecondaryColumnTitle = "Usage (job name)"
-            };
+            var listDescriptor = new SimpleListDescriptor(
+                "Variables",
+                "Variable",
+                "Usage (job name)"
+            );
 
             listDescriptor.AddRange(
                 from variable

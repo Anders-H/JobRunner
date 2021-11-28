@@ -10,7 +10,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
     public class DeleteFileJob : InProcessJob
     {
         private string FileToDelete { get; set; }
-        private Action<string> Action { get; set; }
+        private DeleteFileDelegate Action { get; set; }
 
         public override void Begin(ArgumentList args)
         {

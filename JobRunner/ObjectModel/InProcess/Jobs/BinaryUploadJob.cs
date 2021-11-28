@@ -13,7 +13,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
         public string Target { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        private Action<string, string, string, string> Action { get; set; }
+        private UploadFileDelegate Action { get; set; }
 
         public override void Begin(ArgumentList args)
         {

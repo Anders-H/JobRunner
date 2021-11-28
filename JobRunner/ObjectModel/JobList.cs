@@ -16,6 +16,11 @@ namespace JobRunner.ObjectModel
         public bool LoadSuccess { get; private set; }
         public string LoadFailedMessage { get; private set; }
 
+        public JobList()
+        {
+            LoadFailedMessage = "";
+        }
+
         public void Load()
         {
             LoadSuccess = false;

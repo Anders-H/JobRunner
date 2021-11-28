@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,8 +9,8 @@ namespace JobRunner.GuiComponents
 {
     public class Grid : DataGridView, IGridVisualFeedback
     {
-        public event EventHandler EditJob;
-        public event ContextMenuEventHandler ShowContextMenu;
+        public event EventHandler? EditJob;
+        public event ContextMenuEventHandler? ShowContextMenu;
         public bool CursorBlink { get; set; }
         public bool Running { get; set; }
         public int RunSingle { get; set; }
@@ -161,7 +162,7 @@ namespace JobRunner.GuiComponents
             return (int) (cellBounds.Height / 2.0 - textSize.Height / 2.0) + 1;
         }
 
-        public Job SelectedJob
+        public Job? SelectedJob
         {
             get => SelectedCells.Count <= 0
                 ? null

@@ -226,10 +226,8 @@ namespace JobRunner
 
         private void ViewJob()
         {
-            using var x = new ViewJobDialog
-            {
-                Job = grid1.SelectedJob
-            };
+            using var x = new ViewJobDialog(grid1.SelectedJob);
+
             var result = x.ShowDialog(this);
 
             if (result == DialogResult.OK)
@@ -286,12 +284,11 @@ namespace JobRunner
 
         private void jobsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var listDescriptor = new SimpleListDescriptor
-            {
-                WindowTitle = "Jobs",
-                PrimaryColumnTitle = "Job",
-                SecondaryColumnTitle = "Variables"
-            };
+            var listDescriptor = new SimpleListDescriptor(
+                "Jobs",
+                "Job",
+                "Variables"
+            );
 
             listDescriptor.AddRange(
                 from job

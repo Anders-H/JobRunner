@@ -14,7 +14,7 @@ namespace JobRunner.Dialogs
         public Job Job { get; set; }
         public IVariableList Variables { get; set; }
         public IJobList Jobs { get; set; }
-        public Action<MainWindow, IVariableList> SaveVariables { get; set; }
+        public SaveVariablesDelegate SaveVariables { get; set; }
         
         public EditJobDialog(MainWindow parent)
         {
@@ -109,12 +109,11 @@ namespace JobRunner.Dialogs
 
         private void lblVariables_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var listDescriptor = new SimpleListDescriptor
-            {
-                WindowTitle = "Variables",
-                PrimaryColumnTitle = "Variable",
-                SecondaryColumnTitle = "Usage (job name)"
-            };
+            var listDescriptor = new SimpleListDescriptor(
+                "Variables",
+                "Variable",
+                "Usage (job name)"
+            );
 
             listDescriptor.AddRange(
                 from variable

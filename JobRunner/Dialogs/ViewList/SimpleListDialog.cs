@@ -11,8 +11,8 @@ namespace JobRunner.Dialogs.ViewList
         private readonly MainWindow _parent;
         private readonly IVariableList _variables;
         private readonly IJobList _jobs;
-        private SimpleListDescriptor _descriptor;
-        private AddVariableDelegate _addAction;
+        private SimpleListDescriptor? _descriptor;
+        private AddVariableDelegate? _addAction;
 
         public SimpleListDialog(MainWindow parent, IVariableList variables, IJobList jobs)
         {
@@ -35,7 +35,7 @@ namespace JobRunner.Dialogs.ViewList
         private void SimpleListDialog_Load(object sender, EventArgs e)
         {
             btnAdd.Visible = _addAction != null;
-            Text = _descriptor.WindowTitle;
+            Text = _descriptor!.WindowTitle ?? "";
             RefreshList();
         }
 
@@ -60,10 +60,13 @@ namespace JobRunner.Dialogs.ViewList
         {
             listView1.BeginUpdate();
             listView1.Items.Clear();
-            listView1.Columns[0].Text = _descriptor.PrimaryColumnTitle;
-            listView1.Columns[1].Text = _descriptor.SecondaryColumnTitle;
-            foreach (var item in _descriptor)
-                item.Add(listView1);
+            listView1.Columns[0].Text = _descriptor?.PrimaryColumnTitle ?? "";
+            listView1.Columns[1].Text = _descriptor?.SecondaryColumnTitle ?? "";
+
+            if (_descriptor != null)
+                foreach (var item in _descriptor)
+                    item.Add(listView1);
+
             listView1.EndUpdate();
         }
     }

@@ -11,11 +11,13 @@ namespace JobRunner.Dialogs.InProcess
 {
     public partial class DownloadStringDialog : Form
     {
-        public string JobIdentiftyerString { get; set; }
-        public string Arguments { get; set; }
+        public string JobIdentiftyerString { get; private set; }
+        public string Arguments { get; private set; }
 
-        public DownloadStringDialog()
+        public DownloadStringDialog(string jobIdentiftyerString, string arguments)
         {
+            JobIdentiftyerString = jobIdentiftyerString;
+            Arguments = arguments;
             InitializeComponent();
         }
 

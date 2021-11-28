@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Windows.Forms;
 using JobRunner.GuiComponents;
 using JobRunner.ObjectModel.InProcess;
@@ -11,11 +12,13 @@ namespace JobRunner.Dialogs.InProcess
 {
     public partial class BinaryUploadDialog : Form
     {
-        public string JobIdentiftyerString { get; set; }
-        public string Arguments { get; set; }
+        public string JobIdentiftyerString { get; private set; }
+        public string Arguments { get; private set; }
 
-        public BinaryUploadDialog()
+        public BinaryUploadDialog(string jobIdentifyerString, string arguments)
         {
+            JobIdentiftyerString = jobIdentifyerString;
+            Arguments = arguments;
             InitializeComponent();
         }
 
