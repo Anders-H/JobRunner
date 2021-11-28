@@ -1,15 +1,17 @@
 ﻿using System.Windows.Forms;
 using JobRunner.ObjectModel;
 using JobRunner.Services;
+using JobRunner.Utils;
 
 namespace JobRunner.Dialogs
 {
     public partial class AddVariableDialogSmall : Form
     {
-        public IVariableList Variables { get; set; }
+        private readonly IVariableList _variables;
         
-        public AddVariableDialogSmall()
+        public AddVariableDialogSmall(IVariableList variable)
         {
+            _variables = variable;
             InitializeComponent();
         }
 
@@ -23,27 +25,17 @@ namespace JobRunner.Dialogs
 
             if (string.IsNullOrWhiteSpace(txtVariableName.Text))
             {
-                MessageBox.Show(
-                    @"The variable must have a valid name.",
-                    Text,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                MessageDisplayer.Tell(@"The variable must have a valid name.", Text);
                 return;
             }
 
-            if (Variables.HasVariable(txtVariableName.Text))
+            if (_variables.HasVariable(txtVariableName.Text))
             {
-                MessageBox.Show(
-                    @"The variable name already exists.",
-                    Text,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                MessageDisplayer.Tell(@"The variable name already exists.", Text);
                 return;
             }
 
-            Variables.Add(txtVariableName.Text, txtVariableValue.Text);
+            _variables.Add(txtVariableName.Text, txtVariableValue.Text);
             
             DialogResult = DialogResult.OK;
         }

@@ -138,12 +138,12 @@ namespace JobRunner.Dialogs
 
         private void AddVariable(MainWindow parent, IVariableList variables, IJobList jobList, SimpleListDescriptor descriptor)
         {
-            using var x = new AddVariableDialogSmall
-            {
-                Variables = Variables
-            };
+            using var x = new AddVariableDialogSmall(Variables);
+
             x.ShowDialog(this);
+
             descriptor.Clear();
+
             descriptor.AddRange(
                 from variable
                     in Variables.All
@@ -154,6 +154,7 @@ namespace JobRunner.Dialogs
                     $"[{variable.Name}]"
                 )
             );
+
             SaveVariables(_parent, Variables);
         }
         

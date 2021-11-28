@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
+using JobRunner.ObjectModel.Xml;
 using JobRunner.Utils;
 
 namespace JobRunner.ObjectModel
@@ -21,6 +21,7 @@ namespace JobRunner.ObjectModel
             LoadSuccess = false;
             All.Clear();
             var filename = Config.GetJobFilePath();
+
             if (!File.Exists(filename))
             {
                 if (Config.IsAdministrator)
@@ -31,17 +32,21 @@ namespace JobRunner.ObjectModel
                 LoadFailedMessage = $"The file {filename} does not exist.";
                 return;
             }
+            
             var dom = new XmlDocument();
             dom.Load(filename);
             var doc = dom.DocumentElement;
             var jobsXml = doc?.SelectNodes("job");
+
             if (jobsXml == null)
                 return;
+            
             Config.AutoStart = doc.GetBoolFromAttribute("AutoStart");
             Config.AutoClose = doc.GetBoolFromAttribute("AutoClose");
             Config.EnableLogging = doc.GetBoolFromAttribute("EnableLogging");
             Config.TreatLoggingErrorsAsStepErrors = doc.GetBoolFromAttribute("TreatLoggingErrorsAsStepErrors");
             var number = 0;
+
             foreach (XmlElement jobXml in jobsXml)
             {
                 number++;
@@ -113,19 +118,8 @@ namespace JobRunner.ObjectModel
         public int Count =>
             All.Count;
 
-        public string GetXml()
-        {
-            var s = new StringBuilder();
-            s.AppendLine(@"<?xml version=""1.0"" encoding=""utf-8"" ?>");
-            s.AppendLine($@"<jobs
-   AutoStart=""{(Config.AutoStart ? "1" : "0")}""
-   AutoClose=""{(Config.AutoClose ? "1" : "0")}""
-   EnableLogging=""{(Config.EnableLogging ? "1" : "0")}""
-   TreatLoggingErrorsAsStepErrors=""{(Config.TreatLoggingErrorsAsStepErrors ? "1" : "0")}"">");
-            All.ForEach(x => s.AppendLine(x.GetXml()));
-            s.AppendLine("</jobs>");
-            return s.ToString();
-        }
+        public string GetXml() =>
+            new XmlBuilder().GetXml(All);
 
         public void ResetJobs()
         {

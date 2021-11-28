@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using JobRunner.Logging;
+using JobRunner.Utils;
 
 namespace JobRunner.Dialogs
 {
@@ -18,12 +19,16 @@ namespace JobRunner.Dialogs
             Refresh();
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();
+            
             var file = Log.GetFile();
+            
             lblFolder.Text = file.Directory?.FullName ?? "";
             lblFile.Text = file.Name;
+            
             lblStatus.Text = file.Exists
                 ? $@"Status: Ok ({file.Length:n0} bytes)"
                 : "Status: Missing";
+            
             lblFile.Enabled = file.Exists;
             Cursor = Cursors.Default;
         }
@@ -36,7 +41,7 @@ namespace JobRunner.Dialogs
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, @"Failed to open folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageDisplayer.Yell(exception.Message, @"Failed to open folder");
             }
         }
 
@@ -48,7 +53,7 @@ namespace JobRunner.Dialogs
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, @"Failed to open file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageDisplayer.Yell(exception.Message, @"Failed to open file");
             }
         }
     }

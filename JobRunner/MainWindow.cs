@@ -66,7 +66,7 @@ namespace JobRunner
 
             if (grid1.SelectedJob == null)
             {
-                MessageBox.Show(@"No job is selected.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageDisplayer.Tell(@"No job is selected.", Text);
                 return;
             }
             
@@ -130,21 +130,19 @@ namespace JobRunner
             {
                 Cursor = Cursors.Default;
                 lblStatus.Text = @"Load failed.";
+                
                 var failMessage = string.IsNullOrWhiteSpace(Jobs.LoadFailedMessage)
                     ? "An unknown error has occured."
                     : Jobs.LoadFailedMessage;
+                
                 var t = new StringBuilder();
-                t.Append(failMessage);
-                t.AppendLine();
-                t.AppendLine();
+                var logTextProducer = new LogTextProducer();
+                logTextProducer.AppendMessage(t, failMessage);
+
                 if (!Config.IsAdministrator)
-                {
-                    t.Append("The application will close.");
-                    t.AppendLine();
-                    t.AppendLine();
-                    t.AppendLine("To be able to edit the job list, start JobRunner as administrator.");
-                }
-                MessageBox.Show(t.ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logTextProducer.AppendCloseMessage(t);
+
+                MessageDisplayer.Yell(t.ToString(), Text);
                 
                 if (!Config.IsAdministrator)
                     Close();
@@ -199,6 +197,7 @@ namespace JobRunner
             using var x = new DeleteJobDialog();
             x.Jobs = Jobs;
             x.InitiallySelectedJob = grid1.SelectedJob;
+
             if (x.ShowDialog(this) == DialogResult.OK)
             {
                 grid1.RemoveJob(grid1.SelectedRow);
@@ -345,7 +344,7 @@ namespace JobRunner
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, @"Failed to open log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageDisplayer.Yell(exception.Message, @"Failed to open log");
             }
         }
 

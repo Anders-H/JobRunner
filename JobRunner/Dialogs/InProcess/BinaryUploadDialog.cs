@@ -26,6 +26,7 @@ namespace JobRunner.Dialogs.InProcess
             cboUploadFailedBehaviour.SelectedIndex = 0;
 
             var args = new ArgumentList(Arguments ?? "");
+
             if (args.Count <= 0)
                 return;
 

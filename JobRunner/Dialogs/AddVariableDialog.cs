@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using JobRunner.Dialogs.ViewList;
 using JobRunner.ObjectModel;
 using JobRunner.Services;
+using JobRunner.Utils;
 
 namespace JobRunner.Dialogs
 {
@@ -29,23 +30,13 @@ namespace JobRunner.Dialogs
             
             if (string.IsNullOrWhiteSpace(txtVariableName.Text))
             {
-                MessageBox.Show(
-                    @"The variable must have a valid name.",
-                    Text,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                MessageDisplayer.Tell(@"The variable must have a valid name.", Text);
                 return;
             }
 
             if (_variables.HasVariable(txtVariableName.Text))
             {
-                MessageBox.Show(
-                    @"The variable name already exists.",
-                    Text,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                MessageDisplayer.Tell(@"The variable name already exists.", Text);
                 return;
             }
             

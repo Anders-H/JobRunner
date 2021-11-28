@@ -11,11 +11,13 @@ namespace JobRunner.Dialogs.InProcess
 {
     public partial class DeleteFileDialog : Form
     {
-        public string JobIdentiftyerString { get; set; }
-        public string Arguments { get; set; }
+        public string JobIdentiftyerString { get; private set; }
+        public string Arguments { get; private set; }
 
-        public DeleteFileDialog()
+        public DeleteFileDialog(string jobIdentiftyerString, string arguments)
         {
+            JobIdentiftyerString = jobIdentiftyerString;
+            Arguments = arguments;
             InitializeComponent();
         }
 
@@ -26,6 +28,7 @@ namespace JobRunner.Dialogs.InProcess
             cboFileNotFoundBehaviour.SelectedIndex = 0;
 
             var args = new ArgumentList(Arguments ?? "");
+
             if (args.Count <= 0)
                 return;
 

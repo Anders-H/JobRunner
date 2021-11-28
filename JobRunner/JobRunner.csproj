@@ -130,6 +130,7 @@
     <Compile Include="GuiComponents\TextboxExtensions.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="LogTextProducer.cs" />
     <Compile Include="MainWindowController.cs" />
     <Compile Include="ObjectModel\IJobList.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\BinaryUploadJob.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="ObjectModel\IVariableList.cs" />
     <Compile Include="ObjectModel\Variable.cs" />
     <Compile Include="ObjectModel\VariableList.cs" />
+    <Compile Include="ObjectModel\Xml\XmlBuilder.cs" />
     <Compile Include="Services\ArgumentDecoder.cs" />
     <Compile Include="Services\ArgumentList.cs" />
     <Compile Include="Services\VariableName.cs" />
@@ -262,5 +264,6 @@
     <Content Include="Settings %2825%29.ico" />
     <Content Include="variables.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
