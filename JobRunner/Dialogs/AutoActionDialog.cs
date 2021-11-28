@@ -1,16 +1,18 @@
-﻿using System.Windows.Forms;
+﻿#nullable enable
+
+using System.Windows.Forms;
 
 namespace JobRunner.Dialogs
 {
     public partial class AutoActionDialog : Form
     {
+        private string? TimerText { get; set; }
+        private int? SecondsLeft { get; set; } = 5;
+
         public AutoActionDialog()
         {
             InitializeComponent();
         }
-
-        private string TimerText { get; set; }
-        private int SecondsLeft { get; set; } = 5;
 
         public static bool CheckAutoStart(IWin32Window owner)
         {

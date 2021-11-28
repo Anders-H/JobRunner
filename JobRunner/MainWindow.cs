@@ -167,11 +167,7 @@ namespace JobRunner
             if (!Config.IsAdministrator)
                 return;
 
-            using var x = new AddJobDialog
-            {
-                Jobs = Jobs,
-                Variables = Variables
-            };
+            using var x = new AddJobDialog(this, Jobs, Variables);
 
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -251,8 +247,8 @@ namespace JobRunner
                 MessageDisplayer.Tell("No job is selected.", "Edit job");
                 return;
             }
-
-            using var x = new EditJobDialog
+            
+            using var x = new EditJobDialog(this)
             {
                 Job = grid1.SelectedJob,
                 Variables = Variables,
@@ -297,6 +293,7 @@ namespace JobRunner
                 PrimaryColumnTitle = "Job",
                 SecondaryColumnTitle = "Variables"
             };
+
             listDescriptor.AddRange(
                 from job
                 in Jobs.All
@@ -307,7 +304,10 @@ namespace JobRunner
                     job.Name
                 )
             );
-            SimpleListDialog.ShowListDialog(this, listDescriptor, null);
+
+            using var x = new SimpleListDialog(this, Variables, Jobs);
+
+            x.ShowListDialog(this, listDescriptor, null);
         }
 
         private void variablesToolStripMenuItem_Click(object sender, EventArgs e) =>
@@ -323,12 +323,8 @@ namespace JobRunner
         {
             if (!Config.IsAdministrator)
                 return;
-            
-            using var x = new AddVariableDialog
-            {
-                Variables = Variables,
-                Jobs = Jobs
-            };
+
+            using var x = new AddVariableDialog(Variables, Jobs);
             
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;

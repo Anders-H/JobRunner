@@ -10,13 +10,15 @@ namespace JobRunner.Dialogs
 {
     public partial class EditJobDialog : Form
     {
+        private readonly MainWindow _parent;
         public Job Job { get; set; }
         public IVariableList Variables { get; set; }
         public IJobList Jobs { get; set; }
         public Action<MainWindow, IVariableList> SaveVariables { get; set; }
         
-        public EditJobDialog()
+        public EditJobDialog(MainWindow parent)
         {
+            _parent = parent;
             InitializeComponent();
         }
 
@@ -113,6 +115,7 @@ namespace JobRunner.Dialogs
                 PrimaryColumnTitle = "Variable",
                 SecondaryColumnTitle = "Usage (job name)"
             };
+
             listDescriptor.AddRange(
                 from variable
                 in Variables.All
@@ -123,14 +126,17 @@ namespace JobRunner.Dialogs
                     $"[{variable.Name}]"
                 )
             );
-            SimpleListDialog.ShowListDialog(
+
+            using var x = new SimpleListDialog(_parent, Variables, Jobs);
+
+            x.ShowListDialog(
                 this,
                 listDescriptor,
-                Config.IsAdministrator ? (Action<SimpleListDescriptor>)AddVariable : null
+                Config.IsAdministrator ? (AddVariableDelegate)AddVariable : null
             );
         }
 
-        private void AddVariable(SimpleListDescriptor descriptor)
+        private void AddVariable(MainWindow parent, IVariableList variables, IJobList jobList, SimpleListDescriptor descriptor)
         {
             using var x = new AddVariableDialogSmall
             {
@@ -148,7 +154,7 @@ namespace JobRunner.Dialogs
                     $"[{variable.Name}]"
                 )
             );
-            SaveVariables();
+            SaveVariables(_parent, Variables);
         }
         
         private void txtArguments_TextChanged(object sender, EventArgs e)

@@ -1,22 +1,30 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Windows.Forms;
+using JobRunner.ObjectModel;
 using JobRunner.Utils;
 
 namespace JobRunner.Dialogs.ViewList
 {
     public partial class SimpleListDialog : Form
     {
+        private readonly MainWindow _parent;
+        private readonly IVariableList _variables;
+        private readonly IJobList _jobs;
         private SimpleListDescriptor _descriptor;
-        private Action<SimpleListDescriptor> _addAction; 
-        
-        private SimpleListDialog()
+        private AddVariableDelegate _addAction;
+
+        public SimpleListDialog(MainWindow parent, IVariableList variables, IJobList jobs)
         {
+            _parent = parent;
+            _variables = variables;
+            _jobs = jobs;
             InitializeComponent();
         }
 
-        public static DialogResult ShowListDialog(IWin32Window owner, SimpleListDescriptor descriptor, Action<SimpleListDescriptor> addAction)
+        public DialogResult ShowListDialog(IWin32Window owner, SimpleListDescriptor descriptor, AddVariableDelegate addAction)
         {
-            using var x = new SimpleListDialog
+            using var x = new SimpleListDialog(_parent, _variables, _jobs)
             {
                 _descriptor = descriptor,
                 _addAction = addAction
@@ -44,7 +52,7 @@ namespace JobRunner.Dialogs.ViewList
         {
             if (_addAction == null)
                 return;
-            _addAction.Invoke(_descriptor);
+            _addAction.Invoke(_parent, _variables, _jobs, _descriptor);
             RefreshList();
         }
 

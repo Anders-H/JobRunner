@@ -9,11 +9,13 @@ namespace JobRunner.Dialogs
 {
     public partial class AddVariableDialog : Form
     {
-        public IVariableList Variables { get; set; }
-        public IJobList Jobs { get; set; }
+        private IVariableList _variables;
+        private IJobList _jobs;
 
-        public AddVariableDialog()
+        public AddVariableDialog(IVariableList variables, IJobList jobs)
         {
+            _variables = variables;
+            _jobs = jobs;
             InitializeComponent();
         }
 
@@ -21,8 +23,10 @@ namespace JobRunner.Dialogs
         {
             txtVariableName.Text = new VariableName(txtVariableName.Text)
                 .GetCleanName();
+            
             txtVariableValue.Text = new VariableName(txtVariableValue.Text)
                 .GetCleanValue();
+            
             if (string.IsNullOrWhiteSpace(txtVariableName.Text))
             {
                 MessageBox.Show(
@@ -33,7 +37,8 @@ namespace JobRunner.Dialogs
                 );
                 return;
             }
-            if (Variables.HasVariable(txtVariableName.Text))
+
+            if (_variables.HasVariable(txtVariableName.Text))
             {
                 MessageBox.Show(
                     @"The variable name already exists.",
@@ -43,7 +48,9 @@ namespace JobRunner.Dialogs
                 );
                 return;
             }
-            Variables.Add(txtVariableName.Text, txtVariableValue.Text);
+            
+            _variables.Add(txtVariableName.Text, txtVariableValue.Text);
+            
             DialogResult = DialogResult.OK;
         }
         
@@ -55,21 +62,25 @@ namespace JobRunner.Dialogs
                 PrimaryColumnTitle = "Variable",
                 SecondaryColumnTitle = "Usage (job name)"
             };
+
             listDescriptor.AddRange(
                 from variable
-                in Variables.All
-                let jobs = Jobs.GetVariableUsage(variable)
+                in _variables.All
+                let jobs = _jobs.GetVariableUsage(variable)
                 select new SimpleListItem(
                     $"\"{variable.Name}\"=\"{variable.Value}\"",
                     jobs.Names,
                     $"[{variable.Name}]"
                 )
             );
+
             listView1.BeginUpdate();
             listView1.Columns[0].Text = listDescriptor.PrimaryColumnTitle;
             listView1.Columns[1].Text = listDescriptor.SecondaryColumnTitle;
+            
             foreach (var item in listDescriptor)
                 item.Add(listView1);
+            
             listView1.EndUpdate();
         }
 

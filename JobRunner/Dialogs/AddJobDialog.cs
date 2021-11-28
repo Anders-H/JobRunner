@@ -14,11 +14,15 @@ namespace JobRunner.Dialogs
 {
     public partial class AddJobDialog : Form
     {
-        public IJobList Jobs { private get; set; }
-        public IVariableList Variables { get; set; }
+        private readonly MainWindow _parent;
+        private readonly IJobList _jobs;
+        private readonly IVariableList _variables;
 
-        public AddJobDialog()
+        public AddJobDialog(MainWindow parent, IJobList jobs, IVariableList variables)
         {
+            _parent = parent;
+            _jobs = jobs;
+            _variables = variables;
             InitializeComponent();
         }
 
@@ -74,18 +78,18 @@ namespace JobRunner.Dialogs
         private int CalculateSequence()
         {
             int.TryParse(txtNumber.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out var s);
-            if (s <= Jobs.FirstSequenceNumber)
+            if (s <= _jobs.FirstSequenceNumber)
                 s = 1;
-            else if (s > Jobs.LastSequenceNumber)
-                s = Jobs.Count + 1;
+            else if (s > _jobs.LastSequenceNumber)
+                s = _jobs.Count + 1;
             return s;
         }
 
         private string SequenceAsString(int s)
         {
-            if (Jobs.Count <= 0 || s == 1)
+            if (_jobs.Count <= 0 || s == 1)
                 return "First job";
-            return s > Jobs.Count
+            return s > _jobs.Count
                 ? "Last job"
                 : $"Position {s}";
         }
@@ -159,7 +163,7 @@ namespace JobRunner.Dialogs
         {
             if (!ValidateForm(false))
                 return;
-            Jobs.InsertJob(CreateJob());
+            _jobs.InsertJob(CreateJob());
             DialogResult = DialogResult.OK;
         }
 
@@ -199,19 +203,19 @@ namespace JobRunner.Dialogs
 
         private void txtArguments_TextChanged(object sender, EventArgs e)
         {
-            if (Variables == null)
+            if (_variables == null)
             {
                 txtArgsEvaluated.Text = @"(Missing variable list.)";
                 return;
             }
 
-            if (Variables.Count <= 0)
+            if (_variables.Count <= 0)
             {
                 txtArgsEvaluated.Text = txtArguments.Text.Trim();
                 return;
             }
 
-            txtArgsEvaluated.Text = new ArgumentDecoder(Variables)
+            txtArgsEvaluated.Text = new ArgumentDecoder(_variables)
                 .GetDecodedText(txtArguments.Text);
         }
 
@@ -223,17 +227,21 @@ namespace JobRunner.Dialogs
                 PrimaryColumnTitle = "Variable",
                 SecondaryColumnTitle = "Usage (job name)"
             };
+
             listDescriptor.AddRange(
                 from variable
-                in Variables.All
-                let jobs = Jobs.GetVariableUsage(variable)
+                in _variables.All
+                let jobs = _jobs.GetVariableUsage(variable)
                 select new SimpleListItem(
                     $"\"{variable.Name}\"=\"{variable.Value}\"",
                     jobs.Names,
                     $"[{variable.Name}]"
                 )
             );
-            SimpleListDialog.ShowListDialog(this, listDescriptor, null);
+
+            using var x = new SimpleListDialog(_parent, _variables, _jobs);
+
+            x.ShowListDialog(this, listDescriptor, null);
         }
 
         private void btnInProcess_Click(object sender, EventArgs e)

@@ -122,10 +122,12 @@ namespace JobRunner
                 )
             );
 
-            SimpleListDialog.ShowListDialog(
+            using var x = new SimpleListDialog(parent, variables, jobList);
+
+            x.ShowListDialog(
                 parent,
                 listDescriptor,
-                Config.IsAdministrator ? (Action<MainWindow, IVariableList, IJobList, SimpleListDescriptor>)AddVariable : null
+                Config.IsAdministrator ? (AddVariableDelegate)AddVariable : null
             );
         }
 

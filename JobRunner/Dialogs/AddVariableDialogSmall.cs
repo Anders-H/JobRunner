@@ -17,8 +17,10 @@ namespace JobRunner.Dialogs
         {
             txtVariableName.Text = new VariableName(txtVariableName.Text)
                 .GetCleanName();
+            
             txtVariableValue.Text = new VariableName(txtVariableValue.Text)
                 .GetCleanValue();
+
             if (string.IsNullOrWhiteSpace(txtVariableName.Text))
             {
                 MessageBox.Show(
@@ -29,6 +31,7 @@ namespace JobRunner.Dialogs
                 );
                 return;
             }
+
             if (Variables.HasVariable(txtVariableName.Text))
             {
                 MessageBox.Show(
@@ -39,7 +42,9 @@ namespace JobRunner.Dialogs
                 );
                 return;
             }
+
             Variables.Add(txtVariableName.Text, txtVariableValue.Text);
+            
             DialogResult = DialogResult.OK;
         }
 
