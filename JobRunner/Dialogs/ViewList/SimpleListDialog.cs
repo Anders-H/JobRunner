@@ -22,13 +22,14 @@ namespace JobRunner.Dialogs.ViewList
             InitializeComponent();
         }
 
-        public DialogResult ShowListDialog(IWin32Window owner, SimpleListDescriptor descriptor, AddVariableDelegate addAction)
+        public DialogResult ShowListDialog(IWin32Window owner, SimpleListDescriptor descriptor, AddVariableDelegate? addAction)
         {
             using var x = new SimpleListDialog(_parent, _variables, _jobs)
             {
                 _descriptor = descriptor,
                 _addAction = addAction
             };
+
             return x.ShowDialog(owner);
         }
 

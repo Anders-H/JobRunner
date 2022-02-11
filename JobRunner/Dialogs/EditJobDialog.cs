@@ -159,9 +159,9 @@ namespace JobRunner.Dialogs
         
         private void txtArguments_TextChanged(object sender, EventArgs e)
         {
-            if (Variables == null)
+            if (Variables == null!)
             {
-                txtArgsEvaluated.Text = "(Missing variable list.)";
+                txtArgsEvaluated.Text = @"(Missing variable list.)";
                 return;
             }
 
