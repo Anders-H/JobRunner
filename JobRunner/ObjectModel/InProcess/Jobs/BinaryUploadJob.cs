@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.IO;
 using System.Net;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
@@ -58,7 +59,6 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
                     Credentials = new NetworkCredential(username, password)
                 };
                 client.UploadFile(target, WebRequestMethods.Ftp.UploadFile, sourceFile);
-                
             }
             catch (SystemException e)
             {

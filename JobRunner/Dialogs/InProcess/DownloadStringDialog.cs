@@ -11,12 +11,12 @@ namespace JobRunner.Dialogs.InProcess
 {
     public partial class DownloadStringDialog : Form
     {
-        public string JobIdentiftyerString { get; private set; }
+        public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
 
-        public DownloadStringDialog(string jobIdentiftyerString, string arguments)
+        public DownloadStringDialog(string jobIdentifierString, string arguments)
         {
-            JobIdentiftyerString = jobIdentiftyerString;
+            JobIdentifierString = jobIdentifierString;
             Arguments = arguments;
             InitializeComponent();
         }
@@ -71,7 +71,7 @@ namespace JobRunner.Dialogs.InProcess
             if (!txtTargetFile.ValidateDashAndQuotes("Target file", Text))
                 return;
 
-            JobIdentiftyerString = new InProcessJobIdentifyerHelper()
+            JobIdentifierString = new InProcessJobIdentifyerHelper()
                 .GetIdentifyerString(
                     InProcessJobIdentifyer.DownloadString
                 );

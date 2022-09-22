@@ -260,21 +260,21 @@ namespace JobRunner.Dialogs
         private void ShowInProcessDialog(Type dialogType)
         {
             var helper = new InProcessJobIdentifyerHelper();
-            var jobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.DownloadString);
+            var jobIdentifierString = helper.GetIdentifyerString(InProcessJobIdentifyer.DownloadString);
             var program = txtProgram.Text.Trim();
 
-            var x = (Form)Activator.CreateInstance(dialogType);
+            var x = (Form)Activator.CreateInstance(dialogType, jobIdentifierString, "");
 
             var argumentsProperty = x.GetType().GetProperty("Arguments");
 
-            if (string.Compare(jobIdentiftyerString, program, StringComparison.InvariantCultureIgnoreCase) == 0)
+            if (string.Compare(jobIdentifierString, program, StringComparison.InvariantCultureIgnoreCase) == 0)
                 argumentsProperty!.SetValue(x, txtArguments.Text, null);
 
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            var jobIdentiftyerStringProperty = x.GetType().GetProperty("JobIdentiftyerString");
-            txtProgram.Text = (jobIdentiftyerStringProperty!.GetValue(x, null) as string ?? "").Trim();
+            var jobIdentifierStringProperty = x.GetType().GetProperty("JobIdentifierString");
+            txtProgram.Text = (jobIdentifierStringProperty!.GetValue(x, null) as string ?? "").Trim();
             txtArguments.Text = (argumentsProperty!.GetValue(x, null) as string ?? "").Trim();
         }
     }

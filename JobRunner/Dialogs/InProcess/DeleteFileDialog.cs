@@ -11,12 +11,12 @@ namespace JobRunner.Dialogs.InProcess
 {
     public partial class DeleteFileDialog : Form
     {
-        public string JobIdentiftyerString { get; private set; }
+        public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
 
-        public DeleteFileDialog(string jobIdentiftyerString, string arguments)
+        public DeleteFileDialog(string jobIdentifierString, string arguments)
         {
-            JobIdentiftyerString = jobIdentiftyerString;
+            JobIdentifierString = jobIdentifierString;
             Arguments = arguments;
             InitializeComponent();
         }
@@ -71,7 +71,7 @@ namespace JobRunner.Dialogs.InProcess
                 return;
 
             var helper = new InProcessJobIdentifyerHelper();
-            JobIdentiftyerString = helper.GetIdentifyerString(InProcessJobIdentifyer.DeleteFile);
+            JobIdentifierString = helper.GetIdentifyerString(InProcessJobIdentifyer.DeleteFile);
             Arguments = DeleteFileArguments.CreateArgumentString(txtTargetFile.Text, GetFileNotFoundBehaviour());
             DialogResult = DialogResult.OK;
         }
