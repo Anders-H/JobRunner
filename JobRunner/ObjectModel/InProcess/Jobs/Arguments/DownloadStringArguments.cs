@@ -1,4 +1,5 @@
 ﻿using System;
+using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.Services;
 
@@ -35,11 +36,11 @@ namespace JobRunner.ObjectModel.InProcess.Jobs.Arguments
                 ExistsBehaviourOverwrite => FileExistsBehaviour.Overwrite,
                 ExistsBehaviourSkip => FileExistsBehaviour.Skip,
                 ExistsBehaviourFail => FileExistsBehaviour.Fail,
-                _ => throw new SystemException("Value out of range.")
+                _ => throw new SystemException($"Value out of range after {ExistsBehaviour}.")
             };
         }
 
-        public FileExistsBehaviour TryGetFileExistsBehaviour()
+        public FileExistsBehaviour TryGetFileExistsBehaviour(ILogger log)
         {
             try
             {
@@ -47,6 +48,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs.Arguments
             }
             catch
             {
+                log.AppendLog($"Using default behaviour (skip) on {ExistsBehaviour}.");
                 return FileExistsBehaviour.Skip;
             }
         }

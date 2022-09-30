@@ -261,9 +261,12 @@
     <None Include="Resources\FormRunHS.png" />
     <None Include="Resources\PropertiesHS.png" />
     <None Include="Resources\log.png" />
+    <None Include="Resources\StopHS.png" />
     <Content Include="Settings %2825%29.ico" />
     <Content Include="variables.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

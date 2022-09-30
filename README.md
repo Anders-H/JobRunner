@@ -11,24 +11,31 @@ C:\Users\\*username*\AppData\Roaming\JobRunnerJobListFile\jobs.xml
 
 This can be changed by editing the `JobRunner.exe.config` file.
 
-Download version 1.3: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe)
+Download version 1.4: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe)
 
-**Version history:**
+## Version history:
 
-Changes in version 1.3:
+**Changes in version 1.4:**
+
+- A bugg in the job argument reader is fixed.
+- Incorrect use of failure behaviour is logged.
+- Ability to stop a running script is added.
+- When started as administrator, autorun is always disabled.
+
+**Changes in version 1.3:**
 
 - Variables can be added on the fly, from any view.
 - Three in-process tasks are added: "Delete a file", "Download text" and "Binary upload".
 - Non-administrators can view or start a job by double clicking on it.
 - Context menu added.
 
-Changes in version 1.2:
+**Changes in version 1.2:**
 
 - Minor improvments in the user interface (added icons, more options in the Add job dialog).
 - Non administrators can open the Options dialog in read only mode.
 - Logging to file added.
 
-Changes in version 1.1:
+**Changes in version 1.1:**
 
 - Added support for variables in job configuration.
 - Bug fix: Application crash when opening the Add job dialog.

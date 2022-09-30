@@ -35,10 +35,11 @@ namespace JobRunner
             return false;
         }
 
-        public void SetGuiToRunningState(ToolStripMenuItem runMenuItem, ToolStripMenuItem runSelectedMenuItem, bool runningState)
+        public void SetGuiToRunningState(ToolStripMenuItem runMenuItem, ToolStripMenuItem runSelectedMenuItem, ToolStripMenuItem stopToolStripMenuItem, bool runningState)
         {
             runMenuItem.Enabled = !runningState;
             runSelectedMenuItem.Enabled = !runningState;
+            stopToolStripMenuItem.Enabled = runningState;
         }
 
         public void RunJobsCompleted(Form mainWindow, bool cleanExit, ToolStripStatusLabel statusBar, IJobList jobs, Grid grid)
@@ -50,7 +51,7 @@ namespace JobRunner
             grid.Running = false;
             grid.Invalidate();
 
-            if (Config.AutoClose && jobs.RunSuccess && AutoActionDialog.CheckAutoClose(mainWindow))
+            if (Config.AutoClose && jobs.RunSuccess && AutoActionDialog.CheckAutoClose(mainWindow) && !Config.IsAdministrator)
                 mainWindow.Close();
         }
 

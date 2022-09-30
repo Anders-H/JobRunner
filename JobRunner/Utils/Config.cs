@@ -56,6 +56,9 @@ namespace JobRunner.Utils
 
         public static string GetJobFilePath()
         {
+#if DEBUG
+            return @"C:\GitRepos\JobRunner\jobs.xml"; // TODO: Rätta sökvägarna i filen
+#endif
             switch (JobFileLocation)
             {
                 case JobFileLocation.Application:

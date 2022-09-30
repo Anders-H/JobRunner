@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,18 @@ namespace JobRunner
 {
     public partial class MainWindow : Form
     {
+        private readonly ILogger _log;
         private readonly MainWindowController _controller;
-        private IJobList Jobs { get; } = new JobList();
+        private bool _cancelFlag;
+        private IJobList Jobs { get; }
         private IVariableList Variables { get; } = new VariableList();
         private bool CleanExit { get; set; }
-        private ILogger _logger;
         
         public MainWindow()
         {
+            _log = new Logger();
+            Jobs = new JobList(_log);
+            _cancelFlag = false;
             InitializeComponent();
             _controller = new MainWindowController();
         }
@@ -38,7 +43,6 @@ namespace JobRunner
                 = editVariableToolStripMenuItem.Enabled
                 = deleteVariableToolStripMenuItem.Enabled
                 = Config.IsAdministrator;
-            AssignLogger();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) =>
@@ -49,8 +53,9 @@ namespace JobRunner
             if (!_controller.TellUserIfProgramHasJobs(Jobs, Text))
                 return;
 
+            _cancelFlag = false;
             lblStatus.Text = @"Running...";
-            _controller.SetGuiToRunningState(runToolStripMenuItem, runSelectedJobToolStripMenuItem, true);
+            _controller.SetGuiToRunningState(runToolStripMenuItem, runSelectedJobToolStripMenuItem, stopToolStripMenuItem, true);
             Jobs.ResetJobs();
             grid1.RunSingle = -1;
             grid1.Running = true;
@@ -69,9 +74,10 @@ namespace JobRunner
                 MessageDisplayer.Tell(@"No job is selected.", Text);
                 return;
             }
-            
+
+            _cancelFlag = false;
             lblStatus.Text = @"Running...";
-            _controller.SetGuiToRunningState(runToolStripMenuItem, runSelectedJobToolStripMenuItem, true);
+            _controller.SetGuiToRunningState(runToolStripMenuItem, runSelectedJobToolStripMenuItem, stopToolStripMenuItem, true);
             Jobs.ResetJobs();
             grid1.RunSingle = grid1.SelectedCells[0].RowIndex;
             grid1.Running = true;
@@ -86,7 +92,7 @@ namespace JobRunner
         private void RunJobsCompletedActions()
         {
             _controller.RunJobsCompleted(this, CleanExit, lblStatus, Jobs, grid1);
-            _controller.SetGuiToRunningState(runToolStripMenuItem, runSelectedJobToolStripMenuItem, false);
+            _controller.SetGuiToRunningState(runToolStripMenuItem, runSelectedJobToolStripMenuItem, stopToolStripMenuItem, false);
         }
 
         private void RunJobs()
@@ -95,6 +101,12 @@ namespace JobRunner
             var jobIndex = 0;
             foreach (var job in Jobs.All)
             {
+                if (_cancelFlag)
+                {
+                    CleanExit = false;
+                    break;
+                }
+
                 if (grid1.RunSingle < 0 || grid1.RunSingle == jobIndex)
                 {
                     job.Status = JobStatus.Running;
@@ -102,7 +114,7 @@ namespace JobRunner
                         ? $@"Running step {job.RowIndex + 1} of {Jobs.Count}..."
                         : "Running single job...";
                     grid1.Invalidate();
-                    job.Run(_logger, grid1, Variables);
+                    job.Run(_log, grid1, Variables);
                     grid1.Invalidate();
                     if (job.BreakOnError && job.Status != JobStatus.Completed)
                     {
@@ -132,7 +144,7 @@ namespace JobRunner
                 lblStatus.Text = @"Load failed.";
                 
                 var failMessage = string.IsNullOrWhiteSpace(Jobs.LoadFailedMessage)
-                    ? "An unknown error has occured."
+                    ? "An unknown error has occurred."
                     : Jobs.LoadFailedMessage;
                 
                 var t = new StringBuilder();
@@ -156,8 +168,8 @@ namespace JobRunner
 
             Cursor = Cursors.Default;
             
-            if (Config.AutoStart && AutoActionDialog.CheckAutoStart(this))
-                runToolStripMenuItem_Click(this, new EventArgs());
+            if (Config.AutoStart && !Config.IsAdministrator && AutoActionDialog.CheckAutoStart(this))
+                runToolStripMenuItem_Click(this, EventArgs.Empty);
         }
 
         private void AddJobToolStripMenuItem_Click(object sender, EventArgs e)
@@ -165,7 +177,7 @@ namespace JobRunner
             if (!Config.IsAdministrator)
                 return;
 
-            using var x = new AddJobDialog(this, Jobs, Variables);
+            using var x = new AddJobDialog(this, Jobs, Variables, _log);
 
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -201,7 +213,7 @@ namespace JobRunner
             if (x.ShowDialog(this) == DialogResult.OK)
             {
                 grid1.RemoveJob(grid1.SelectedRow);
-                Jobs.RemoveJob(x.SelectedJob);
+                Jobs.RemoveJob(x.SelectedJob!);
                 grid1.Refresh();
                 SaveJobs();
             }
@@ -334,20 +346,14 @@ namespace JobRunner
             {
                 using var x = new ShowLogDialog
                 {
-                    Log = _logger
+                    Log = _log
                 };
                 x.ShowDialog(this);
-                AssignLogger();
             }
             catch (Exception exception)
             {
                 MessageDisplayer.Yell(exception.Message, @"Failed to open log");
             }
-        }
-
-        private void AssignLogger()
-        {
-            _logger = new Logger();
         }
 
         private void grid1_ShowContextMenu(object sender, GuiComponents.ContextMenuEventArgs e) =>
@@ -379,5 +385,12 @@ namespace JobRunner
 
         private void runThisJobToolStripMenuItem_Click(object sender, EventArgs e) =>
             RunSelectedJobToolStripMenuItem_Click(sender, e);
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            stopToolStripMenuItem.Enabled = false;
+            _cancelFlag = true;
+            _controller.RunJobsCompleted(this, false, lblStatus, Jobs, grid1);
+        }
     }
 }

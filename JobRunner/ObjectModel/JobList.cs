@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using JobRunner.Logging;
 using JobRunner.ObjectModel.Xml;
 using JobRunner.Utils;
 
@@ -12,12 +13,14 @@ namespace JobRunner.ObjectModel
 {
     public class JobList : IJobList
     {
+        private readonly ILogger _log;
         public List<Job> All { get; } = new List<Job>();
         public bool LoadSuccess { get; private set; }
         public string LoadFailedMessage { get; private set; }
 
-        public JobList()
+        public JobList(ILogger log)
         {
+            _log = log;
             LoadFailedMessage = "";
         }
 
@@ -105,6 +108,7 @@ namespace JobRunner.ObjectModel
             string display,
             string breakOnError) =>
             All.Add(new Job(
+                _log,
                 number,
                 name,
                 command,
@@ -200,7 +204,7 @@ namespace JobRunner.ObjectModel
         
         public IJobList GetVariableUsage(Variable variable)
         {
-            IJobList jobs = new JobList();
+            IJobList jobs = new JobList(_log);
             foreach (var job in All.Where(job => job.UsesVariable(variable)))
                 jobs.All.Add(job);
             return jobs;

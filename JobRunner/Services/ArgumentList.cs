@@ -31,18 +31,15 @@ namespace JobRunner.Services
 
         public string GetAfter(string name)
         {
-            if (Count <= 0)
+            if (Count <= 1)
                 return "";
 
-            for (var i = 0; i < Count; i++)
+            for (var i = 0; i < Count - 1; i++)
             {
                 if (string.Compare(this[i], name, StringComparison.InvariantCulture) != 0)
                     continue;
                 
-                if (i < Count - 1)
-                    return this[i + 1];
-                
-                break;
+                return this[i + 1];
             }
 
             return "";

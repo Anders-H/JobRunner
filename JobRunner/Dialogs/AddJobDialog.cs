@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using JobRunner.Dialogs.InProcess;
 using JobRunner.Dialogs.ViewList;
+using JobRunner.Logging;
 using JobRunner.ObjectModel;
 using JobRunner.ObjectModel.InProcess;
 using JobRunner.Services;
@@ -17,12 +18,14 @@ namespace JobRunner.Dialogs
         private readonly MainWindow _parent;
         private readonly IJobList _jobs;
         private readonly IVariableList _variables;
+        private readonly ILogger _log;
 
-        public AddJobDialog(MainWindow parent, IJobList jobs, IVariableList variables)
+        public AddJobDialog(MainWindow parent, IJobList jobs, IVariableList variables, ILogger log)
         {
             _parent = parent;
             _jobs = jobs;
             _variables = variables;
+            _log = log;
             InitializeComponent();
         }
 
@@ -171,6 +174,7 @@ namespace JobRunner.Dialogs
         {
             int.TryParse(txtNumber.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out var nr);
             return new Job(
+                _log,
                 nr,
                 txtName.Text,
                 txtProgram.Text,
@@ -259,7 +263,7 @@ namespace JobRunner.Dialogs
 
         private void ShowInProcessDialog(Type dialogType)
         {
-            var helper = new InProcessJobIdentifyerHelper();
+            var helper = new InProcessJobIdentifyerHelper(_log);
             var jobIdentifierString = helper.GetIdentifyerString(InProcessJobIdentifyer.DownloadString);
             var program = txtProgram.Text.Trim();
 

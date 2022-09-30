@@ -3,6 +3,7 @@ using JobRunner.Utils;
 using System;
 using System.Windows.Forms;
 using JobRunner.GuiComponents;
+using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
@@ -11,11 +12,13 @@ namespace JobRunner.Dialogs.InProcess
 {
     public partial class DownloadStringDialog : Form
     {
+        private readonly ILogger _log;
         public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
 
-        public DownloadStringDialog(string jobIdentifierString, string arguments)
+        public DownloadStringDialog(ILogger log, string jobIdentifierString, string arguments)
         {
+            _log = log;
             JobIdentifierString = jobIdentifierString;
             Arguments = arguments;
             InitializeComponent();
@@ -71,7 +74,7 @@ namespace JobRunner.Dialogs.InProcess
             if (!txtTargetFile.ValidateDashAndQuotes("Target file", Text))
                 return;
 
-            JobIdentifierString = new InProcessJobIdentifyerHelper()
+            JobIdentifierString = new InProcessJobIdentifyerHelper(_log)
                 .GetIdentifyerString(
                     InProcessJobIdentifyer.DownloadString
                 );

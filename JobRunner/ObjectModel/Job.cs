@@ -12,6 +12,7 @@ namespace JobRunner.ObjectModel
 {
     public class Job
     {
+        private readonly ILogger _log;
         public int Number { get; internal set; }
         public string Name { get; internal set; }
         public string Command { get; internal set; }
@@ -27,8 +28,9 @@ namespace JobRunner.ObjectModel
         public bool Hidden { get; internal set; }
         public bool BreakOnError { get; internal set; }
 
-        public Job(int number, string name, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError)
+        public Job(ILogger log, int number, string name, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError)
         {
+            _log = log;
             Number = number;
             Name = name;
             Command = command;
@@ -151,7 +153,7 @@ namespace JobRunner.ObjectModel
 
         private void InProcess(IGridVisualFeedback grid, IVariableList variableList)
         {
-            var inProcessJobIdentifyerHelper = new InProcessJobIdentifyerHelper();
+            var inProcessJobIdentifyerHelper = new InProcessJobIdentifyerHelper(_log);
             var jobId = inProcessJobIdentifyerHelper.GetIdentifyerFromString(Command);
             var job = inProcessJobIdentifyerHelper.GetJob(jobId);
             var args = new ArgumentList(Arguments);

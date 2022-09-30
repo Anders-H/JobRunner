@@ -1,4 +1,5 @@
 ﻿using System;
+using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess.Jobs;
 
 namespace JobRunner.ObjectModel.InProcess
@@ -12,6 +13,13 @@ namespace JobRunner.ObjectModel.InProcess
 
     public class InProcessJobIdentifyerHelper
     {
+        private readonly ILogger _log;
+
+        public InProcessJobIdentifyerHelper(ILogger log)
+        {
+            _log = log;
+        }
+
         public string GetIdentifyerString(InProcessJobIdentifyer j) =>
             j switch
             {
@@ -33,9 +41,9 @@ namespace JobRunner.ObjectModel.InProcess
         public InProcessJob GetJob(InProcessJobIdentifyer j) =>
             j switch
             {
-                InProcessJobIdentifyer.BinaryUpload => new BinaryUploadJob(),
-                InProcessJobIdentifyer.DeleteFile => new DeleteFileJob(),
-                InProcessJobIdentifyer.DownloadString => new DownloadStringJob(),
+                InProcessJobIdentifyer.BinaryUpload => new BinaryUploadJob(_log),
+                InProcessJobIdentifyer.DeleteFile => new DeleteFileJob(_log),
+                InProcessJobIdentifyer.DownloadString => new DownloadStringJob(_log),
                 _ => throw new SystemException($@"Failed to get in-process job: {j}")
             };
     }

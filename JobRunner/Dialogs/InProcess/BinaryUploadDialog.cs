@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using JobRunner.GuiComponents;
+using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
@@ -12,11 +13,13 @@ namespace JobRunner.Dialogs.InProcess
 {
     public partial class BinaryUploadDialog : Form
     {
+        private readonly ILogger _log;
         public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
 
-        public BinaryUploadDialog(string jobIdentifyerString, string arguments)
+        public BinaryUploadDialog(ILogger log, string jobIdentifyerString, string arguments)
         {
+            _log = log;
             JobIdentifierString = jobIdentifyerString;
             Arguments = arguments;
             InitializeComponent();
@@ -83,7 +86,7 @@ namespace JobRunner.Dialogs.InProcess
             if (!txtPassword.ValidateDashAndQuotes("Password", Text))
                 return;
 
-            JobIdentifierString = new InProcessJobIdentifyerHelper()
+            JobIdentifierString = new InProcessJobIdentifyerHelper(_log)
                 .GetIdentifyerString(
                     InProcessJobIdentifyer.BinaryUpload
                 );

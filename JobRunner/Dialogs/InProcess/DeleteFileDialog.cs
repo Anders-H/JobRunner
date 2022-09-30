@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using JobRunner.GuiComponents;
+using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
@@ -11,11 +12,13 @@ namespace JobRunner.Dialogs.InProcess
 {
     public partial class DeleteFileDialog : Form
     {
+        public readonly ILogger _log;
         public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
 
-        public DeleteFileDialog(string jobIdentifierString, string arguments)
+        public DeleteFileDialog(ILogger log, string jobIdentifierString, string arguments)
         {
+            _log = log;
             JobIdentifierString = jobIdentifierString;
             Arguments = arguments;
             InitializeComponent();
@@ -70,7 +73,7 @@ namespace JobRunner.Dialogs.InProcess
             if (!txtTargetFile.ValidateDashAndQuotes("File to delete", Text))
                 return;
 
-            var helper = new InProcessJobIdentifyerHelper();
+            var helper = new InProcessJobIdentifyerHelper(_log);
             JobIdentifierString = helper.GetIdentifyerString(InProcessJobIdentifyer.DeleteFile);
             Arguments = DeleteFileArguments.CreateArgumentString(txtTargetFile.Text, GetFileNotFoundBehaviour());
             DialogResult = DialogResult.OK;

@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Net;
+using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
@@ -15,6 +16,10 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
         public string Username { get; set; }
         public string Password { get; set; }
         private UploadFileDelegate Action { get; set; }
+
+        public BinaryUploadJob(ILogger log) : base(log)
+        {
+        }
 
         public override void Begin(ArgumentList args)
         {

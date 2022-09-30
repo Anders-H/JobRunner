@@ -1,8 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
+using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
@@ -11,16 +13,20 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
 {
     public class DownloadStringJob : InProcessJob
     {
-        private string TargetFile { get; set; }
-        private DownloadStringDelegate Action { get; set; }
-        
+        private string? TargetFile { get; set; }
+        private DownloadStringDelegate? Action { get; set; }
+
+        public DownloadStringJob(ILogger log) : base(log)
+        {
+        }
+
         public override void Begin(ArgumentList args)
         {
             var downloadStringArguments = new DownloadStringArguments(args);
 
             TargetFile = downloadStringArguments.TargetFile;
 
-             switch (downloadStringArguments.GetFileExistsBehaviour())
+            switch (downloadStringArguments.TryGetFileExistsBehaviour(_log))
             {
                 case FileExistsBehaviour.Skip:
                     if (File.Exists(TargetFile))
@@ -36,7 +42,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
                         HasExited = true;
                         ExitCode = 1;
                         throw new SystemException("Target file exists.");
-                    } 
+                    }
                     break;
             }
             HasExited = false;
@@ -46,6 +52,9 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
 
         private void DownloadString(string source, string target)
         {
+            if (string.IsNullOrWhiteSpace(target))
+                throw new SystemException("Target is empty.");
+
             try
             {
                 using var client = new HttpClient();
@@ -61,7 +70,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
 
                 var result = request.Result;
 
-                using var sw = new StreamWriter(TargetFile, false, Encoding.UTF8);
+                using var sw = new StreamWriter(TargetFile!, false, Encoding.UTF8);
                 sw.Write(result);
                 sw.Flush();
                 sw.Close();
