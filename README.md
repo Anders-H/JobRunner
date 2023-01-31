@@ -15,6 +15,10 @@ Download version 1.4: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe)
 
 ## Version history:
 
+**Changes in version 1.5:**
+
+- New jobs get a suggested sequence number.
+
 **Changes in version 1.4:**
 
 - A bugg in the job argument reader is fixed.

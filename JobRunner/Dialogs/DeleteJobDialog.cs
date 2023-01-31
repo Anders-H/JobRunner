@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using JobRunner.ObjectModel;
 using JobRunner.Utils;
 
-namespace JobRunner
+namespace JobRunner.Dialogs
 {
     public partial class DeleteJobDialog : Form
     {

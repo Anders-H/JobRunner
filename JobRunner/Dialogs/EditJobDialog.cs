@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
 using System.Windows.Forms;
 using JobRunner.Dialogs.ViewList;
@@ -11,34 +12,26 @@ namespace JobRunner.Dialogs
     public partial class EditJobDialog : Form
     {
         private readonly MainWindow _parent;
-        public Job Job { get; set; }
-        public IVariableList Variables { get; set; }
-        public IJobList Jobs { get; set; }
-        public SaveVariablesDelegate SaveVariables { get; set; }
+        private readonly EditJobDialogController _controller;
+        public Job? Job { get; set; }
+        public IVariableList? Variables { get; set; }
+        public IJobList? Jobs { get; set; }
+        public SaveVariablesDelegate? SaveVariables { get; set; }
         
         public EditJobDialog(MainWindow parent)
         {
             _parent = parent;
+            _controller = new EditJobDialogController(this);
             InitializeComponent();
         }
 
         private void EditJobDialog_Load(object sender, EventArgs e)
         {
-            foreach (var x in new TimeSpanList())
-                cboTimeout.Items.Add(x);
-            foreach (TimeSpan i in cboTimeout.Items)
-            {
-                if (i != Job.Timeout)
-                    continue;
-                cboTimeout.SelectedItem = i;
-                break;
-            }
-            if (cboTimeout.SelectedIndex < 0)
-            {
-                cboTimeout.Items.Add(Job.Timeout);
-                cboTimeout.SelectedIndex = cboTimeout.Items.Count - 1;
-            }
-            txtName.Text = Job.Name;
+            _controller.ThrowIfRequiredPropertiesAreNull();
+
+            _controller.PopulateTimeout(cboTimeout);
+
+            txtName.Text = Job!.Name;
             txtProgram.Text = Job.Command;
             txtArguments.Text = Job.Arguments;
             chkHidden.Checked = Job.Hidden;
@@ -49,18 +42,23 @@ namespace JobRunner.Dialogs
         {
             if (!ValidateJobName(quiet))
                 return false;
+
             if (!ValidateProgram(quiet))
                 return false;
+
             if (!ValidateTimeout(quiet))
                 return false;
+
             return true;
         }
 
         private bool ValidateJobName(bool quiet)
         {
             txtName.Text = txtName.Text.Trim();
+
             if (!string.IsNullOrWhiteSpace(txtName.Text))
                 return true;
+
             MessageDisplayer.ShowValidationError(@"The field ""Job name"" cannot be empty.", Text, quiet);
             return false;
         }
@@ -68,8 +66,10 @@ namespace JobRunner.Dialogs
         private bool ValidateProgram(bool quiet)
         {
             txtProgram.Text = txtProgram.Text.Trim();
+
             if (!string.IsNullOrWhiteSpace(txtProgram.Text))
                 return true;
+            
             MessageDisplayer.ShowValidationError(@"The field ""Program to run"" cannot be empty.", Text, quiet);
             return false;
         }
@@ -78,6 +78,7 @@ namespace JobRunner.Dialogs
         {
             if (cboTimeout.SelectedItem != null)
                 return true;
+
             MessageDisplayer.ShowValidationError(@"The field ""Timeout"" cannot be empty.", Text, quiet);
             return false;
         }
@@ -86,7 +87,8 @@ namespace JobRunner.Dialogs
         {
             if (!ValidateForm(false))
                 return;
-            Job.Name = txtName.Text;
+
+            Job!.Name = txtName.Text;
             Job.Command = txtProgram.Text;
             Job.Arguments = txtArguments.Text;
             Job.Timeout = (TimeSpan)cboTimeout.SelectedItem;
@@ -102,8 +104,10 @@ namespace JobRunner.Dialogs
                 Filter = @"Executables (*.exe)|*.exe|All files (*.*)|*.*",
                 Title = @"Select an executable file"
             };
+
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
+
             txtProgram.Text = x.FileName;
         }
 
@@ -117,7 +121,7 @@ namespace JobRunner.Dialogs
 
             listDescriptor.AddRange(
                 from variable
-                in Variables.All
+                in Variables!.All
                 let jobs = Jobs.GetVariableUsage(variable)
                 select new SimpleListItem(
                     $"\"{variable.Name}\"=\"{variable.Value}\"",
@@ -126,7 +130,7 @@ namespace JobRunner.Dialogs
                 )
             );
 
-            using var x = new SimpleListDialog(_parent, Variables, Jobs);
+            using var x = new SimpleListDialog(_parent, Variables, Jobs!);
 
             x.ShowListDialog(
                 this,
@@ -137,7 +141,7 @@ namespace JobRunner.Dialogs
 
         private void AddVariable(MainWindow parent, IVariableList variables, IJobList jobList, SimpleListDescriptor descriptor)
         {
-            using var x = new AddVariableDialogSmall(Variables);
+            using var x = new AddVariableDialogSmall(Variables!);
 
             x.ShowDialog(this);
 
@@ -145,21 +149,21 @@ namespace JobRunner.Dialogs
 
             descriptor.AddRange(
                 from variable
-                    in Variables.All
-                let jobs = Jobs.GetVariableUsage(variable)
-                select new SimpleListItem(
-                    $"\"{variable.Name}\"=\"{variable.Value}\"",
-                    jobs.Names,
-                    $"[{variable.Name}]"
+                    in Variables!.All
+                    let jobs = Jobs.GetVariableUsage(variable)
+                    select new SimpleListItem(
+                        $"\"{variable.Name}\"=\"{variable.Value}\"",
+                        jobs.Names,
+                        $"[{variable.Name}]"
                 )
             );
 
-            SaveVariables(_parent, Variables);
+            SaveVariables!(_parent, Variables);
         }
         
         private void txtArguments_TextChanged(object sender, EventArgs e)
         {
-            if (Variables == null!)
+            if (Variables == null)
             {
                 txtArgsEvaluated.Text = @"(Missing variable list.)";
                 return;

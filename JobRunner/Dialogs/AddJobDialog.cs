@@ -19,13 +19,15 @@ namespace JobRunner.Dialogs
         private readonly IJobList _jobs;
         private readonly IVariableList _variables;
         private readonly ILogger _log;
+        private readonly int _suggestedSequenceNumber;
 
-        public AddJobDialog(MainWindow parent, IJobList jobs, IVariableList variables, ILogger log)
+        public AddJobDialog(MainWindow parent, IJobList jobs, IVariableList variables, ILogger log, int suggestedSequenceNumber)
         {
             _parent = parent;
             _jobs = jobs;
             _variables = variables;
             _log = log;
+            _suggestedSequenceNumber = suggestedSequenceNumber;
             InitializeComponent();
         }
 
@@ -34,6 +36,7 @@ namespace JobRunner.Dialogs
             Refresh();
             tabControl1.Focus();
             txtNumber.Focus();
+            txtNumber.Text = _suggestedSequenceNumber.ToString();
         }
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)

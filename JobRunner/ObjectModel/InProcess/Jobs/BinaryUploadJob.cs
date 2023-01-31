@@ -15,10 +15,14 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
         public string Target { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        private UploadFileDelegate Action { get; set; }
+        private UploadFileDelegate? Action { get; set; }
 
         public BinaryUploadJob(ILogger log) : base(log)
         {
+            SourceFile = "";
+            Target = "";
+            Username = "";
+            Password = "";
         }
 
         public override void Begin(ArgumentList args)

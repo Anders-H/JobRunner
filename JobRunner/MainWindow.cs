@@ -177,7 +177,9 @@ namespace JobRunner
             if (!Config.IsAdministrator)
                 return;
 
-            using var x = new AddJobDialog(this, Jobs, Variables, _log);
+            var suggestedSequenceNumber = Jobs.Count > 0 ? Jobs.LastJob.Number + 1 : 1;
+
+            using var x = new AddJobDialog(this, Jobs, Variables, _log, suggestedSequenceNumber);
 
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;

@@ -1,5 +1,5 @@
 ﻿
-namespace JobRunner
+namespace JobRunner.Dialogs
 {
     partial class DeleteJobDialog
     {
