@@ -36,7 +36,7 @@ namespace JobRunner.Dialogs.ViewList
         private void SimpleListDialog_Load(object sender, EventArgs e)
         {
             btnAdd.Visible = _addAction != null;
-            Text = _descriptor!.WindowTitle ?? "";
+            Text = _descriptor?.WindowTitle ?? "";
             RefreshList();
         }
 
@@ -53,7 +53,7 @@ namespace JobRunner.Dialogs.ViewList
         {
             if (_addAction == null)
                 return;
-            _addAction.Invoke(_parent, _variables, _jobs, _descriptor);
+            _addAction.Invoke(_parent, _variables, _jobs, _descriptor!);
             RefreshList();
         }
 

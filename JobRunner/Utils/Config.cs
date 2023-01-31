@@ -1,7 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
-using System.Reflection;
+﻿using System.Configuration;
 using System.Security.Principal;
 using JobRunner.ObjectModel;
 
@@ -11,7 +8,6 @@ namespace JobRunner.Utils
     {
         private static JobFileLocation? _jobFileLocation;
         private static bool? _isAdministrator;
-        public const string JobRunnerFolderName = "JobRunnerJobListFile";
         public static bool AutoStart { get; set; }
         public static bool AutoClose { get; set; }
         public static bool EnableLogging { get; set; }
@@ -54,44 +50,11 @@ namespace JobRunner.Utils
             }
         }
 
-        public static string GetJobFilePath()
-        {
-#if DEBUG
-            return @"C:\GitRepos\JobRunner\jobs.xml"; // TODO: Rätta sökvägarna i filen
-#endif
-            switch (JobFileLocation)
-            {
-                case JobFileLocation.Application:
-                    var executingFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
-                    return Path.Combine(executingFile.Directory?.FullName ?? "", "jobs.xml");
-                case JobFileLocation.UserSettings:
-                    var profile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    var folder = new DirectoryInfo(Path.Combine(profile, JobRunnerFolderName));
-                    if (!folder.Exists)
-                        folder.Create();
-                    return Path.Combine(folder.FullName, "jobs.xml");
-                default:
-                    throw new SystemException("Configuration error. Visit https://github.com/Anders-H/JobRunner for more information.");
-            }
-        }
-        
-        public static string GetVariableFilePath()
-        {
-            switch (JobFileLocation)
-            {
-                case JobFileLocation.Application:
-                    var executingFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
-                    return Path.Combine(executingFile.Directory?.FullName ?? "", "variables.xml");
-                case JobFileLocation.UserSettings:
-                    var profile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    var folder = new DirectoryInfo(Path.Combine(profile, JobRunnerFolderName));
-                    if (!folder.Exists)
-                        folder.Create();
-                    return Path.Combine(folder.FullName, "variables.xml");
-                default:
-                    throw new SystemException("Configuration error. Visit https://github.com/Anders-H/JobRunner for more information.");
-            }
-        }
+        public static string GetJobFilePath() =>
+            new PathGenerator(JobFileLocation).GetDataFile("jobs.xml");
+
+        public static string GetVariableFilePath() =>
+            new PathGenerator(JobFileLocation).GetDataFile("variables.xml");
 
         public static bool IsAdministrator
         {

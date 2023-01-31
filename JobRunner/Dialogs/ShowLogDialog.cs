@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Windows.Forms;
 using JobRunner.Logging;
 using JobRunner.Utils;
@@ -11,6 +12,9 @@ namespace JobRunner.Dialogs
 
         public ShowLogDialog()
         {
+            if (Log == null)
+                throw new SystemException($"Uninitialized property: {nameof(Log)}");
+
             InitializeComponent();
         }
 
@@ -19,8 +23,8 @@ namespace JobRunner.Dialogs
             Refresh();
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();
-            
-            var file = Log.GetFile();
+
+            var file = PathGenerator.GetLogFile();
             
             lblFolder.Text = file.Directory?.FullName ?? "";
             lblFile.Text = file.Name;
@@ -37,7 +41,7 @@ namespace JobRunner.Dialogs
         {
             try
             {
-                System.Diagnostics.Process.Start(Log.GetFile().Directory?.FullName ?? "");
+                System.Diagnostics.Process.Start(PathGenerator.GetLogFileDirectoryName());
             }
             catch (Exception exception)
             {
@@ -49,7 +53,7 @@ namespace JobRunner.Dialogs
         {
             try
             {
-                System.Diagnostics.Process.Start(Log.GetFile().FullName);
+                System.Diagnostics.Process.Start(PathGenerator.GetLogFile().FullName);
             }
             catch (Exception exception)
             {

@@ -150,6 +150,7 @@
     <Compile Include="ObjectModel\Variable.cs" />
     <Compile Include="ObjectModel\VariableList.cs" />
     <Compile Include="ObjectModel\Xml\XmlBuilder.cs" />
+    <Compile Include="PathGenerator.cs" />
     <Compile Include="Services\ArgumentDecoder.cs" />
     <Compile Include="Services\ArgumentList.cs" />
     <Compile Include="Services\VariableName.cs" />

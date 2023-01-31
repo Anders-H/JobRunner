@@ -1,8 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using JobRunner.Utils;
 
 namespace JobRunner.Logging
 {
@@ -10,7 +8,8 @@ namespace JobRunner.Logging
     {
         public bool DeleteLog()
         {
-            var file = GetFile();
+            var file = PathGenerator.GetLogFile();
+
             if (!file.Exists)
                 return true;
             
@@ -18,7 +17,7 @@ namespace JobRunner.Logging
             {
                 file.Delete();
                 Application.DoEvents();
-                file = GetFile();
+                file = PathGenerator.GetLogFile();
                 return !file.Exists;
             }
             catch
@@ -29,7 +28,8 @@ namespace JobRunner.Logging
 
         public bool AppendLog(string content)
         {
-            var file = GetFile();
+            var file = PathGenerator.GetLogFile();
+
             try
             {
                 using var sw = new StreamWriter(file.FullName, true, Encoding.UTF8);
@@ -42,15 +42,6 @@ namespace JobRunner.Logging
             {
                 return false;
             }
-        }
-
-        public FileInfo GetFile()
-        {
-            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var folder = new DirectoryInfo(Path.Combine(appData, Config.JobRunnerFolderName));
-            if (!folder.Exists)
-                folder.Create();
-            return new FileInfo(Path.Combine(folder.FullName, "JobRunnerApplicationLog.log"));
         }
     }
 }

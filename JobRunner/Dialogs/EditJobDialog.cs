@@ -122,7 +122,7 @@ namespace JobRunner.Dialogs
             listDescriptor.AddRange(
                 from variable
                 in Variables!.All
-                let jobs = Jobs.GetVariableUsage(variable)
+                let jobs = Jobs!.GetVariableUsage(variable)
                 select new SimpleListItem(
                     $"\"{variable.Name}\"=\"{variable.Value}\"",
                     jobs.Names,
@@ -150,7 +150,7 @@ namespace JobRunner.Dialogs
             descriptor.AddRange(
                 from variable
                     in Variables!.All
-                    let jobs = Jobs.GetVariableUsage(variable)
+                    let jobs = Jobs!.GetVariableUsage(variable)
                     select new SimpleListItem(
                         $"\"{variable.Name}\"=\"{variable.Value}\"",
                         jobs.Names,
