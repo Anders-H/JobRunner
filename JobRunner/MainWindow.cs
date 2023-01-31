@@ -394,5 +394,15 @@ namespace JobRunner
             _cancelFlag = true;
             _controller.RunJobsCompleted(this, false, lblStatus, Jobs, grid1);
         }
+
+        private void editVariableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void deleteVariableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

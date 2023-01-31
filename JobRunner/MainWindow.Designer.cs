@@ -47,7 +47,6 @@
             this.moveJobDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.systemSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jobsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runSelectedJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,8 +122,7 @@
             this.moveJobUpToolStripMenuItem,
             this.moveJobDownToolStripMenuItem,
             this.toolStripMenuItem2,
-            this.optionsToolStripMenuItem,
-            this.systemSettingsToolStripMenuItem});
+            this.optionsToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -167,12 +165,14 @@
             this.editVariableToolStripMenuItem.Name = "editVariableToolStripMenuItem";
             this.editVariableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editVariableToolStripMenuItem.Text = "Edit variable...";
+            this.editVariableToolStripMenuItem.Click += new System.EventHandler(this.editVariableToolStripMenuItem_Click);
             // 
             // deleteVariableToolStripMenuItem
             // 
             this.deleteVariableToolStripMenuItem.Name = "deleteVariableToolStripMenuItem";
             this.deleteVariableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteVariableToolStripMenuItem.Text = "Delete variable";
+            this.deleteVariableToolStripMenuItem.Click += new System.EventHandler(this.deleteVariableToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -206,12 +206,6 @@
             this.optionsToolStripMenuItem.Text = "Options...";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.OptionsToolStripMenuItem_Click);
             // 
-            // systemSettingsToolStripMenuItem
-            // 
-            this.systemSettingsToolStripMenuItem.Name = "systemSettingsToolStripMenuItem";
-            this.systemSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.systemSettingsToolStripMenuItem.Text = "System settings...";
-            // 
             // jobsToolStripMenuItem
             // 
             this.jobsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -228,28 +222,28 @@
             this.runToolStripMenuItem.Image = global::JobRunner.Properties.Resources.FormRunHS;
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.runToolStripMenuItem.Text = "Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
             // runSelectedJobToolStripMenuItem
             // 
             this.runSelectedJobToolStripMenuItem.Name = "runSelectedJobToolStripMenuItem";
-            this.runSelectedJobToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.runSelectedJobToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.runSelectedJobToolStripMenuItem.Text = "Run selected job";
             this.runSelectedJobToolStripMenuItem.Click += new System.EventHandler(this.RunSelectedJobToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(158, 6);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Enabled = false;
             this.stopToolStripMenuItem.Image = global::JobRunner.Properties.Resources.StopHS;
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
@@ -412,7 +406,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem viewJobToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editJobToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem systemSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem runThisJobToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;

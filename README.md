@@ -21,10 +21,10 @@ Download version 1.4: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe)
 
 **Changes in version 1.4:**
 
-- A bugg in the job argument reader is fixed.
+- A bug in the job argument reader is fixed.
 - Incorrect use of failure behaviour is logged.
 - Ability to stop a running script is added.
-- When started as administrator, autorun is always disabled.
+- When started as administrator, auto-run is always disabled.
 
 **Changes in version 1.3:**
 
