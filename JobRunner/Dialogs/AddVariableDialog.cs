@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
 using System.Windows.Forms;
 using JobRunner.Dialogs.ViewList;
@@ -10,8 +11,8 @@ namespace JobRunner.Dialogs
 {
     public partial class AddVariableDialog : Form
     {
-        private IVariableList _variables;
-        private IJobList _jobs;
+        private readonly IVariableList _variables;
+        private readonly IJobList _jobs;
 
         public AddVariableDialog(IVariableList variables, IJobList jobs)
         {

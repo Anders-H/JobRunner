@@ -6,7 +6,7 @@ namespace JobRunner.Dialogs
 {
     public partial class ViewJobDialog : Form
     {
-        public Job Job { get; private set; }
+        public Job Job { get; }
 
         public ViewJobDialog(Job job)
         {

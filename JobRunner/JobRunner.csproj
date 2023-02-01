@@ -107,6 +107,12 @@
     <Compile Include="Dialogs\InProcess\DownloadStringDialog.Designer.cs">
       <DependentUpon>DownloadStringDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SelectVariableDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectVariableDialog.Designer.cs">
+      <DependentUpon>SelectVariableDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ShowLogDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\InProcess\DownloadStringDialog.resx">
       <DependentUpon>DownloadStringDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SelectVariableDialog.resx">
+      <DependentUpon>SelectVariableDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ShowLogDialog.resx">
       <DependentUpon>ShowLogDialog.cs</DependentUpon>

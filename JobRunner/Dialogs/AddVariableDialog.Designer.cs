@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblVariableName = new System.Windows.Forms.Label();
             this.txtVariableName = new System.Windows.Forms.TextBox();
             this.txtVariableValue = new System.Windows.Forms.TextBox();
@@ -41,7 +41,10 @@
             // 
             // listView1
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {this.columnHeader1, this.columnHeader2});
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listView1.FullRowSelect = true;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(4, 4);
             this.listView1.MultiSelect = false;
@@ -54,11 +57,11 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Width = 170;
+            this.columnHeader1.Width = 165;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Width = 170;
+            this.columnHeader2.Width = 165;
             // 
             // lblVariableName
             // 
@@ -96,7 +99,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(184, 348);
+            this.btnOk.Location = new System.Drawing.Point(188, 348);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 4;
@@ -138,6 +141,7 @@
             this.Shown += new System.EventHandler(this.AddVariableDialog_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Button btnCancel;

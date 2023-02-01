@@ -232,20 +232,20 @@ namespace JobRunner
                 return;
             }
 
-            if (grid1.SelectedJob == null)
-                return;
-
             ViewJob();
         }
 
         private void ViewJob()
         {
+            if (grid1.SelectedJob == null)
+                return;
+
             using var x = new ViewJobDialog(grid1.SelectedJob);
 
             var result = x.ShowDialog(this);
 
             if (result == DialogResult.OK)
-                RunSelectedJobToolStripMenuItem_Click(grid1, new EventArgs());
+                RunSelectedJobToolStripMenuItem_Click(grid1, EventArgs.Empty);
         }
         
         private void EditJobToolStripMenuItem_Click(object sender, EventArgs e)
@@ -397,12 +397,18 @@ namespace JobRunner
 
         private void editVariableToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var variable = SelectVariableDialog.GetVariable(this, "Select a variable to edit", Variables, Jobs);
 
+            if (variable == null)
+                return;
         }
 
         private void deleteVariableToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var variable = SelectVariableDialog.GetVariable(this, "Select a variable to delete", Variables, Jobs);
 
+            if (variable == null)
+                return;
         }
     }
 }
