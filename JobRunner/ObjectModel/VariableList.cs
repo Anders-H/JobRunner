@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,16 @@ namespace JobRunner.ObjectModel
         public List<Variable> All { get; } = new List<Variable>();
         public bool LoadSuccess { get; private set; }
         public string LoadFailedMessage { get; private set; }
+
+        public VariableList() : this(false, "")
+        {
+        }
+
+        public VariableList(bool loadSuccess, string loadFailedMessage)
+        {
+            LoadSuccess = loadSuccess;
+            LoadFailedMessage = loadFailedMessage;
+        }
 
         public IVariableList GetVariables(Job job)
         {
@@ -79,10 +90,25 @@ namespace JobRunner.ObjectModel
         public void Add(string name, string value) =>
             All.Add(new Variable(name, value));
 
+        public void Delete(string name)
+        {
+            bool again;
+            do
+            {
+                again = false;
+                foreach (var v in All.Where(v => v.Is(name)))
+                {
+                    All.Remove(v);
+                    again = true;
+                    break;
+                }
+            } while (again);
+        }
+
         public int Count =>
             All.Count;
 
-        public Variable GetVariable(string name) =>
+        public Variable? GetVariable(string name) =>
             All.FirstOrDefault(
                 x => string.Compare(x.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0
             );

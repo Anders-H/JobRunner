@@ -1,4 +1,6 @@
-﻿namespace JobRunner.ObjectModel
+﻿using System;
+
+namespace JobRunner.ObjectModel
 {
     public class Variable
     {
@@ -16,5 +18,8 @@
       <name>{System.Net.WebUtility.HtmlEncode(Name)}</name>
       <value>{System.Net.WebUtility.HtmlEncode(Value)}</value>
    </variable>";
+
+        public bool Is(string name) =>
+            string.Compare(Name, name, StringComparison.CurrentCultureIgnoreCase) == 0;
     }
 }

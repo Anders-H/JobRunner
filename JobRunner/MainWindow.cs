@@ -409,6 +409,12 @@ namespace JobRunner
 
             if (variable == null)
                 return;
+
+            if (!MessageDisplayer.Ask($@"Are you sure you want to delete the variable ""{variable.Name}""?", "Delete variable"))
+                return;
+
+            Variables.Delete(variable.Name);
+            _controller.SaveVariables(this, Variables);
         }
     }
 }
