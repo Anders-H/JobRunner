@@ -44,6 +44,7 @@ namespace JobRunner.Dialogs.ViewList
         {
             if (listView1.SelectedItems.Count <= 0)
                 return;
+
             var valueToCopy = listView1.SelectedItems[0].Tag as string ?? "";
             Clipboard.SetText(valueToCopy);
             MessageDisplayer.Tell($"Copied to clipboard: {valueToCopy}", Text);
@@ -53,12 +54,19 @@ namespace JobRunner.Dialogs.ViewList
         {
             if (_addAction == null)
                 return;
-            _addAction.Invoke(_parent, _variables, _jobs, _descriptor!);
+
+            var name = _addAction.Invoke(_parent, _variables, _jobs, _descriptor!);
+
             RefreshList();
+
+            if (!string.IsNullOrEmpty(name))
+                FindVariable(name);
         }
 
         private void RefreshList()
         {
+            var i = listView1.SelectedIndices.Count > 0 ? listView1.SelectedIndices[0] : -1;
+
             listView1.BeginUpdate();
             listView1.Items.Clear();
             listView1.Columns[0].Text = _descriptor?.PrimaryColumnTitle ?? "";
@@ -68,7 +76,28 @@ namespace JobRunner.Dialogs.ViewList
                 foreach (var item in _descriptor)
                     item.Add(listView1);
 
+            if (i >= 0 && i < listView1.Items.Count)
+            {
+                listView1.Items[i].Selected = true;
+                listView1.Items[i].EnsureVisible();
+            }
+
             listView1.EndUpdate();
+        }
+
+        private void FindVariable(string name)
+        {
+            foreach (ListViewItem item in listView1.Items)
+            {
+                var m = item.Tag as string ?? "";
+
+                if (string.Compare(m, $"[{name}]", StringComparison.CurrentCultureIgnoreCase) != 0)
+                    continue;
+
+                item.Selected = true;
+                item.EnsureVisible();
+                return;
+            }
         }
     }
 }

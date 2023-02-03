@@ -139,7 +139,7 @@ namespace JobRunner.Dialogs
             );
         }
 
-        private void AddVariable(MainWindow parent, IVariableList variables, IJobList jobList, SimpleListDescriptor descriptor)
+        private string AddVariable(MainWindow parent, IVariableList variables, IJobList jobList, SimpleListDescriptor descriptor)
         {
             using var x = new AddVariableDialogSmall(Variables!);
 
@@ -159,6 +159,8 @@ namespace JobRunner.Dialogs
             );
 
             SaveVariables!(_parent, Variables);
+
+            return x.NewVariableName;
         }
         
         private void txtArguments_TextChanged(object sender, EventArgs e)

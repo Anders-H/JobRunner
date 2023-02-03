@@ -8,10 +8,12 @@ namespace JobRunner.Dialogs
     public partial class AddVariableDialogSmall : Form
     {
         private readonly IVariableList _variables;
-        
+        public string NewVariableName { get; set; }
+
         public AddVariableDialogSmall(IVariableList variable)
         {
             _variables = variable;
+            NewVariableName = "";
             InitializeComponent();
         }
 
@@ -37,6 +39,8 @@ namespace JobRunner.Dialogs
 
             _variables.Add(txtVariableName.Text, txtVariableValue.Text);
             
+            NewVariableName = txtVariableName.Text;
+
             DialogResult = DialogResult.OK;
         }
 

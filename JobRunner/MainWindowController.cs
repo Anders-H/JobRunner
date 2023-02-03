@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -131,7 +130,7 @@ namespace JobRunner
             );
         }
 
-        private void AddVariable(MainWindow parent, IVariableList variables, IJobList jobList, SimpleListDescriptor descriptor)
+        private string AddVariable(MainWindow parent, IVariableList variables, IJobList jobList, SimpleListDescriptor descriptor)
         {
             using var x = new AddVariableDialogSmall(variables);
 
@@ -151,6 +150,8 @@ namespace JobRunner
             );
 
             SaveVariables(parent, variables);
+
+            return x.NewVariableName;
         }
 
         public void SaveVariables(MainWindow parent, IVariableList variables)
