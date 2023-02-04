@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.IO;
 using System.Threading;
 using JobRunner.Logging;
@@ -11,10 +12,11 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
     public class DeleteFileJob : InProcessJob
     {
         private string FileToDelete { get; set; }
-        private DeleteFileDelegate Action { get; set; }
+        private DeleteFileDelegate? Action { get; set; }
 
         public DeleteFileJob(ILogger log) : base(log)
         {
+            FileToDelete = "";
         }
 
         public override void Begin(ArgumentList args)

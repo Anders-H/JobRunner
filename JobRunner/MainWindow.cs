@@ -401,6 +401,13 @@ namespace JobRunner
 
             if (variable == null)
                 return;
+
+            var x = new EditVariableDialog();
+
+            x.Variable = variable;
+
+            if (x.ShowDialog(this) == DialogResult.OK)
+                _controller.SaveVariables(this, Variables);
         }
 
         private void deleteVariableToolStripMenuItem_Click(object sender, EventArgs e)

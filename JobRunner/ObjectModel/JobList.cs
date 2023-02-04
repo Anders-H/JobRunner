@@ -44,7 +44,11 @@ namespace JobRunner.ObjectModel
             var dom = new XmlDocument();
             dom.Load(filename);
             var doc = dom.DocumentElement;
-            var jobsXml = doc?.SelectNodes("job");
+
+            if (doc == null)
+                return;
+
+            var jobsXml = doc.SelectNodes("job");
 
             if (jobsXml == null)
                 return;
@@ -58,35 +62,44 @@ namespace JobRunner.ObjectModel
             foreach (XmlElement jobXml in jobsXml)
             {
                 number++;
+
                 var command = jobXml.GetChildString("command");
+
                 if (string.IsNullOrWhiteSpace(command))
                 {
                     LoadFailedMessage = "At least one job is missing <command> value.";
                     if (!Config.IsAdministrator)
                         return;
                 }
+
                 var timeoutString = jobXml.GetChildString("timeout");
+
                 if (string.IsNullOrWhiteSpace(timeoutString))
                 {
                     LoadFailedMessage = "At least one job is missing <timeout> value.";
                     if (!Config.IsAdministrator)
                         return;
                 }
+
                 if (!TimeSpan.TryParse(timeoutString, CultureInfo.CurrentCulture, out var timeout))
                 {
                     LoadFailedMessage = $"Failed to parse timeout: {timeoutString}";
                     if (!Config.IsAdministrator)
                         return;
                 }
+
                 var display = jobXml.GetChildString("display").ToLower();
+
                 if (!(display == "visible" || display == "hidden"))
                 {
                     LoadFailedMessage = "At least one job is missing a correct <display> value. Possible values are Visible or Hidden.";
                     if (!Config.IsAdministrator)
                         return;
                 }
+
                 var arguments = jobXml.GetChildString("arguments");
                 var breakOnError = jobXml.GetChildString("breakOnError").ToLower();
+
                 Add(
                     number,
                     jobXml.GetChildString("name"),
@@ -119,10 +132,10 @@ namespace JobRunner.ObjectModel
             ));
 
         public Job FirstJob =>
-            All.FirstOrDefault();
+            All.FirstOrDefault()!;
 
         public Job LastJob =>
-            All.LastOrDefault();
+            All.LastOrDefault()!;
 
         public int Count =>
             All.Count;

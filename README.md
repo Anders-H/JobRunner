@@ -18,6 +18,8 @@ Download version 1.4: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe)
 **Changes in version 1.5:**
 
 - New jobs get a suggested sequence number.
+- The user interface allows for editing and deleting variables.
+- Lots of bug fixes.
 
 **Changes in version 1.4:**
 

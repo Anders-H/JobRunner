@@ -89,6 +89,12 @@
       <DependentUpon>AutoActionDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EditJobDialogController.cs" />
+    <Compile Include="Dialogs\EditVariableDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\EditVariableDialog.Designer.cs">
+      <DependentUpon>EditVariableDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\InProcess\BinaryUploadDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -210,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EditJobDialog.resx">
       <DependentUpon>EditJobDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\EditVariableDialog.resx">
+      <DependentUpon>EditVariableDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\InProcess\BinaryUploadDialog.resx">
       <DependentUpon>BinaryUploadDialog.cs</DependentUpon>
