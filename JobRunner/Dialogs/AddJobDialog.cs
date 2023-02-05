@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -270,7 +271,7 @@ namespace JobRunner.Dialogs
             var jobIdentifierString = helper.GetIdentifyerString(InProcessJobIdentifyer.DownloadString);
             var program = txtProgram.Text.Trim();
 
-            var x = (Form)Activator.CreateInstance(dialogType, jobIdentifierString, "");
+            var x = (Form)Activator.CreateInstance(dialogType, _log, jobIdentifierString, "");
 
             var argumentsProperty = x.GetType().GetProperty("Arguments");
 

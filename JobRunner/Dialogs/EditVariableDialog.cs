@@ -1,7 +1,9 @@
 ﻿#nullable enable
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using JobRunner.ObjectModel;
+using JobRunner.Utils;
 
 namespace JobRunner.Dialogs
 {
@@ -28,6 +30,26 @@ namespace JobRunner.Dialogs
             txtVariableName.Text = txtVariableName.Text.Trim();
             txtVariableValue.Text = txtVariableValue.Text.Trim();
 
+            if (string.IsNullOrWhiteSpace(txtVariableName.Text))
+            {
+                MessageDisplayer.Tell("The variable must have a name.", Text);
+                txtVariableName.Focus();
+                return;
+            }
+
+            if (!NameIsUnique())
+            {
+                MessageDisplayer.Tell("The variable name is not unique.", Text);
+                txtVariableName.Focus();
+                return;
+            }
+
+            _variable.Name = txtVariableName.Text;
+            _variable.Value = txtVariableValue.Text;
+            DialogResult = DialogResult.OK;
         }
+
+        private bool NameIsUnique() =>
+            _variables.All.Where(v => v != _variable).All(v => !v.Is(txtVariableName.Text));
     }
 }

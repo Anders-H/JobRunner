@@ -1,5 +1,5 @@
 #define MyAppName "JobRunner"
-#define MyAppVersion "1.4"
+#define MyAppVersion "1.5"
 #define MyAppPublisher "Anders Hesselbom"
 #define MyAppURL "http://winsoft.se/"
 #define MyAppExeName "JobRunner.exe"
@@ -15,7 +15,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir=C:\GitRepos\JobRunner
+OutputDir=D:\GitRepos\JobRunner
 OutputBaseFilename=JobRunner
 Compression=lzma
 SolidCompression=yes
@@ -28,8 +28,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\GitRepos\JobRunner\JobRunner\bin\Release\JobRunner.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\GitRepos\JobRunner\JobRunner\bin\Release\JobRunner.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\GitRepos\JobRunner\JobRunner\bin\Release\JobRunner.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\GitRepos\JobRunner\JobRunner\bin\Release\JobRunner.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

@@ -402,9 +402,7 @@ namespace JobRunner
             if (variable == null)
                 return;
 
-            var x = new EditVariableDialog();
-
-            x.Variable = variable;
+            var x = new EditVariableDialog(variable, Variables);
 
             if (x.ShowDialog(this) == DialogResult.OK)
                 _controller.SaveVariables(this, Variables);
