@@ -3,9 +3,15 @@
     public class VersionHistory
     {
         public static string GetVersionHistory() =>
-            @"Changes in version 1.5:
+            @"Changes in version 1.6:
+
+- Individual jobs can be disabled.
+
+Changes in version 1.5:
 
 - New jobs get a suggested sequence number.
+- The user interface allows for editing and deleting variables.
+- Lots of bug fixes.
 
 Changes in version 1.4:
 
