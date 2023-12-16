@@ -153,7 +153,7 @@
     <Compile Include="ObjectModel\InProcess\Jobs\Arguments\BinaryUploadArguments.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\Arguments\DownloadStringArguments.cs" />
     <Compile Include="ObjectModel\InProcess\InProcessJob.cs" />
-    <Compile Include="ObjectModel\InProcess\InProcessJobIdentifyer.cs" />
+    <Compile Include="ObjectModel\InProcess\InProcessJobIdentifier.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\Arguments\DeleteFileArguments.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\Arguments\TypedArgumentsBase.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\DeleteFileJob.cs" />

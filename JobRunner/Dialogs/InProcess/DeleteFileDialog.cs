@@ -12,13 +12,13 @@ namespace JobRunner.Dialogs.InProcess
 {
     public partial class DeleteFileDialog : Form
     {
-        public readonly ILogger _log;
+        public readonly ILogger Log;
         public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
 
         public DeleteFileDialog(ILogger log, string jobIdentifierString, string arguments)
         {
-            _log = log;
+            Log = log;
             JobIdentifierString = jobIdentifierString;
             Arguments = arguments;
             InitializeComponent();
@@ -73,8 +73,8 @@ namespace JobRunner.Dialogs.InProcess
             if (!txtTargetFile.ValidateDashAndQuotes("File to delete", Text))
                 return;
 
-            var helper = new InProcessJobIdentifyerHelper(_log);
-            JobIdentifierString = helper.GetIdentifyerString(InProcessJobIdentifyer.DeleteFile);
+            var helper = new InProcessJobIdentifierHelper(Log);
+            JobIdentifierString = helper.GetIdentifierString(InProcessJobIdentifier.DeleteFile);
             Arguments = DeleteFileArguments.CreateArgumentString(txtTargetFile.Text, GetFileNotFoundBehaviour());
             DialogResult = DialogResult.OK;
         }

@@ -15,6 +15,10 @@ Download version 1.5: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe) (ri
 
 ## Version history:
 
+**Changes in version 1.6:**
+
+- Individual jobs can be disabled.
+
 **Changes in version 1.5:**
 
 - New jobs get a suggested sequence number.

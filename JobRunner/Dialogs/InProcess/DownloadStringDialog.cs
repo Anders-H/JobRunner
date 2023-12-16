@@ -74,9 +74,9 @@ namespace JobRunner.Dialogs.InProcess
             if (!txtTargetFile.ValidateDashAndQuotes("Target file", Text))
                 return;
 
-            JobIdentifierString = new InProcessJobIdentifyerHelper(_log)
-                .GetIdentifyerString(
-                    InProcessJobIdentifyer.DownloadString
+            JobIdentifierString = new InProcessJobIdentifierHelper(_log)
+                .GetIdentifierString(
+                    InProcessJobIdentifier.DownloadString
                 );
 
             Arguments = DownloadStringArguments.CreateArgumentString(txtSourceUrl.Text, txtTargetFile.Text, GetExistsBehaviour());

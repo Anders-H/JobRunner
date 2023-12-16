@@ -99,10 +99,12 @@ namespace JobRunner.ObjectModel
 
                 var arguments = jobXml.GetChildString("arguments");
                 var breakOnError = jobXml.GetChildString("breakOnError").ToLower();
+                var enabled = jobXml.GetChildString("enabled").ToLower();
 
                 Add(
                     number,
                     jobXml.GetChildString("name"),
+                    enabled,
                     command,
                     arguments,
                     timeout,
@@ -115,6 +117,7 @@ namespace JobRunner.ObjectModel
         private void Add(
             int number,
             string name,
+            string enabled,
             string command,
             string arguments,
             TimeSpan timeout,
@@ -124,6 +127,7 @@ namespace JobRunner.ObjectModel
                 _log,
                 number,
                 name,
+                enabled == "true" || enabled == "1" || enabled == "",
                 command,
                 arguments,
                 timeout,

@@ -34,6 +34,7 @@ namespace JobRunner.Dialogs
             txtName.Text = Job!.Name;
             txtProgram.Text = Job.Command;
             txtArguments.Text = Job.Arguments;
+            chkEnabled.Checked = Job.Enabled;
             chkHidden.Checked = Job.Hidden;
             chkBreakOnError.Checked = Job.BreakOnError;
         }
@@ -92,6 +93,7 @@ namespace JobRunner.Dialogs
             Job.Command = txtProgram.Text;
             Job.Arguments = txtArguments.Text;
             Job.Timeout = (TimeSpan)cboTimeout.SelectedItem;
+            Job.Enabled = chkEnabled.Checked;
             Job.Hidden = chkHidden.Checked;
             Job.BreakOnError = chkBreakOnError.Checked;
             DialogResult = DialogResult.OK;

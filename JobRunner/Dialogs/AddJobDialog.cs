@@ -181,6 +181,7 @@ namespace JobRunner.Dialogs
                 _log,
                 nr,
                 txtName.Text,
+                chkEnabled.Checked,
                 txtProgram.Text,
                 txtArguments.Text,
                 (TimeSpan)cboTimeout.SelectedItem,
@@ -267,8 +268,8 @@ namespace JobRunner.Dialogs
 
         private void ShowInProcessDialog(Type dialogType)
         {
-            var helper = new InProcessJobIdentifyerHelper(_log);
-            var jobIdentifierString = helper.GetIdentifyerString(InProcessJobIdentifyer.DownloadString);
+            var helper = new InProcessJobIdentifierHelper(_log);
+            var jobIdentifierString = helper.GetIdentifierString(InProcessJobIdentifier.DownloadString);
             var program = txtProgram.Text.Trim();
 
             var x = (Form)Activator.CreateInstance(dialogType, _log, jobIdentifierString, "");

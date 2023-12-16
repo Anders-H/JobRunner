@@ -7,7 +7,7 @@ namespace JobRunner.ObjectModel.InProcess
 {
     public abstract class InProcessJob
     {
-        protected readonly ILogger _log;
+        protected readonly ILogger Log;
         public bool HasExited { get; protected set; }
         public int ExitCode { get; protected set; }
         public SystemException? Exception { get; protected set; }
@@ -16,7 +16,7 @@ namespace JobRunner.ObjectModel.InProcess
 
         protected InProcessJob(ILogger log)
         {
-            _log = log;
+            Log = log;
         }
     }
 }

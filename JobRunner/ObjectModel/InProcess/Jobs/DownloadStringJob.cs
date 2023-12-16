@@ -26,7 +26,7 @@ namespace JobRunner.ObjectModel.InProcess.Jobs
 
             TargetFile = downloadStringArguments.TargetFile;
 
-            switch (downloadStringArguments.TryGetFileExistsBehaviour(_log))
+            switch (downloadStringArguments.TryGetFileExistsBehaviour(Log))
             {
                 case FileExistsBehaviour.Skip:
                     if (File.Exists(TargetFile))

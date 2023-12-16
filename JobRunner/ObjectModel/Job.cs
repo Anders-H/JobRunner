@@ -15,6 +15,7 @@ namespace JobRunner.ObjectModel
         private readonly ILogger _log;
         public int Number { get; internal set; }
         public string Name { get; internal set; }
+        public bool Enabled { get; internal set; }
         public string Command { get; internal set; }
         public string Arguments { get; internal set; }
         public JobStatus Status { get; set; }
@@ -28,11 +29,12 @@ namespace JobRunner.ObjectModel
         public bool Hidden { get; internal set; }
         public bool BreakOnError { get; internal set; }
 
-        public Job(ILogger log, int number, string name, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError)
+        public Job(ILogger log, int number, string name, bool enabled, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError)
         {
             _log = log;
             Number = number;
             Name = name;
+            Enabled = enabled;
             Command = command;
             Arguments = arguments;
             Timeout = timeout;
@@ -63,6 +65,14 @@ namespace JobRunner.ObjectModel
 
         public void Run(ILogger log, IGridVisualFeedback grid, IVariableList variableList)
         {
+            if (!Enabled)
+            {
+                Status = JobStatus.Completed;
+                log.AppendLog($@"Job ""{Name}"" ({Number}) is disabled.");
+                grid.Invalidate();
+                return;
+            }
+
             try
             {
                 StartTime = DateTime.Now;
@@ -153,9 +163,9 @@ namespace JobRunner.ObjectModel
 
         private void InProcess(IGridVisualFeedback grid, IVariableList variableList)
         {
-            var inProcessJobIdentifyerHelper = new InProcessJobIdentifyerHelper(_log);
-            var jobId = inProcessJobIdentifyerHelper.GetIdentifyerFromString(Command);
-            var job = inProcessJobIdentifyerHelper.GetJob(jobId);
+            var inProcessJobIdentifierHelper = new InProcessJobIdentifierHelper(_log);
+            var jobId = inProcessJobIdentifierHelper.GetIdentifierFromString(Command);
+            var job = inProcessJobIdentifierHelper.GetJob(jobId);
             var args = new ArgumentList(Arguments);
             args = args.Decode(variableList);
             job.Begin(args);
@@ -190,6 +200,7 @@ namespace JobRunner.ObjectModel
         public string GetXml() =>
             $@"    <job>
         <name>{System.Net.WebUtility.HtmlEncode(Name)}</name>
+        <enabled>{(Enabled ? "true" : "false")}</enabled>
         <command>{System.Net.WebUtility.HtmlEncode(Command)}</command>
         <arguments>{System.Net.WebUtility.HtmlEncode(Arguments)}</arguments>
         <timeout>{System.Net.WebUtility.HtmlEncode(Timeout.ToString())}</timeout>

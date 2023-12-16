@@ -17,10 +17,10 @@ namespace JobRunner.Dialogs.InProcess
         public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
 
-        public BinaryUploadDialog(ILogger log, string jobIdentifyerString, string arguments)
+        public BinaryUploadDialog(ILogger log, string jobIdentifierString, string arguments)
         {
             _log = log;
-            JobIdentifierString = jobIdentifyerString;
+            JobIdentifierString = jobIdentifierString;
             Arguments = arguments;
             InitializeComponent();
         }
@@ -86,9 +86,9 @@ namespace JobRunner.Dialogs.InProcess
             if (!txtPassword.ValidateDashAndQuotes("Password", Text))
                 return;
 
-            JobIdentifierString = new InProcessJobIdentifyerHelper(_log)
-                .GetIdentifyerString(
-                    InProcessJobIdentifyer.BinaryUpload
+            JobIdentifierString = new InProcessJobIdentifierHelper(_log)
+                .GetIdentifierString(
+                    InProcessJobIdentifier.BinaryUpload
                 );
             
             Arguments = BinaryUploadArguments

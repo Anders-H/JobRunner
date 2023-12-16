@@ -44,6 +44,7 @@
             this.lblVariables = new System.Windows.Forms.LinkLabel();
             this.txtArgsEvaluated = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.chkEnabled = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txtName
@@ -66,10 +67,10 @@
             // chkHidden
             // 
             this.chkHidden.AutoSize = true;
-            this.chkHidden.Location = new System.Drawing.Point(8, 248);
+            this.chkHidden.Location = new System.Drawing.Point(8, 272);
             this.chkHidden.Name = "chkHidden";
             this.chkHidden.Size = new System.Drawing.Size(81, 17);
-            this.chkHidden.TabIndex = 10;
+            this.chkHidden.TabIndex = 13;
             this.chkHidden.Text = "Run hidden";
             this.chkHidden.UseVisualStyleBackColor = true;
             // 
@@ -80,7 +81,7 @@
             this.cboTimeout.Location = new System.Drawing.Point(8, 220);
             this.cboTimeout.Name = "cboTimeout";
             this.cboTimeout.Size = new System.Drawing.Size(112, 21);
-            this.cboTimeout.TabIndex = 9;
+            this.cboTimeout.TabIndex = 11;
             // 
             // label1
             // 
@@ -88,7 +89,7 @@
             this.label1.Location = new System.Drawing.Point(8, 204);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 13);
-            this.label1.TabIndex = 8;
+            this.label1.TabIndex = 10;
             this.label1.Text = "Timeout:";
             // 
             // btnBrowse
@@ -138,10 +139,10 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(288, 300);
+            this.btnOk.Location = new System.Drawing.Point(288, 320);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 12;
+            this.btnOk.TabIndex = 15;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
@@ -149,20 +150,20 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(372, 300);
+            this.btnCancel.Location = new System.Drawing.Point(372, 320);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 13;
+            this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // chkBreakOnError
             // 
             this.chkBreakOnError.AutoSize = true;
-            this.chkBreakOnError.Location = new System.Drawing.Point(8, 268);
+            this.chkBreakOnError.Location = new System.Drawing.Point(8, 292);
             this.chkBreakOnError.Name = "chkBreakOnError";
             this.chkBreakOnError.Size = new System.Drawing.Size(93, 17);
-            this.chkBreakOnError.TabIndex = 11;
+            this.chkBreakOnError.TabIndex = 14;
             this.chkBreakOnError.Text = "Break on error";
             this.chkBreakOnError.UseVisualStyleBackColor = true;
             // 
@@ -187,7 +188,7 @@
             this.txtArgsEvaluated.Name = "txtArgsEvaluated";
             this.txtArgsEvaluated.ReadOnly = true;
             this.txtArgsEvaluated.Size = new System.Drawing.Size(440, 20);
-            this.txtArgsEvaluated.TabIndex = 15;
+            this.txtArgsEvaluated.TabIndex = 9;
             this.txtArgsEvaluated.TabStop = false;
             // 
             // label2
@@ -196,8 +197,18 @@
             this.label2.Location = new System.Drawing.Point(8, 164);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(110, 13);
-            this.label2.TabIndex = 14;
+            this.label2.TabIndex = 8;
             this.label2.Text = "Arguments evaluated:";
+            // 
+            // chkEnabled
+            // 
+            this.chkEnabled.AutoSize = true;
+            this.chkEnabled.Location = new System.Drawing.Point(8, 252);
+            this.chkEnabled.Name = "chkEnabled";
+            this.chkEnabled.Size = new System.Drawing.Size(65, 17);
+            this.chkEnabled.TabIndex = 12;
+            this.chkEnabled.Text = "Enabled";
+            this.chkEnabled.UseVisualStyleBackColor = true;
             // 
             // EditJobDialog
             // 
@@ -205,7 +216,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(456, 330);
+            this.ClientSize = new System.Drawing.Size(456, 349);
+            this.Controls.Add(this.chkEnabled);
             this.Controls.Add(this.chkBreakOnError);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -253,5 +265,6 @@
         private System.Windows.Forms.LinkLabel lblVariables;
         private System.Windows.Forms.TextBox txtArgsEvaluated;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox chkEnabled;
     }
 }

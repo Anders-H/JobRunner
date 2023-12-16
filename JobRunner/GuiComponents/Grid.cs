@@ -137,6 +137,9 @@ namespace JobRunner.GuiComponents
 
         private Brush ForgroundFromStatus(Job job)
         {
+            if (!job.Enabled)
+                return Brushes.DimGray;
+
             switch (job.Status)
             {
                 case JobStatus.Pending:
@@ -194,7 +197,7 @@ namespace JobRunner.GuiComponents
         protected override void OnCellDoubleClick(DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.RowIndex < RowCount)
-                EditJob?.Invoke(this, new EventArgs());
+                EditJob?.Invoke(this, EventArgs.Empty);
             base.OnCellDoubleClick(e);
         }
 
@@ -219,7 +222,7 @@ namespace JobRunner.GuiComponents
             if (e.Button == MouseButtons.Right)
             {
                 var hit = HitTest(e.X, e.Y);
-                if (hit != null && hit.Type == DataGridViewHitTestType.Cell)
+                if (hit is { Type: DataGridViewHitTestType.Cell })
                 {
                     ClearSelection();
                     Rows[hit.RowIndex].Cells[hit.ColumnIndex].Selected = true;
@@ -328,7 +331,7 @@ namespace JobRunner.GuiComponents
                         {
                             var x = e.CellBounds.X + 3;
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(JobStatusHelper.GetStatusText(job.Status), Font, ForgroundFromStatus(job), x, y);
+                            e.Graphics.DrawString(job.Enabled ? JobStatusHelper.GetStatusText(job.Status) : "Disabled", Font, ForgroundFromStatus(job), x, y);
                         }
                         break;
                     case 7:

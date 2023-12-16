@@ -61,6 +61,7 @@
             this.deleteAFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.binaryUploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkEnabled = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.tabPageProcess.SuspendLayout();
@@ -86,6 +87,7 @@
             // 
             // tabPageBasic
             // 
+            this.tabPageBasic.Controls.Add(this.chkEnabled);
             this.tabPageBasic.Controls.Add(this.txtName);
             this.tabPageBasic.Controls.Add(this.lblName);
             this.tabPageBasic.Controls.Add(this.txtNumber);
@@ -365,7 +367,7 @@
             this.downloadTextToolStripMenuItem,
             this.binaryUploadToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(161, 70);
             // 
             // deleteAFileToolStripMenuItem
             // 
@@ -384,9 +386,21 @@
             // binaryUploadToolStripMenuItem
             // 
             this.binaryUploadToolStripMenuItem.Name = "binaryUploadToolStripMenuItem";
-            this.binaryUploadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.binaryUploadToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.binaryUploadToolStripMenuItem.Text = "Binary upload...";
             this.binaryUploadToolStripMenuItem.Click += new System.EventHandler(this.binaryUploadToolStripMenuItem_Click);
+            // 
+            // chkEnabled
+            // 
+            this.chkEnabled.AutoSize = true;
+            this.chkEnabled.Checked = true;
+            this.chkEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkEnabled.Location = new System.Drawing.Point(8, 216);
+            this.chkEnabled.Name = "chkEnabled";
+            this.chkEnabled.Size = new System.Drawing.Size(65, 17);
+            this.chkEnabled.TabIndex = 4;
+            this.chkEnabled.Text = "Enabled";
+            this.chkEnabled.UseVisualStyleBackColor = true;
             // 
             // AddJobDialog
             // 
@@ -459,5 +473,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStripMenuItem binaryUploadToolStripMenuItem;
+        private System.Windows.Forms.CheckBox chkEnabled;
     }
 }
