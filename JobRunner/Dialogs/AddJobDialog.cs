@@ -42,15 +42,55 @@ namespace JobRunner.Dialogs
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (tabControl1.SelectedIndex >= tabControl1.TabCount - 1)
+            {
+                if (string.IsNullOrWhiteSpace(txtName.Text))
+                    txtName.Text = SuggestName();
+            }
+
             btnOk.Enabled = ValidateForm(true);
+
             if (tabControl1.SelectedTab == tabPageOverview)
                 ConstructOverview();
+            
             btnBack.Enabled = tabControl1.SelectedIndex > 0;
             btnNext.Enabled = tabControl1.SelectedIndex < tabControl1.TabCount - 1;
         }
 
+        private string SuggestName()
+        {
+            var p = txtProgram.Text.Trim();
+
+            txtProgram.Text = p;
+
+            if (string.IsNullOrWhiteSpace(p))
+                return "";
+
+            if (p.StartsWith("@"))
+            {
+                switch (p)
+                {
+                    case "@deletefile":
+                        return $"Delete a file: {txtArguments.Text}";
+                    case "@downloadstring":
+                        return $"Download a string of text: {txtArguments.Text}";
+                    case "@binaryupload":
+                        return $"Upload a binary file: {txtArguments.Text}";
+                    default:
+                        return p;
+                }
+            }
+            else
+            {
+                return $@"Run process: {p}";
+            }
+        }
+
         private void ConstructOverview()
         {
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+                txtName.Text = SuggestName();
+
             tvOverview.BeginUpdate();
             tvOverview.Nodes.Clear();
             AddItemToOverview("Sequence:",
@@ -85,10 +125,12 @@ namespace JobRunner.Dialogs
         private int CalculateSequence()
         {
             int.TryParse(txtNumber.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out var s);
+
             if (s <= _jobs.FirstSequenceNumber)
                 s = 1;
             else if (s > _jobs.LastSequenceNumber)
                 s = _jobs.Count + 1;
+
             return s;
         }
 
@@ -96,6 +138,7 @@ namespace JobRunner.Dialogs
         {
             if (_jobs.Count <= 0 || s == 1)
                 return "First job";
+
             return s > _jobs.Count
                 ? "Last job"
                 : $"Position {s}";
@@ -105,6 +148,7 @@ namespace JobRunner.Dialogs
         {
             if (tabControl1.SelectedIndex <= 0)
                 return;
+
             tabControl1.SelectedIndex--;
             btnBack.Enabled = tabControl1.SelectedIndex > 0;
             btnNext.Enabled = tabControl1.SelectedIndex < tabControl1.TabCount - 1;
@@ -114,6 +158,7 @@ namespace JobRunner.Dialogs
         {
             if (tabControl1.SelectedIndex >= tabControl1.TabCount - 1)
                 return;
+
             tabControl1.SelectedIndex++;
             btnBack.Enabled = tabControl1.SelectedIndex > 0;
             btnNext.Enabled = tabControl1.SelectedIndex < tabControl1.TabCount - 1;
@@ -123,12 +168,16 @@ namespace JobRunner.Dialogs
         {
             if (!ValidateSequenceNumber(quiet))
                 return false;
+            
             if (!ValidateJobName(quiet))
                 return false;
+            
             if (!ValidateProgram(quiet))
                 return false;
+            
             if (!ValidateTimeout(quiet))
                 return false;
+            
             return true;
         }
 
@@ -136,6 +185,7 @@ namespace JobRunner.Dialogs
         {
             if (int.TryParse(txtNumber.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out _))
                 return true;
+            
             MessageDisplayer.ShowValidationError(@"The field ""Sequence number"" must be an integer.", Text, quiet);
             return false;
         }
@@ -143,8 +193,10 @@ namespace JobRunner.Dialogs
         private bool ValidateJobName(bool quiet)
         {
             txtName.Text = txtName.Text.Trim();
+
             if (!string.IsNullOrWhiteSpace(txtName.Text))
                 return true;
+            
             MessageDisplayer.ShowValidationError(@"The field ""Job name"" cannot be empty.", Text, quiet);
             return false;
         }
@@ -152,8 +204,10 @@ namespace JobRunner.Dialogs
         private bool ValidateProgram(bool quiet)
         {
             txtProgram.Text = txtProgram.Text.Trim();
+
             if (!string.IsNullOrWhiteSpace(txtProgram.Text))
                 return true;
+
             MessageDisplayer.ShowValidationError(@"The field ""Program to run"" cannot be empty.", Text, quiet);
             return false;
         }
@@ -177,6 +231,7 @@ namespace JobRunner.Dialogs
         private Job CreateJob()
         {
             int.TryParse(txtNumber.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out var nr);
+
             return new Job(
                 _log,
                 nr,
@@ -193,8 +248,10 @@ namespace JobRunner.Dialogs
         {
             var p = tvOverview.Parent.BackColor;
             tvOverview.BackColor = Color.FromArgb(p.R, p.G, p.B);
+            
             foreach (var x in new TimeSpanList())
                 cboTimeout.Items.Add(x);
+
             cboTimeout.SelectedIndex = 1;
         }
 

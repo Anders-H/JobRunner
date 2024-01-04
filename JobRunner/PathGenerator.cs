@@ -17,6 +17,9 @@ namespace JobRunner
 
         public string GetDataFile(string name)
         {
+#if DEBUG
+            return $@"..\..\{name}";
+#else
             switch (_location)
             {
                 case JobFileLocation.Application:
@@ -33,6 +36,7 @@ namespace JobRunner
                 default:
                     throw new SystemException("Configuration error. Visit https://github.com/Anders-H/JobRunner for more information.");
             }
+#endif
         }
 
         public static FileInfo GetLogFile()

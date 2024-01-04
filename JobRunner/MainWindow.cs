@@ -259,6 +259,8 @@ namespace JobRunner
                 return;
             }
             
+            // TODO: Check if custom dialog can be used.
+
             using var x = new EditJobDialog(this)
             {
                 Job = grid1.SelectedJob,
