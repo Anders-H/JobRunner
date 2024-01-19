@@ -284,6 +284,8 @@
     <None Include="Resources\PropertiesHS.png" />
     <None Include="Resources\log.png" />
     <None Include="Resources\StopHS.png" />
+    <None Include="Resources\GoToNextRecord.png" />
+    <None Include="Resources\Help.png" />
     <Content Include="Settings %2825%29.ico" />
     <Content Include="variables.xml" />
   </ItemGroup>
