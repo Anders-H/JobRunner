@@ -1,6 +1,6 @@
 ﻿namespace JobRunner.Dialogs.InProcess
 {
-    partial class DeleteFileDialog
+    partial class AddDeleteFileDialog
     {
         /// <summary>
         /// Required designer variable.

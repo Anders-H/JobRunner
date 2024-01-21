@@ -31,4 +31,13 @@
         <display>Visible</display>
         <breakOnError>false</breakOnError>
     </job>
+    <job>
+        <name>Kill!</name>
+        <enabled>true</enabled>
+        <command>@deletefile</command>
+        <arguments>-file &quot;C:\Users\hbom\Desktop\kill.xlsx&quot; -notfoundbehaviour skip</arguments>
+        <timeout>00:01:00</timeout>
+        <display>Visible</display>
+        <breakOnError>true</breakOnError>
+    </job>
 </jobs>

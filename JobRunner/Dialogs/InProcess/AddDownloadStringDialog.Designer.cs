@@ -1,6 +1,6 @@
 ﻿namespace JobRunner.Dialogs.InProcess
 {
-    partial class DownloadStringDialog
+    partial class AddDownloadStringDialog
     {
         /// <summary>
         /// Required designer variable.

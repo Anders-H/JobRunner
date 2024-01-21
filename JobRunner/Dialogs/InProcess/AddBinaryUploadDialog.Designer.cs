@@ -1,7 +1,7 @@
 ﻿
 namespace JobRunner.Dialogs.InProcess
 {
-    partial class BinaryUploadDialog
+    partial class AddBinaryUploadDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -42,6 +42,8 @@ namespace JobRunner.Dialogs.InProcess
             this.label5 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
+            this.lblUsernameVariables = new System.Windows.Forms.LinkLabel();
+            this.lblPasswordVariables = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // btnBrowse
@@ -91,7 +93,7 @@ namespace JobRunner.Dialogs.InProcess
             this.txtUsername.Location = new System.Drawing.Point(8, 104);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(528, 20);
-            this.txtUsername.TabIndex = 6;
+            this.txtUsername.TabIndex = 7;
             // 
             // label3
             // 
@@ -107,7 +109,7 @@ namespace JobRunner.Dialogs.InProcess
             this.txtPassword.Location = new System.Drawing.Point(8, 144);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(528, 20);
-            this.txtPassword.TabIndex = 8;
+            this.txtPassword.TabIndex = 10;
             // 
             // label4
             // 
@@ -115,7 +117,7 @@ namespace JobRunner.Dialogs.InProcess
             this.label4.Location = new System.Drawing.Point(8, 128);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
-            this.label4.TabIndex = 7;
+            this.label4.TabIndex = 8;
             this.label4.Text = "Password:";
             // 
             // cboUploadFailedBehaviour
@@ -125,7 +127,7 @@ namespace JobRunner.Dialogs.InProcess
             this.cboUploadFailedBehaviour.Location = new System.Drawing.Point(8, 184);
             this.cboUploadFailedBehaviour.Name = "cboUploadFailedBehaviour";
             this.cboUploadFailedBehaviour.Size = new System.Drawing.Size(528, 21);
-            this.cboUploadFailedBehaviour.TabIndex = 10;
+            this.cboUploadFailedBehaviour.TabIndex = 12;
             // 
             // label5
             // 
@@ -133,7 +135,7 @@ namespace JobRunner.Dialogs.InProcess
             this.label5.Location = new System.Drawing.Point(8, 168);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 13);
-            this.label5.TabIndex = 9;
+            this.label5.TabIndex = 11;
             this.label5.Text = "Upload failed behaviour:";
             // 
             // btnCancel
@@ -142,7 +144,7 @@ namespace JobRunner.Dialogs.InProcess
             this.btnCancel.Location = new System.Drawing.Point(460, 248);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 12;
+            this.btnCancel.TabIndex = 14;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -151,18 +153,49 @@ namespace JobRunner.Dialogs.InProcess
             this.btnOk.Location = new System.Drawing.Point(380, 248);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 11;
+            this.btnOk.TabIndex = 13;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
-            // BinaryUploadDialog
+            // lblUsernameVariables
+            // 
+            this.lblUsernameVariables.AutoSize = true;
+            this.lblUsernameVariables.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblUsernameVariables.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lblUsernameVariables.LinkColor = System.Drawing.Color.Navy;
+            this.lblUsernameVariables.Location = new System.Drawing.Point(476, 88);
+            this.lblUsernameVariables.Name = "lblUsernameVariables";
+            this.lblUsernameVariables.Size = new System.Drawing.Size(59, 13);
+            this.lblUsernameVariables.TabIndex = 6;
+            this.lblUsernameVariables.TabStop = true;
+            this.lblUsernameVariables.Text = "Variables...";
+            this.lblUsernameVariables.VisitedLinkColor = System.Drawing.Color.Navy;
+            this.lblUsernameVariables.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblUsernameVariables_LinkClicked);
+            // 
+            // lblPasswordVariables
+            // 
+            this.lblPasswordVariables.AutoSize = true;
+            this.lblPasswordVariables.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblPasswordVariables.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lblPasswordVariables.LinkColor = System.Drawing.Color.Navy;
+            this.lblPasswordVariables.Location = new System.Drawing.Point(476, 128);
+            this.lblPasswordVariables.Name = "lblPasswordVariables";
+            this.lblPasswordVariables.Size = new System.Drawing.Size(59, 13);
+            this.lblPasswordVariables.TabIndex = 9;
+            this.lblPasswordVariables.TabStop = true;
+            this.lblPasswordVariables.Text = "Variables...";
+            this.lblPasswordVariables.VisitedLinkColor = System.Drawing.Color.Navy;
+            // 
+            // AddBinaryUploadDialog
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(545, 279);
+            this.Controls.Add(this.lblPasswordVariables);
+            this.Controls.Add(this.lblUsernameVariables);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.cboUploadFailedBehaviour);
@@ -179,7 +212,7 @@ namespace JobRunner.Dialogs.InProcess
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "BinaryUploadDialog";
+            this.Name = "AddBinaryUploadDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "In process: Binary upload";
@@ -204,5 +237,7 @@ namespace JobRunner.Dialogs.InProcess
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.LinkLabel lblUsernameVariables;
+        private System.Windows.Forms.LinkLabel lblPasswordVariables;
     }
 }

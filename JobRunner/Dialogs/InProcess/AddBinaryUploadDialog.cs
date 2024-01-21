@@ -1,8 +1,11 @@
 ﻿#nullable enable
 using System;
+using System.Linq;
 using System.Windows.Forms;
+using JobRunner.Dialogs.ViewList;
 using JobRunner.GuiComponents;
 using JobRunner.Logging;
+using JobRunner.ObjectModel;
 using JobRunner.ObjectModel.InProcess;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
@@ -11,13 +14,15 @@ using JobRunner.Utils;
 
 namespace JobRunner.Dialogs.InProcess
 {
-    public partial class BinaryUploadDialog : Form
+    public partial class AddBinaryUploadDialog : Form, IAddInProcess
     {
         private readonly ILogger _log;
         public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
+        public IVariableList? Variables { get; set; }
+        public IJobList? Jobs { get; set; }
 
-        public BinaryUploadDialog(ILogger log, string jobIdentifierString, string arguments)
+        public AddBinaryUploadDialog(ILogger log, string jobIdentifierString, string arguments)
         {
             _log = log;
             JobIdentifierString = jobIdentifierString;
@@ -109,5 +114,28 @@ namespace JobRunner.Dialogs.InProcess
                 0 => FileNotFoundBehaviour.Skip,
                 _ => FileNotFoundBehaviour.Fail
             };
+
+        private void lblUsernameVariables_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var listDescriptor = new SimpleListDescriptor(
+                "Variables",
+                "Variable",
+                "Usage (job name)"
+            );
+
+            listDescriptor.AddRange(
+                from variable
+                    in Variables!.All
+                let jobs = Jobs.GetVariableUsage(variable)
+                select new SimpleListItem(
+                    $"\"{variable.Name}\"=\"{variable.Value}\"",
+                    jobs.Names,
+                    $"[{variable.Name}]"
+                )
+            );
+
+            using var x = new SimpleListDialog((MainWindow)Parent.Parent, Variables, Jobs);
+            x.ShowListDialog(this, listDescriptor, null);
+        }
     }
 }

@@ -7,16 +7,19 @@ using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
+using JobRunner.ObjectModel;
 
 namespace JobRunner.Dialogs.InProcess
 {
-    public partial class DownloadStringDialog : Form
+    public partial class AddDownloadStringDialog : Form, IAddInProcess
     {
         private readonly ILogger _log;
         public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
+        public IVariableList? Variables { get; set; }
+        public IJobList? Jobs { get; set; }
 
-        public DownloadStringDialog(ILogger log, string jobIdentifierString, string arguments)
+        public AddDownloadStringDialog(ILogger log, string jobIdentifierString, string arguments)
         {
             _log = log;
             JobIdentifierString = jobIdentifierString;

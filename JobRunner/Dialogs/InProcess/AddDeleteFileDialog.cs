@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using JobRunner.GuiComponents;
 using JobRunner.Logging;
+using JobRunner.ObjectModel;
 using JobRunner.ObjectModel.InProcess;
 using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
@@ -10,13 +11,15 @@ using JobRunner.Utils;
 
 namespace JobRunner.Dialogs.InProcess
 {
-    public partial class DeleteFileDialog : Form
+    public partial class AddDeleteFileDialog : Form, IAddInProcess
     {
         public readonly ILogger Log;
         public string JobIdentifierString { get; private set; }
         public string Arguments { get; private set; }
+        public IVariableList? Variables { get; set; }
+        public IJobList? Jobs { get; set; }
 
-        public DeleteFileDialog(ILogger log, string jobIdentifierString, string arguments)
+        public AddDeleteFileDialog(ILogger log, string jobIdentifierString, string arguments)
         {
             Log = log;
             JobIdentifierString = jobIdentifierString;

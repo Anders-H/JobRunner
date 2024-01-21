@@ -18,7 +18,7 @@ namespace JobRunner.Dialogs
     {
         private readonly MainWindow _parent;
         private readonly IJobList _jobs;
-        private readonly IVariableList _variables;
+        private readonly IVariableList? _variables;
         private readonly ILogger _log;
         private readonly int _suggestedSequenceNumber;
 
@@ -70,11 +70,11 @@ namespace JobRunner.Dialogs
             {
                 switch (p)
                 {
-                    case "@deletefile":
+                    case InProcessNames.DeleteFile:
                         return $"Delete a file: {txtArguments.Text}";
-                    case "@downloadstring":
+                    case InProcessNames.DownloadString:
                         return $"Download a string of text: {txtArguments.Text}";
-                    case "@binaryupload":
+                    case InProcessNames.BinaryUpload:
                         return $"Upload a binary file: {txtArguments.Text}";
                     default:
                         return p;
@@ -295,7 +295,7 @@ namespace JobRunner.Dialogs
 
             listDescriptor.AddRange(
                 from variable
-                in _variables.All
+                in _variables!.All
                 let jobs = _jobs.GetVariableUsage(variable)
                 select new SimpleListItem(
                     $"\"{variable.Name}\"=\"{variable.Value}\"",
@@ -315,13 +315,13 @@ namespace JobRunner.Dialogs
         }
 
         private void deleteAFileToolStripMenuItem_Click(object sender, EventArgs e) =>
-            ShowInProcessDialog(typeof(DeleteFileDialog));
+            ShowInProcessDialog(typeof(AddDeleteFileDialog));
 
         private void downloadTextToolStripMenuItem_Click(object sender, EventArgs e) =>
-            ShowInProcessDialog(typeof(DownloadStringDialog));
+            ShowInProcessDialog(typeof(AddDownloadStringDialog));
 
         private void binaryUploadToolStripMenuItem_Click(object sender, EventArgs e) =>
-            ShowInProcessDialog(typeof(BinaryUploadDialog));
+            ShowInProcessDialog(typeof(AddBinaryUploadDialog));
 
         private void ShowInProcessDialog(Type dialogType)
         {
@@ -330,6 +330,9 @@ namespace JobRunner.Dialogs
             var program = txtProgram.Text.Trim();
 
             var x = (Form)Activator.CreateInstance(dialogType, _log, jobIdentifierString, "");
+
+            ((IAddInProcess)x).Jobs = _jobs;
+            ((IAddInProcess)x).Variables = _variables;
 
             var argumentsProperty = x.GetType().GetProperty("Arguments");
 

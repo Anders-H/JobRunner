@@ -95,24 +95,25 @@
     <Compile Include="Dialogs\EditVariableDialog.Designer.cs">
       <DependentUpon>EditVariableDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\InProcess\BinaryUploadDialog.cs">
+    <Compile Include="Dialogs\InProcess\AddBinaryUploadDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\InProcess\BinaryUploadDialog.Designer.cs">
-      <DependentUpon>BinaryUploadDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\InProcess\AddBinaryUploadDialog.Designer.cs">
+      <DependentUpon>AddBinaryUploadDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\InProcess\DeleteFileDialog.cs">
+    <Compile Include="Dialogs\InProcess\AddDeleteFileDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\InProcess\DeleteFileDialog.Designer.cs">
-      <DependentUpon>DeleteFileDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\InProcess\AddDeleteFileDialog.Designer.cs">
+      <DependentUpon>AddDeleteFileDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\InProcess\DownloadStringDialog.cs">
+    <Compile Include="Dialogs\InProcess\AddDownloadStringDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\InProcess\DownloadStringDialog.Designer.cs">
-      <DependentUpon>DownloadStringDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\InProcess\AddDownloadStringDialog.Designer.cs">
+      <DependentUpon>AddDownloadStringDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\InProcess\IAddInProcess.cs" />
     <Compile Include="Dialogs\SelectVariableDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +148,7 @@
     <Compile Include="LogTextProducer.cs" />
     <Compile Include="MainWindowController.cs" />
     <Compile Include="ObjectModel\IJobList.cs" />
+    <Compile Include="ObjectModel\InProcess\InProcessNames.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\BinaryUploadJob.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\ArgumentOptions\FileExistsBehaviour.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\ArgumentOptions\FileNotFoundBehaviour.cs" />
@@ -220,14 +222,14 @@
     <EmbeddedResource Include="Dialogs\EditVariableDialog.resx">
       <DependentUpon>EditVariableDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\InProcess\BinaryUploadDialog.resx">
-      <DependentUpon>BinaryUploadDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\InProcess\AddBinaryUploadDialog.resx">
+      <DependentUpon>AddBinaryUploadDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\InProcess\DeleteFileDialog.resx">
-      <DependentUpon>DeleteFileDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\InProcess\AddDeleteFileDialog.resx">
+      <DependentUpon>AddDeleteFileDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\InProcess\DownloadStringDialog.resx">
-      <DependentUpon>DownloadStringDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\InProcess\AddDownloadStringDialog.resx">
+      <DependentUpon>AddDownloadStringDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SelectVariableDialog.resx">
       <DependentUpon>SelectVariableDialog.cs</DependentUpon>

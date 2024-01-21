@@ -8,6 +8,7 @@ using JobRunner.Dialogs;
 using JobRunner.Dialogs.ViewList;
 using JobRunner.Logging;
 using JobRunner.ObjectModel;
+using JobRunner.ObjectModel.InProcess;
 using JobRunner.Utils;
 
 namespace JobRunner
@@ -20,7 +21,7 @@ namespace JobRunner
         private IJobList Jobs { get; }
         private IVariableList Variables { get; } = new VariableList();
         private bool CleanExit { get; set; }
-        
+
         public MainWindow()
         {
             _log = new Logger();
@@ -142,11 +143,11 @@ namespace JobRunner
             {
                 Cursor = Cursors.Default;
                 lblStatus.Text = @"Load failed.";
-                
+
                 var failMessage = string.IsNullOrWhiteSpace(Jobs.LoadFailedMessage)
                     ? "An unknown error has occurred."
                     : Jobs.LoadFailedMessage;
-                
+
                 var t = new StringBuilder();
                 var logTextProducer = new LogTextProducer();
                 logTextProducer.AppendMessage(t, failMessage);
@@ -155,19 +156,19 @@ namespace JobRunner
                     logTextProducer.AppendCloseMessage(t);
 
                 MessageDisplayer.Yell(t.ToString(), Text);
-                
+
                 if (!Config.IsAdministrator)
                     Close();
             }
 
             if (Config.IsAdministrator && !string.IsNullOrWhiteSpace(Jobs.LoadFailedMessage))
                 MessageDisplayer.Yell(Jobs.LoadFailedMessage, Text);
-            
+
             grid1.Initialize(Jobs);
             _controller.InitializeStatus(this, lblStatus);
 
             Cursor = Cursors.Default;
-            
+
             if (Config.AutoStart && !Config.IsAdministrator && AutoActionDialog.CheckAutoStart(this))
                 runToolStripMenuItem_Click(this, EventArgs.Empty);
         }
@@ -205,7 +206,7 @@ namespace JobRunner
                 MessageDisplayer.Yell($@"Failed to save the file ""{Config.GetJobFilePath()}"".", Text);
             }
         }
-        
+
         private void DeleteJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using var x = new DeleteJobDialog();
@@ -247,7 +248,7 @@ namespace JobRunner
             if (result == DialogResult.OK)
                 RunSelectedJobToolStripMenuItem_Click(grid1, EventArgs.Empty);
         }
-        
+
         private void EditJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Config.IsAdministrator)
@@ -258,19 +259,40 @@ namespace JobRunner
                 MessageDisplayer.Tell("No job is selected.", "Edit job");
                 return;
             }
-            
-            // TODO: Check if custom dialog can be used.
 
-            using var x = new EditJobDialog(this)
+            var job = grid1.SelectedJob;
+
+            switch (job.Command)
             {
-                Job = grid1.SelectedJob,
-                Variables = Variables,
-                Jobs = Jobs,
-                SaveVariables = _controller.SaveVariables
-            };
+                case InProcessNames.DeleteFile:
+                    {
+                        using var x = new EditJobDialog(this)
+                        {
+                            Job = job,
+                            Variables = Variables,
+                            Jobs = Jobs,
+                            SaveVariables = _controller.SaveVariables
+                        };
 
-            if (x.ShowDialog(this) != DialogResult.OK)
-                return;
+                        if (x.ShowDialog(this) != DialogResult.OK)
+                            return;
+                    }
+                    break;
+                default:
+                    {
+                        using var x = new EditJobDialog(this)
+                        {
+                            Job = job,
+                            Variables = Variables,
+                            Jobs = Jobs,
+                            SaveVariables = _controller.SaveVariables
+                        };
+
+                        if (x.ShowDialog(this) != DialogResult.OK)
+                            return;
+                    }
+                    break;
+            }
 
             grid1.Refresh();
             SaveJobs();
@@ -294,7 +316,7 @@ namespace JobRunner
 
             if (x.ShowDialog(this) != DialogResult.OK || !Config.IsAdministrator)
                 return;
-            
+
             SaveJobs();
         }
 
@@ -324,7 +346,7 @@ namespace JobRunner
 
         private void variablesToolStripMenuItem_Click(object sender, EventArgs e) =>
             _controller.ShowVariables(this, Variables, Jobs);
-        
+
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e) =>
             MessageDisplayer.Tell(
                 VersionHistory.GetVersionHistory(),
@@ -337,7 +359,7 @@ namespace JobRunner
                 return;
 
             using var x = new AddVariableDialog(Variables, Jobs);
-            
+
             if (x.ShowDialog(this) != DialogResult.OK)
                 return;
 
