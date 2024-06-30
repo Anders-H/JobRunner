@@ -37,6 +37,22 @@ namespace JobRunner.Dialogs
             chkEnabled.Checked = Job.Enabled;
             chkHidden.Checked = Job.Hidden;
             chkBreakOnError.Checked = Job.BreakOnError;
+
+            cboRetryCount.Items.Add(0);
+            cboRetryCount.Items.Add(1);
+            cboRetryCount.Items.Add(2);
+            cboRetryCount.Items.Add(3);
+            cboRetryCount.Items.Add(4);
+            cboRetryCount.Items.Add(5);
+
+            var retryCountIndex = Job.RetryCount;
+
+            if (retryCountIndex < 0)
+                retryCountIndex = 0;
+            else if (retryCountIndex > 5)
+                retryCountIndex = 5;
+
+            cboRetryCount.SelectedIndex = retryCountIndex;
         }
 
         private bool ValidateForm(bool quiet)
@@ -96,6 +112,7 @@ namespace JobRunner.Dialogs
             Job.Enabled = chkEnabled.Checked;
             Job.Hidden = chkHidden.Checked;
             Job.BreakOnError = chkBreakOnError.Checked;
+            Job.RetryCount = cboRetryCount.SelectedIndex;
             DialogResult = DialogResult.OK;
         }
 

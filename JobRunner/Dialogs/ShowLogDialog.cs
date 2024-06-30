@@ -8,14 +8,17 @@ namespace JobRunner.Dialogs
 {
     public partial class ShowLogDialog : Form
     {
-        public ILogger Log { get; set; }
+        public ILogger? Log { get; set; }
 
         public ShowLogDialog()
         {
+            InitializeComponent();
+        }
+
+        private void ShowLogDialog_Load(object sender, EventArgs e)
+        {
             if (Log == null)
                 throw new SystemException($"Uninitialized property: {nameof(Log)}");
-
-            InitializeComponent();
         }
 
         private void ShowLogDialog_Shown(object sender, EventArgs e)

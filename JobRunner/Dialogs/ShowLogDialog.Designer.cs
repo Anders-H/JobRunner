@@ -122,9 +122,11 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Log";
+            this.Load += new System.EventHandler(this.ShowLogDialog_Load);
             this.Shown += new System.EventHandler(this.ShowLogDialog_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Button btnClose;

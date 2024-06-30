@@ -6,6 +6,7 @@ namespace JobRunner.Dialogs
 {
     public partial class ViewJobDialog : Form
     {
+        public bool Running { get; set; }
         public Job Job { get; }
 
         public ViewJobDialog(Job job)
@@ -18,12 +19,13 @@ namespace JobRunner.Dialogs
         {
             tvOverview.BeginUpdate();
             tvOverview.Nodes.Clear();
+            btnRun.Enabled = !Running;
 
             AddItemToOverview("Sequence:", Job.Number.ToString());
             AddItemToOverview("Name:", Job.Name);
             AddItemToOverview("Program:", Job.Command);
             AddItemToOverview("Arguments:", Job.Arguments);
-            AddItemToOverview("Timeout:", $"{Job.Timeout.TotalMinutes:00}:{Job.Timeout.Seconds:00}");
+            AddItemToOverview("Timeout:", $"{Job.Timeout.TotalMinutes:00}:{Job.Timeout.Seconds:00}{(Job.RetryCount > 0 ? $" (retry count: {Job.RetryCount})" : " (without retries)")}");
             AddItemToOverview("Window:", Job.Hidden ? "Hidden" : "Visible");
             AddItemToOverview("Flow control:", Job.BreakOnError ? "Break on error" : "Continue on error");
             AddItemToOverview("Start time:", Job.StartTime.HasValue ? Job.StartTime.ToString() : "[Not run]");

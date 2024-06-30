@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageBasic = new System.Windows.Forms.TabPage();
+            this.chkEnabled = new System.Windows.Forms.CheckBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.txtNumber = new System.Windows.Forms.TextBox();
@@ -61,7 +62,8 @@
             this.deleteAFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.binaryUploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chkEnabled = new System.Windows.Forms.CheckBox();
+            this.cboRetryCount = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.tabPageProcess.SuspendLayout();
@@ -98,6 +100,18 @@
             this.tabPageBasic.TabIndex = 0;
             this.tabPageBasic.Text = "Basic information";
             this.tabPageBasic.UseVisualStyleBackColor = true;
+            // 
+            // chkEnabled
+            // 
+            this.chkEnabled.AutoSize = true;
+            this.chkEnabled.Checked = true;
+            this.chkEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkEnabled.Location = new System.Drawing.Point(8, 216);
+            this.chkEnabled.Name = "chkEnabled";
+            this.chkEnabled.Size = new System.Drawing.Size(65, 17);
+            this.chkEnabled.TabIndex = 4;
+            this.chkEnabled.Text = "Enabled";
+            this.chkEnabled.UseVisualStyleBackColor = true;
             // 
             // txtName
             // 
@@ -241,6 +255,8 @@
             // 
             // tabOptions
             // 
+            this.tabOptions.Controls.Add(this.cboRetryCount);
+            this.tabOptions.Controls.Add(this.label3);
             this.tabOptions.Controls.Add(this.chkHidden);
             this.tabOptions.Controls.Add(this.cboTimeout);
             this.tabOptions.Controls.Add(this.label1);
@@ -257,7 +273,7 @@
             this.chkHidden.Location = new System.Drawing.Point(8, 216);
             this.chkHidden.Name = "chkHidden";
             this.chkHidden.Size = new System.Drawing.Size(81, 17);
-            this.chkHidden.TabIndex = 2;
+            this.chkHidden.TabIndex = 4;
             this.chkHidden.Text = "Run hidden";
             this.chkHidden.UseVisualStyleBackColor = true;
             // 
@@ -390,17 +406,23 @@
             this.binaryUploadToolStripMenuItem.Text = "Binary upload...";
             this.binaryUploadToolStripMenuItem.Click += new System.EventHandler(this.binaryUploadToolStripMenuItem_Click);
             // 
-            // chkEnabled
+            // cboRetryCount
             // 
-            this.chkEnabled.AutoSize = true;
-            this.chkEnabled.Checked = true;
-            this.chkEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkEnabled.Location = new System.Drawing.Point(8, 216);
-            this.chkEnabled.Name = "chkEnabled";
-            this.chkEnabled.Size = new System.Drawing.Size(65, 17);
-            this.chkEnabled.TabIndex = 4;
-            this.chkEnabled.Text = "Enabled";
-            this.chkEnabled.UseVisualStyleBackColor = true;
+            this.cboRetryCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRetryCount.FormattingEnabled = true;
+            this.cboRetryCount.Location = new System.Drawing.Point(8, 68);
+            this.cboRetryCount.Name = "cboRetryCount";
+            this.cboRetryCount.Size = new System.Drawing.Size(112, 21);
+            this.cboRetryCount.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 52);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Retry count:";
             // 
             // AddJobDialog
             // 
@@ -474,5 +496,7 @@
 
         private System.Windows.Forms.ToolStripMenuItem binaryUploadToolStripMenuItem;
         private System.Windows.Forms.CheckBox chkEnabled;
+        private System.Windows.Forms.ComboBox cboRetryCount;
+        private System.Windows.Forms.Label label3;
     }
 }

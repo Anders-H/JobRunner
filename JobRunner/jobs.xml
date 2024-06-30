@@ -12,6 +12,7 @@
         <timeout>00:00:03</timeout>
         <display>Hidden</display>
         <breakOnError>false</breakOnError>
+        <RetryCount>0</RetryCount>
     </job>
     <job>
         <name>Visa notepad 2</name>
@@ -21,6 +22,7 @@
         <timeout>00:10:00</timeout>
         <display>Visible</display>
         <breakOnError>false</breakOnError>
+        <RetryCount>0</RetryCount>
     </job>
     <job>
         <name>Download a string of text: -source &quot;wrwer&quot; -target &quot;rerwerwer&quot; -existsbehaviour skip</name>
@@ -30,6 +32,7 @@
         <timeout>00:01:00</timeout>
         <display>Visible</display>
         <breakOnError>false</breakOnError>
+        <RetryCount>0</RetryCount>
     </job>
     <job>
         <name>Kill!</name>
@@ -39,5 +42,26 @@
         <timeout>00:01:00</timeout>
         <display>Visible</display>
         <breakOnError>true</breakOnError>
+        <RetryCount>0</RetryCount>
+    </job>
+    <job>
+        <name>Test retry</name>
+        <enabled>true</enabled>
+        <command>notepad.exe</command>
+        <arguments></arguments>
+        <timeout>00:00:30</timeout>
+        <display>Visible</display>
+        <breakOnError>false</breakOnError>
+        <RetryCount>3</RetryCount>
+    </job>
+    <job>
+        <name>Test retry 2</name>
+        <enabled>true</enabled>
+        <command>notepad.exe</command>
+        <arguments></arguments>
+        <timeout>00:00:30</timeout>
+        <display>Visible</display>
+        <breakOnError>false</breakOnError>
+        <RetryCount>0</RetryCount>
     </job>
 </jobs>

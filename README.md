@@ -17,6 +17,11 @@ Download version 1.6: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe) (ri
 
 ## Version history:
 
+**Changes in version 1.7:**
+
+- Ability to set retry count
+- Minor bug fixes
+
 **Changes in version 1.6.1:**
 
 - If a task name is nog given, it will be suggested

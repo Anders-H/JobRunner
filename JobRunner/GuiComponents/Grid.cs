@@ -36,48 +36,56 @@ namespace JobRunner.GuiComponents
             BorderStyle = BorderStyle.None;
             BackColor = Color.Black;
             DoubleBuffered = true;
+
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"No",
                 Width = 30,
                 ReadOnly = true
             });
+            
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"Name",
                 Width = 200,
                 ReadOnly = true
             });
+            
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"Start time",
                 Width = 110,
                 ReadOnly = true
             });
+            
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"End time",
                 Width = 110,
                 ReadOnly = true
             });
+            
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"Step time",
                 Width = 65,
                 ReadOnly = true
             });
+            
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"Total time",
                 Width = 65,
                 ReadOnly = true
             });
+            
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"Status",
                 Width = 80,
                 ReadOnly = true
             });
+            
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"Result",
@@ -91,12 +99,14 @@ namespace JobRunner.GuiComponents
             Rows.Clear();
             var rows = new List<DataGridViewRow>();
             var rowIndex = 0;
+
             foreach (var job in jobs.All)
             {
                 var row = new DataGridViewRow
                 {
                     Tag = job
                 };
+
                 row.Cells.Add(new DataGridViewTextBoxCell());
                 row.Cells.Add(new DataGridViewTextBoxCell());
                 row.Cells.Add(new DataGridViewTextBoxCell());
@@ -135,7 +145,7 @@ namespace JobRunner.GuiComponents
             }
         }
 
-        private Brush ForgroundFromStatus(Job job)
+        private Brush ForegroundFromStatus(Job job)
         {
             if (!job.Enabled)
                 return Brushes.DimGray;
@@ -161,8 +171,8 @@ namespace JobRunner.GuiComponents
         {
             const string text = "JjÖg";
             var textSize = g.MeasureString(text, Font);
-            width = (int) textSize.Width;
-            return (int) (cellBounds.Height / 2.0 - textSize.Height / 2.0) + 1;
+            width = (int)textSize.Width;
+            return (int)(cellBounds.Height / 2.0 - textSize.Height / 2.0) + 1;
         }
 
         public Job? SelectedJob
@@ -198,6 +208,7 @@ namespace JobRunner.GuiComponents
         {
             if (e.RowIndex >= 0 && e.RowIndex < RowCount)
                 EditJob?.Invoke(this, EventArgs.Empty);
+
             base.OnCellDoubleClick(e);
         }
 
@@ -222,6 +233,7 @@ namespace JobRunner.GuiComponents
             if (e.Button == MouseButtons.Right)
             {
                 var hit = HitTest(e.X, e.Y);
+
                 if (hit is { Type: DataGridViewHitTestType.Cell })
                 {
                     ClearSelection();
@@ -231,15 +243,18 @@ namespace JobRunner.GuiComponents
                     return;
                 }
             }
+
             base.OnMouseClick(e);
         }
         
         protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
         {
             var centerY = CenterY(e.Graphics, e.CellBounds, out var width);
+
             if (e.RowIndex < 0)
             {
                 var t = e.Value.ToString();
+
                 if (Running)
                 {
                     e.Graphics.FillRectangle(CursorBlink ? Brushes.DarkBlue : Brushes.DarkRed, e.CellBounds);
@@ -255,23 +270,25 @@ namespace JobRunner.GuiComponents
             else
             {
                 var job = (Job)Rows[e.RowIndex].Tag;
+
                 if (job.Status == JobStatus.Running)
                     e.Graphics.FillRectangle(CursorBlink ? BackgroundFromStatus(job) : Brushes.Black, e.CellBounds);
                 else
                     e.Graphics.FillRectangle(BackgroundFromStatus(job), e.CellBounds);
+                
                 switch (e.ColumnIndex)
                 {
                     case 0:
                         {
                             var x = e.CellBounds.X + e.CellBounds.Width - 2 - width;
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(job.Number.ToString(), Font, ForgroundFromStatus(job), x, y);
+                            e.Graphics.DrawString(job.Number.ToString(), Font, ForegroundFromStatus(job), x, y);
                             break;
                         }
                     case 1:
                         {
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(job.Name, Font, ForgroundFromStatus(job), e.CellBounds.X + 3, y);
+                            e.Graphics.DrawString(job.Name, Font, ForegroundFromStatus(job), e.CellBounds.X + 3, y);
                             break;
                         }
                     case 2:
@@ -280,7 +297,7 @@ namespace JobRunner.GuiComponents
                             var d = job.StartTime.Value.ToShortDateString();
                             var text = $"{d} {job.StartTime.Value.ToLongTimeString()}";
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(text, Font, ForgroundFromStatus(job), e.CellBounds.X + 3, y);
+                            e.Graphics.DrawString(text, Font, ForegroundFromStatus(job), e.CellBounds.X + 3, y);
                         }
                         break;
                     case 3:
@@ -290,7 +307,7 @@ namespace JobRunner.GuiComponents
                             var text = $"{d} {job.EndTime.Value.ToLongTimeString()}";
                             var x = e.CellBounds.X + 3;
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(text, Font, ForgroundFromStatus(job), x, y);
+                            e.Graphics.DrawString(text, Font, ForegroundFromStatus(job), x, y);
                         }
                         else if (job.StartTime.HasValue)
                         {
@@ -312,7 +329,7 @@ namespace JobRunner.GuiComponents
                             var s = Math.Abs(span.Seconds);
                             var x = $"{h:00}:{m:00}:{s:00}";
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(x, Font, ForgroundFromStatus(job), e.CellBounds.X + 3, y);
+                            e.Graphics.DrawString(x, Font, ForegroundFromStatus(job), e.CellBounds.X + 3, y);
                         }
                         break;
                     case 5:
@@ -324,14 +341,14 @@ namespace JobRunner.GuiComponents
                             var s = Math.Abs(span.Seconds);
                             var x = $"{h:00}:{m:00}:{s:00}";
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(x, Font, ForgroundFromStatus(job), e.CellBounds.X + 3, y);
+                            e.Graphics.DrawString(x, Font, ForegroundFromStatus(job), e.CellBounds.X + 3, y);
                         }
                         break;
                     case 6:
                         {
                             var x = e.CellBounds.X + 3;
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(job.Enabled ? JobStatusHelper.GetStatusText(job.Status) : "Disabled", Font, ForgroundFromStatus(job), x, y);
+                            e.Graphics.DrawString(job.Enabled ? JobStatusHelper.GetStatusText(job.Status) : "Disabled", Font, ForegroundFromStatus(job), x, y);
                         }
                         break;
                     case 7:
@@ -339,12 +356,14 @@ namespace JobRunner.GuiComponents
                             var text = $"{(job.ExitCode == 0 ? "" : $"{job.ExitCode}: ")}{job.FailMessage}";
                             var x = e.CellBounds.X + 3;
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(text, Font, ForgroundFromStatus(job), x, y);
+                            e.Graphics.DrawString(text, Font, ForegroundFromStatus(job), x, y);
                         }
                         break;
                 }
             }
+
             e.Graphics.DrawRectangle(Pens.Green, e.CellBounds);
+            
             if (SelectedCells.Count > 0)
             {
                 var c = SelectedCells[0];
@@ -355,6 +374,7 @@ namespace JobRunner.GuiComponents
                     e.Graphics.DrawRectangle(Pens.LawnGreen, e.CellBounds.X + 2, e.CellBounds.Y + 2, w, h);
                 }
             }
+
             e.Handled = true;
         }
     }

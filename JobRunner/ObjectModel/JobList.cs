@@ -100,6 +100,16 @@ namespace JobRunner.ObjectModel
                 var arguments = jobXml.GetChildString("arguments");
                 var breakOnError = jobXml.GetChildString("breakOnError").ToLower();
                 var enabled = jobXml.GetChildString("enabled").ToLower();
+                var retryCountString = jobXml.GetChildString("retryCount");
+                var retryCount = 0;
+
+                if (!string.IsNullOrEmpty(retryCountString))
+                    int.TryParse(retryCountString, NumberStyles.Any, CultureInfo.CurrentCulture, out retryCount);
+
+                if (retryCount < 0)
+                    retryCount = 0;
+                else if (retryCount > 5)
+                    retryCount = 5;
 
                 Add(
                     number,
@@ -109,7 +119,8 @@ namespace JobRunner.ObjectModel
                     arguments,
                     timeout,
                     display,
-                    breakOnError);
+                    breakOnError,
+                    retryCount);
             }
             LoadSuccess = true;
         }
@@ -122,7 +133,8 @@ namespace JobRunner.ObjectModel
             string arguments,
             TimeSpan timeout,
             string display,
-            string breakOnError) =>
+            string breakOnError,
+            int retryCount) =>
             All.Add(new Job(
                 _log,
                 number,
@@ -132,7 +144,8 @@ namespace JobRunner.ObjectModel
                 arguments,
                 timeout,
                 display == "hidden",
-                breakOnError == "true" || breakOnError == "1"
+                breakOnError == "true" || breakOnError == "1",
+                retryCount
             ));
 
         public Job FirstJob =>

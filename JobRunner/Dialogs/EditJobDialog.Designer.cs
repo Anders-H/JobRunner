@@ -45,6 +45,8 @@
             this.txtArgsEvaluated = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.chkEnabled = new System.Windows.Forms.CheckBox();
+            this.cboRetryCount = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtName
@@ -70,7 +72,7 @@
             this.chkHidden.Location = new System.Drawing.Point(8, 272);
             this.chkHidden.Name = "chkHidden";
             this.chkHidden.Size = new System.Drawing.Size(81, 17);
-            this.chkHidden.TabIndex = 13;
+            this.chkHidden.TabIndex = 15;
             this.chkHidden.Text = "Run hidden";
             this.chkHidden.UseVisualStyleBackColor = true;
             // 
@@ -142,7 +144,7 @@
             this.btnOk.Location = new System.Drawing.Point(288, 320);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 15;
+            this.btnOk.TabIndex = 17;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
@@ -153,7 +155,7 @@
             this.btnCancel.Location = new System.Drawing.Point(372, 320);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 16;
+            this.btnCancel.TabIndex = 18;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -163,7 +165,7 @@
             this.chkBreakOnError.Location = new System.Drawing.Point(8, 292);
             this.chkBreakOnError.Name = "chkBreakOnError";
             this.chkBreakOnError.Size = new System.Drawing.Size(93, 17);
-            this.chkBreakOnError.TabIndex = 14;
+            this.chkBreakOnError.TabIndex = 16;
             this.chkBreakOnError.Text = "Break on error";
             this.chkBreakOnError.UseVisualStyleBackColor = true;
             // 
@@ -206,9 +208,27 @@
             this.chkEnabled.Location = new System.Drawing.Point(8, 252);
             this.chkEnabled.Name = "chkEnabled";
             this.chkEnabled.Size = new System.Drawing.Size(65, 17);
-            this.chkEnabled.TabIndex = 12;
+            this.chkEnabled.TabIndex = 14;
             this.chkEnabled.Text = "Enabled";
             this.chkEnabled.UseVisualStyleBackColor = true;
+            // 
+            // cboRetryCount
+            // 
+            this.cboRetryCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRetryCount.FormattingEnabled = true;
+            this.cboRetryCount.Location = new System.Drawing.Point(128, 220);
+            this.cboRetryCount.Name = "cboRetryCount";
+            this.cboRetryCount.Size = new System.Drawing.Size(112, 21);
+            this.cboRetryCount.TabIndex = 13;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(128, 204);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Retry count:";
             // 
             // EditJobDialog
             // 
@@ -217,6 +237,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(456, 349);
+            this.Controls.Add(this.cboRetryCount);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.chkEnabled);
             this.Controls.Add(this.chkBreakOnError);
             this.Controls.Add(this.btnCancel);
@@ -266,5 +288,7 @@
         private System.Windows.Forms.TextBox txtArgsEvaluated;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkEnabled;
+        private System.Windows.Forms.ComboBox cboRetryCount;
+        private System.Windows.Forms.Label label3;
     }
 }

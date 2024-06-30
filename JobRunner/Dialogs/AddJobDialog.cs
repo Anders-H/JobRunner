@@ -241,7 +241,8 @@ namespace JobRunner.Dialogs
                 txtArguments.Text,
                 (TimeSpan)cboTimeout.SelectedItem,
                 chkHidden.Checked,
-                chkBreakOnError.Checked);
+                chkBreakOnError.Checked,
+                cboRetryCount.SelectedIndex);
         }
 
         private void AddJobDialog_Load(object sender, EventArgs e)
@@ -253,6 +254,14 @@ namespace JobRunner.Dialogs
                 cboTimeout.Items.Add(x);
 
             cboTimeout.SelectedIndex = 1;
+
+            cboRetryCount.Items.Add(0);
+            cboRetryCount.Items.Add(1);
+            cboRetryCount.Items.Add(2);
+            cboRetryCount.Items.Add(3);
+            cboRetryCount.Items.Add(4);
+            cboRetryCount.Items.Add(5);
+            cboRetryCount.SelectedIndex = 0;
         }
 
         private void BtnBrowse_Click(object sender, EventArgs e)

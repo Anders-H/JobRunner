@@ -3,7 +3,12 @@
     public class VersionHistory
     {
         public static string GetVersionHistory() =>
-            @"Changes in version 1.6.1:
+            @"Changes in version 1.7:
+
+- Ability to set retry count
+- Minor bug fixes
+
+Changes in version 1.6.1:
 
 - If a task name is nog given, it will be suggested
 - Individual jobs can be disabled

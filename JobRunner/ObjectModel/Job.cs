@@ -28,8 +28,9 @@ namespace JobRunner.ObjectModel
         public TimeSpan Timeout { get; internal set; }
         public bool Hidden { get; internal set; }
         public bool BreakOnError { get; internal set; }
+        public int RetryCount { get; internal set; }
 
-        public Job(ILogger log, int number, string name, bool enabled, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError)
+        public Job(ILogger log, int number, string name, bool enabled, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError, int retryCount)
         {
             _log = log;
             Number = number;
@@ -42,6 +43,7 @@ namespace JobRunner.ObjectModel
             Hidden = hidden;
             BreakOnError = breakOnError;
             FailMessage = "";
+            RetryCount = retryCount;
         }
 
         public string GetDescription()
@@ -73,53 +75,61 @@ namespace JobRunner.ObjectModel
                 return;
             }
 
-            try
+            for (var retry = 0; retry <= RetryCount; retry++)
             {
-                StartTime = DateTime.Now;
-
-                if (Config.EnableLogging)
+                if (retry > 0)
+                    log.AppendLog($"Retry {retry} of {RetryCount}.");
+                try
                 {
-                    var s = StartTime.Value;
-                    var h = Hidden ? " (hidden)" : "";
-                    var n = Name.Trim();
+                    StartTime = DateTime.Now;
 
-                    if (string.IsNullOrEmpty(n))
-                        n = Command;
+                    if (Config.EnableLogging)
+                    {
+                        var s = StartTime.Value;
+                        var h = Hidden ? " (hidden)" : "";
+                        var n = Name.Trim();
 
-                    var result = log.AppendLog($"{s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00}{h}: {n}");
+                        if (string.IsNullOrEmpty(n))
+                            n = Command;
 
-                    if (!result && Config.TreatLoggingErrorsAsStepErrors)
-                        throw new SystemException("Logging failed.");
+                        var result = log.AppendLog($"{s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00}{h}: {n}");
+
+                        if (!result && Config.TreatLoggingErrorsAsStepErrors)
+                            throw new SystemException("Logging failed.");
+                    }
+
+                    if (Command.StartsWith("@"))
+                        InProcess(grid, variableList);
+                    else
+                        OutOfProcess(grid, variableList);
+
+                    EndTime = DateTime.Now;
+
+                    if (Config.EnableLogging)
+                    {
+                        var s = EndTime.Value;
+                        var result = log.AppendLog($"Ended at {s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00} with exit code: {ExitCode}.");
+                        if (!result && Config.TreatLoggingErrorsAsStepErrors)
+                            throw new SystemException("Logging failed.");
+                    }
+
+                    if (!(Status == JobStatus.Failed || Status == JobStatus.Timeout))
+                        break;
                 }
-
-                if (Command.StartsWith("@"))
-                    InProcess(grid, variableList);
-                else
-                    OutOfProcess(grid, variableList);
-
-                EndTime = DateTime.Now;
-
-                if (Config.EnableLogging)
+                catch (Exception e)
                 {
-                    var s = EndTime.Value;
-                    var result = log.AppendLog($"Ended at {s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00} with exit code: {ExitCode}.");
-                    if (!result && Config.TreatLoggingErrorsAsStepErrors)
-                        throw new SystemException("Logging failed.");
-                }
-            }
-            catch (Exception e)
-            {
-                EndTime = DateTime.Now;
-                Status = JobStatus.Failed;
-                FailMessage = e.Message;
+                    EndTime = DateTime.Now;
+                    Status = JobStatus.Failed;
+                    FailMessage = e.Message;
 
-                if (string.IsNullOrWhiteSpace(FailMessage))
-                    FailMessage = e.GetType().Name;
+                    if (string.IsNullOrWhiteSpace(FailMessage))
+                        FailMessage = e.GetType().Name;
 
-                if (Config.EnableLogging)
-                {
-                    var s = EndTime.Value;
-                    log.AppendLog($"System error at {s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00}: {FailMessage}");
+                    if (Config.EnableLogging)
+                    {
+                        var s = EndTime.Value;
+                        log.AppendLog($"System error at {s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00}: {FailMessage}");
+                    }
                 }
             }
         }
@@ -206,6 +216,7 @@ namespace JobRunner.ObjectModel
         <timeout>{System.Net.WebUtility.HtmlEncode(Timeout.ToString())}</timeout>
         <display>{(Hidden ? "Hidden" : "Visible")}</display>
         <breakOnError>{(BreakOnError ? "true" : "false")}</breakOnError>
+        <RetryCount>{RetryCount}</RetryCount>
     </job>";
 
         public override string ToString() =>

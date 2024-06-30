@@ -242,7 +242,7 @@ namespace JobRunner
                 return;
 
             using var x = new ViewJobDialog(grid1.SelectedJob);
-
+            x.Running = grid1.Running || grid1.SelectedJob.Status == JobStatus.Running;
             var result = x.ShowDialog(this);
 
             if (result == DialogResult.OK)
@@ -397,9 +397,10 @@ namespace JobRunner
             }
             else
             {
+                var selectedRunning = grid1.SelectedJob is { Status: JobStatus.Running };
                 viewJobToolStripMenuItem.Enabled = true;
                 editJobToolStripMenuItem1.Enabled = Config.IsAdministrator;
-                runThisJobToolStripMenuItem.Enabled = true;
+                runThisJobToolStripMenuItem.Enabled = !(grid1.Running || selectedRunning);
             }
         }
 
