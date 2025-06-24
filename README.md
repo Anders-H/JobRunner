@@ -1,7 +1,7 @@
 # JobRunner
 **JobRunner** is a program that provide an interface for running and monitoring other processes. This can be used for downloading and uploading RSS feeds, for generating and uploading static web pages or anything that need to be run in a specific order.
 
-![JobRunner screenshot](screenshot.jpg "JobRunner screenshot")
+![JobRunner screenshot](https://raw.githubusercontent.com/Anders-H/JobRunner/refs/heads/master/screenshot.jpg "JobRunner screenshot")
 
 When **JobRunner** is started as administrator, the job list is editable from within the application. The application cannot run without a job list. If you don't want to start **JobRunner** as administrator, the job list can still be edited manually.
 
@@ -15,7 +15,7 @@ Or:
 
 This can be changed by editing the `JobRunner.exe.config` file.
 
-Download version 1.7: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe) (right click, Save as...)
+Download setup program for version 1.7: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe) (right click, Save as...)
 
 ## Version history:
 
