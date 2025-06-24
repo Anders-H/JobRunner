@@ -29,6 +29,7 @@ namespace JobRunner.ObjectModel
         public bool Hidden { get; internal set; }
         public bool BreakOnError { get; internal set; }
         public int RetryCount { get; internal set; }
+        public int CurrentRetry { get; private set; }
 
         public Job(ILogger log, int number, string name, bool enabled, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError, int retryCount)
         {
@@ -44,6 +45,7 @@ namespace JobRunner.ObjectModel
             BreakOnError = breakOnError;
             FailMessage = "";
             RetryCount = retryCount;
+            CurrentRetry = 0;
         }
 
         public string GetDescription()
@@ -75,10 +77,13 @@ namespace JobRunner.ObjectModel
                 return;
             }
 
-            for (var retry = 0; retry <= RetryCount; retry++)
+            for (CurrentRetry = 0; CurrentRetry <= RetryCount; CurrentRetry++)
             {
-                if (retry > 0)
-                    log.AppendLog($"Retry {retry} of {RetryCount}.");
+                if (CurrentRetry > 0)
+                    log.AppendLog($"Retry {CurrentRetry} of {RetryCount}.");
+
+                Status = JobStatus.Running;
+
                 try
                 {
                     StartTime = DateTime.Now;
@@ -155,8 +160,10 @@ namespace JobRunner.ObjectModel
                 grid.CursorBlink = !grid.CursorBlink;
                 grid.Invalidate();
                 Thread.Sleep(1000);
+
                 if (DateTime.Now.Subtract(StartTime!.Value) <= Timeout)
                     continue;
+                
                 process.Kill();
                 EndTime = DateTime.Now;
                 Status = JobStatus.Timeout;
@@ -216,7 +223,7 @@ namespace JobRunner.ObjectModel
         <timeout>{System.Net.WebUtility.HtmlEncode(Timeout.ToString())}</timeout>
         <display>{(Hidden ? "Hidden" : "Visible")}</display>
         <breakOnError>{(BreakOnError ? "true" : "false")}</breakOnError>
-        <RetryCount>{RetryCount}</RetryCount>
+        <retryCount>{RetryCount}</retryCount>
     </job>";
 
         public override string ToString() =>

@@ -195,6 +195,7 @@ namespace JobRunner
             try
             {
                 using var sw = new StreamWriter(Config.GetJobFilePath(), false, Encoding.UTF8);
+                System.Windows.Forms.MessageBox.Show(Jobs.GetXml());
                 sw.Write(Jobs.GetXml());
                 sw.Flush();
                 sw.Close();

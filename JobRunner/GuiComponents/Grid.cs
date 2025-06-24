@@ -82,14 +82,14 @@ namespace JobRunner.GuiComponents
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"Status",
-                Width = 80,
+                Width = 100,
                 ReadOnly = true
             });
             
             Columns.Add(new DataGridViewColumn
             {
                 HeaderText = @"Result",
-                Width = 250,
+                Width = 270,
                 ReadOnly = true
             });
         }
@@ -348,7 +348,7 @@ namespace JobRunner.GuiComponents
                         {
                             var x = e.CellBounds.X + 3;
                             var y = e.CellBounds.Y + centerY;
-                            e.Graphics.DrawString(job.Enabled ? JobStatusHelper.GetStatusText(job.Status) : "Disabled", Font, ForegroundFromStatus(job), x, y);
+                            e.Graphics.DrawString(job.Enabled ? JobStatusHelper.GetStatusText(job.Status, job.CurrentRetry) : "Disabled", Font, ForegroundFromStatus(job), x, y);
                         }
                         break;
                     case 7:

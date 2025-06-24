@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+#if !DEBUG
 using System.Reflection;
+#endif
 using JobRunner.ObjectModel;
 
 namespace JobRunner
@@ -8,11 +10,15 @@ namespace JobRunner
     public class PathGenerator
     {
         private const string JobRunnerFolderName = "JobRunnerJobListFile";
+#if !DEBUG
         private readonly JobFileLocation _location;
+#endif
 
         public PathGenerator(JobFileLocation location)
         {
+#if !DEBUG
             _location = location;
+#endif
         }
 
         public string GetDataFile(string name)

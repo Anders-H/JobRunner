@@ -11,11 +11,13 @@ C:\Users\\*username*\AppData\Roaming\JobRunnerJobListFile\jobs.xml
 
 This can be changed by editing the `JobRunner.exe.config` file.
 
-Download version 1.6: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe) (right click, Save as...)
-
-*(1.6.1 is not available for download yet.)*
+Download version 1.7: [JobRunner.exe](http://winsoft.se/files/JobRunner.exe) (right click, Save as...)
 
 ## Version history:
+
+**Changes in version 1.8:**
+
+- Ability to set run conditions for jobs
 
 **Changes in version 1.7:**
 
