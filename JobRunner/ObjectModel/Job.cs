@@ -80,7 +80,10 @@ namespace JobRunner.ObjectModel
             for (CurrentRetry = 0; CurrentRetry <= RetryCount; CurrentRetry++)
             {
                 if (CurrentRetry > 0)
+                {
                     log.AppendLog($"Retry {CurrentRetry} of {RetryCount}.");
+                    Thread.Sleep(1000);
+                }
 
                 Status = JobStatus.Running;
 
@@ -114,6 +117,7 @@ namespace JobRunner.ObjectModel
                     {
                         var s = EndTime.Value;
                         var result = log.AppendLog($"Ended at {s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00} with exit code: {ExitCode}.");
+                        
                         if (!result && Config.TreatLoggingErrorsAsStepErrors)
                             throw new SystemException("Logging failed.");
                     }

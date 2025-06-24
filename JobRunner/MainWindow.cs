@@ -100,6 +100,7 @@ namespace JobRunner
         {
             CleanExit = true;
             var jobIndex = 0;
+
             foreach (var job in Jobs.All)
             {
                 if (_cancelFlag)
@@ -111,18 +112,22 @@ namespace JobRunner
                 if (grid1.RunSingle < 0 || grid1.RunSingle == jobIndex)
                 {
                     job.Status = JobStatus.Running;
+                    
                     lblStatus.Text = grid1.RunSingle < 0
                         ? $@"Running step {job.RowIndex + 1} of {Jobs.Count}..."
                         : "Running single job...";
+                    
                     grid1.Invalidate();
                     job.Run(_log, grid1, Variables);
                     grid1.Invalidate();
+                    
                     if (job.BreakOnError && job.Status != JobStatus.Completed)
                     {
                         CleanExit = false;
                         return;
                     }
                 }
+
                 jobIndex++;
             }
         }
@@ -195,7 +200,6 @@ namespace JobRunner
             try
             {
                 using var sw = new StreamWriter(Config.GetJobFilePath(), false, Encoding.UTF8);
-                System.Windows.Forms.MessageBox.Show(Jobs.GetXml());
                 sw.Write(Jobs.GetXml());
                 sw.Flush();
                 sw.Close();

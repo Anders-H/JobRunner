@@ -30,7 +30,7 @@ namespace JobRunner.ObjectModel
                         _ => "Running"
                     };
                 case JobStatus.Completed:
-                    return "Completed";
+                    return retryCount > 0 ? $"Completed after {retryCount} retries" : "Completed";
                 case JobStatus.Failed:
                     return "Failed";
                 case JobStatus.Timeout:

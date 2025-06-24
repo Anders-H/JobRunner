@@ -257,7 +257,7 @@ namespace JobRunner.GuiComponents
 
                 if (Running)
                 {
-                    e.Graphics.FillRectangle(CursorBlink ? Brushes.DarkBlue : Brushes.DarkRed, e.CellBounds);
+                    e.Graphics.FillRectangle(CursorBlink ? Brushes.DarkBlue : Brushes.Blue, e.CellBounds);
                     var brush = CursorBlink ? Brushes.Cyan : Brushes.Yellow;
                     e.Graphics.DrawString(t, Font, brush, e.CellBounds.X + 3, e.CellBounds.Y + centerY);
                 }
@@ -356,6 +356,15 @@ namespace JobRunner.GuiComponents
                             var text = $"{(job.ExitCode == 0 ? "" : $"{job.ExitCode}: ")}{job.FailMessage}";
                             var x = e.CellBounds.X + 3;
                             var y = e.CellBounds.Y + centerY;
+
+                            if (job.CurrentRetry > 0 && text != "")
+                            {
+                                if (job.Status == JobStatus.Completed)
+                                    text += $" (Required {job.CurrentRetry - 1} retries.)";
+                                else
+                                    text += $" (Did {job.CurrentRetry - 1} retries.)";
+                            }
+                                
                             e.Graphics.DrawString(text, Font, ForegroundFromStatus(job), x, y);
                         }
                         break;

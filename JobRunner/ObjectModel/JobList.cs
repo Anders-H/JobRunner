@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml;
 using JobRunner.Logging;
 using JobRunner.ObjectModel.Xml;
@@ -42,7 +43,23 @@ namespace JobRunner.ObjectModel
             }
             
             var dom = new XmlDocument();
-            dom.Load(filename);
+
+            try
+            {
+                dom.Load(filename);
+            }
+            catch
+            {
+                LoadSuccess = true; // To avoid an extra messagebox.
+                var fi = new FileInfo(filename);
+
+                if (MessageBox.Show($@"The XML file ""{fi.FullName}"" is corrupt. You should restore a backup version or start from scratch. Do you want to open the working folder ""{(fi.Directory?.FullName ?? "")}""?", @"Load failed", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", fi.Directory?.FullName ?? "");
+                    return;
+                }
+            }
+
             var doc = dom.DocumentElement;
 
             if (doc == null)
