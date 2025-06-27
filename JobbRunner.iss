@@ -1,5 +1,5 @@
 #define MyAppName "JobRunner"
-#define MyAppVersion "1.8"
+#define MyAppVersion "1.8 (preview)"
 #define MyAppPublisher "Anders Hesselbom"
 #define MyAppURL "https://github.com/Anders-H/JobRunner"
 #define MyAppExeName "JobRunner.exe"
@@ -16,7 +16,7 @@ DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=D:\GitRepos\JobRunner
-OutputBaseFilename=JobRunner
+OutputBaseFilename=JobRunnerSetup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
