@@ -47,10 +47,17 @@
             this.lblProgram = new System.Windows.Forms.Label();
             this.lblVariables = new System.Windows.Forms.LinkLabel();
             this.tabOptions = new System.Windows.Forms.TabPage();
+            this.cboRetryCount = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.chkHidden = new System.Windows.Forms.CheckBox();
             this.cboTimeout = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabFlowControl = new System.Windows.Forms.TabPage();
+            this.btnBrowseConditionArg = new System.Windows.Forms.Button();
+            this.txtRunningConditionArgumentFile = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cboRunIf = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.chkBreakOnError = new System.Windows.Forms.CheckBox();
             this.tabPageOverview = new System.Windows.Forms.TabPage();
             this.tvOverview = new System.Windows.Forms.TreeView();
@@ -62,8 +69,6 @@
             this.deleteAFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.binaryUploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cboRetryCount = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
             this.tabPageProcess.SuspendLayout();
@@ -267,6 +272,24 @@
             this.tabOptions.Text = "Options";
             this.tabOptions.UseVisualStyleBackColor = true;
             // 
+            // cboRetryCount
+            // 
+            this.cboRetryCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRetryCount.FormattingEnabled = true;
+            this.cboRetryCount.Location = new System.Drawing.Point(8, 68);
+            this.cboRetryCount.Name = "cboRetryCount";
+            this.cboRetryCount.Size = new System.Drawing.Size(112, 21);
+            this.cboRetryCount.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 52);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Retry count:";
+            // 
             // chkHidden
             // 
             this.chkHidden.AutoSize = true;
@@ -297,6 +320,11 @@
             // 
             // tabFlowControl
             // 
+            this.tabFlowControl.Controls.Add(this.btnBrowseConditionArg);
+            this.tabFlowControl.Controls.Add(this.txtRunningConditionArgumentFile);
+            this.tabFlowControl.Controls.Add(this.label5);
+            this.tabFlowControl.Controls.Add(this.cboRunIf);
+            this.tabFlowControl.Controls.Add(this.label4);
             this.tabFlowControl.Controls.Add(this.chkBreakOnError);
             this.tabFlowControl.Location = new System.Drawing.Point(4, 22);
             this.tabFlowControl.Name = "tabFlowControl";
@@ -305,13 +333,60 @@
             this.tabFlowControl.Text = "Flow control";
             this.tabFlowControl.UseVisualStyleBackColor = true;
             // 
+            // btnBrowseConditionArg
+            // 
+            this.btnBrowseConditionArg.Enabled = false;
+            this.btnBrowseConditionArg.Location = new System.Drawing.Point(412, 66);
+            this.btnBrowseConditionArg.Name = "btnBrowseConditionArg";
+            this.btnBrowseConditionArg.Size = new System.Drawing.Size(39, 23);
+            this.btnBrowseConditionArg.TabIndex = 4;
+            this.btnBrowseConditionArg.Text = "...";
+            this.btnBrowseConditionArg.UseVisualStyleBackColor = true;
+            this.btnBrowseConditionArg.Click += new System.EventHandler(this.btnBrowseConditionArg_Click);
+            // 
+            // txtRunningConditionArgumentFile
+            // 
+            this.txtRunningConditionArgumentFile.Enabled = false;
+            this.txtRunningConditionArgumentFile.Location = new System.Drawing.Point(8, 68);
+            this.txtRunningConditionArgumentFile.Name = "txtRunningConditionArgumentFile";
+            this.txtRunningConditionArgumentFile.Size = new System.Drawing.Size(396, 20);
+            this.txtRunningConditionArgumentFile.TabIndex = 3;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 52);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(159, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Running condition argument file:";
+            // 
+            // cboRunIf
+            // 
+            this.cboRunIf.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRunIf.FormattingEnabled = true;
+            this.cboRunIf.Location = new System.Drawing.Point(8, 24);
+            this.cboRunIf.Name = "cboRunIf";
+            this.cboRunIf.Size = new System.Drawing.Size(444, 21);
+            this.cboRunIf.TabIndex = 1;
+            this.cboRunIf.SelectedIndexChanged += new System.EventHandler(this.cboRunIf_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(4, 8);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(96, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Running condition:";
+            // 
             // chkBreakOnError
             // 
             this.chkBreakOnError.AutoSize = true;
-            this.chkBreakOnError.Location = new System.Drawing.Point(8, 8);
+            this.chkBreakOnError.Location = new System.Drawing.Point(8, 216);
             this.chkBreakOnError.Name = "chkBreakOnError";
             this.chkBreakOnError.Size = new System.Drawing.Size(93, 17);
-            this.chkBreakOnError.TabIndex = 0;
+            this.chkBreakOnError.TabIndex = 5;
             this.chkBreakOnError.Text = "Break on error";
             this.chkBreakOnError.UseVisualStyleBackColor = true;
             // 
@@ -383,46 +458,28 @@
             this.downloadTextToolStripMenuItem,
             this.binaryUploadToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(161, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(160, 70);
             // 
             // deleteAFileToolStripMenuItem
             // 
             this.deleteAFileToolStripMenuItem.Name = "deleteAFileToolStripMenuItem";
-            this.deleteAFileToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.deleteAFileToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.deleteAFileToolStripMenuItem.Text = "Delete a file...";
             this.deleteAFileToolStripMenuItem.Click += new System.EventHandler(this.deleteAFileToolStripMenuItem_Click);
             // 
             // downloadTextToolStripMenuItem
             // 
             this.downloadTextToolStripMenuItem.Name = "downloadTextToolStripMenuItem";
-            this.downloadTextToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.downloadTextToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.downloadTextToolStripMenuItem.Text = "Download text...";
             this.downloadTextToolStripMenuItem.Click += new System.EventHandler(this.downloadTextToolStripMenuItem_Click);
             // 
             // binaryUploadToolStripMenuItem
             // 
             this.binaryUploadToolStripMenuItem.Name = "binaryUploadToolStripMenuItem";
-            this.binaryUploadToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.binaryUploadToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.binaryUploadToolStripMenuItem.Text = "Binary upload...";
             this.binaryUploadToolStripMenuItem.Click += new System.EventHandler(this.binaryUploadToolStripMenuItem_Click);
-            // 
-            // cboRetryCount
-            // 
-            this.cboRetryCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboRetryCount.FormattingEnabled = true;
-            this.cboRetryCount.Location = new System.Drawing.Point(8, 68);
-            this.cboRetryCount.Name = "cboRetryCount";
-            this.cboRetryCount.Size = new System.Drawing.Size(112, 21);
-            this.cboRetryCount.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 52);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Retry count:";
             // 
             // AddJobDialog
             // 
@@ -498,5 +555,10 @@
         private System.Windows.Forms.CheckBox chkEnabled;
         private System.Windows.Forms.ComboBox cboRetryCount;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cboRunIf;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtRunningConditionArgumentFile;
+        private System.Windows.Forms.Button btnBrowseConditionArg;
     }
 }

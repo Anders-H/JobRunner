@@ -1,67 +1,65 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Windows.Forms;
 using JobRunner.Logging;
 using JobRunner.Utils;
 
-namespace JobRunner.Dialogs
+namespace JobRunner.Dialogs;
+
+public partial class ShowLogDialog : Form
 {
-    public partial class ShowLogDialog : Form
+    public ILogger? Log { get; set; }
+
+    public ShowLogDialog()
     {
-        public ILogger? Log { get; set; }
+        InitializeComponent();
+    }
 
-        public ShowLogDialog()
-        {
-            InitializeComponent();
-        }
+    private void ShowLogDialog_Load(object sender, EventArgs e)
+    {
+        if (Log == null)
+            throw new SystemException($"Uninitialized property: {nameof(Log)}");
+    }
 
-        private void ShowLogDialog_Load(object sender, EventArgs e)
-        {
-            if (Log == null)
-                throw new SystemException($"Uninitialized property: {nameof(Log)}");
-        }
+    private void ShowLogDialog_Shown(object sender, EventArgs e)
+    {
+        Refresh();
+        Cursor = Cursors.WaitCursor;
+        Application.DoEvents();
 
-        private void ShowLogDialog_Shown(object sender, EventArgs e)
-        {
-            Refresh();
-            Cursor = Cursors.WaitCursor;
-            Application.DoEvents();
-
-            var file = PathGenerator.GetLogFile();
+        var file = PathGenerator.GetLogFile();
             
-            lblFolder.Text = file.Directory?.FullName ?? "";
-            lblFile.Text = file.Name;
+        lblFolder.Text = file.Directory?.FullName ?? "";
+        lblFile.Text = file.Name;
             
-            lblStatus.Text = file.Exists
-                ? $@"Status: Ok ({file.Length:n0} bytes)"
-                : "Status: Missing";
+        lblStatus.Text = file.Exists
+            ? $@"Status: Ok ({file.Length:n0} bytes)"
+            : "Status: Missing";
             
-            lblFile.Enabled = file.Exists;
-            Cursor = Cursors.Default;
-        }
+        lblFile.Enabled = file.Exists;
+        Cursor = Cursors.Default;
+    }
 
-        private void lblFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private void lblFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        try
         {
-            try
-            {
-                System.Diagnostics.Process.Start(PathGenerator.GetLogFileDirectoryName());
-            }
-            catch (Exception exception)
-            {
-                MessageDisplayer.Yell(exception.Message, @"Failed to open folder");
-            }
+            System.Diagnostics.Process.Start(PathGenerator.GetLogFileDirectoryName());
         }
-
-        private void lblFile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        catch (Exception exception)
         {
-            try
-            {
-                System.Diagnostics.Process.Start(PathGenerator.GetLogFile().FullName);
-            }
-            catch (Exception exception)
-            {
-                MessageDisplayer.Yell(exception.Message, @"Failed to open file");
-            }
+            MessageDisplayer.Yell(this, exception.Message, @"Failed to open folder");
+        }
+    }
+
+    private void lblFile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(PathGenerator.GetLogFile().FullName);
+        }
+        catch (Exception exception)
+        {
+            MessageDisplayer.Yell(this, exception.Message, @"Failed to open file");
         }
     }
 }

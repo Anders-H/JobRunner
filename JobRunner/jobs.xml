@@ -5,17 +5,7 @@
    EnableLogging="0"
    TreatLoggingErrorsAsStepErrors="0">
     <job>
-        <name>Delete non existing file</name>
-        <enabled>true</enabled>
-        <command>@deletefile</command>
-        <arguments>-file &quot;C:\Users\hbom\Desktop\jellsdfsdf.txt&quot; -notfoundbehaviour fail</arguments>
-        <timeout>00:01:00</timeout>
-        <display>Visible</display>
-        <breakOnError>true</breakOnError>
-        <retryCount>5</retryCount>
-    </job>
-    <job>
-        <name>Show notepad</name>
+        <name>dfgdfgdfg</name>
         <enabled>true</enabled>
         <command>notepad.exe</command>
         <arguments></arguments>

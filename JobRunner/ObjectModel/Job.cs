@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Text;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using JobRunner.GuiComponents;
 using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess;
+using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.Services;
 using JobRunner.Utils;
 
@@ -30,8 +32,10 @@ namespace JobRunner.ObjectModel
         public bool BreakOnError { get; internal set; }
         public int RetryCount { get; internal set; }
         public int CurrentRetry { get; private set; }
+        public JobRunConditionEnum RunIf { get; }
+        public string RunIfArgument { get; }
 
-        public Job(ILogger log, int number, string name, bool enabled, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError, int retryCount)
+        public Job(ILogger log, int number, string name, bool enabled, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError, int retryCount, JobRunConditionEnum runIf, string runIfArgument)
         {
             _log = log;
             Number = number;
@@ -46,6 +50,8 @@ namespace JobRunner.ObjectModel
             FailMessage = "";
             RetryCount = retryCount;
             CurrentRetry = 0;
+            RunIf = runIf;
+            RunIfArgument = runIfArgument;
         }
 
         public string GetDescription()
@@ -73,6 +79,14 @@ namespace JobRunner.ObjectModel
             {
                 Status = JobStatus.Completed;
                 log.AppendLog($@"Job ""{Name}"" ({Number}) is disabled.");
+                grid.Invalidate();
+                return;
+            }
+
+            if (!RunIfConditionsMet())
+            {
+                Status = JobStatus.Completed;
+                log.AppendLog($@"Job ""{Name}"" ({Number}) is did not meet running condition.");
                 grid.Invalidate();
                 return;
             }
@@ -140,6 +154,33 @@ namespace JobRunner.ObjectModel
                         log.AppendLog($"System error at {s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00}: {FailMessage}");
                     }
                 }
+            }
+        }
+
+        private bool RunIfConditionsMet()
+        {
+            switch (RunIf)
+            {
+                case JobRunConditionEnum.NoCondition:
+                    return true;
+                case JobRunConditionEnum.RunIfFileExists:
+                    return FileExists(RunIfArgument);
+                case JobRunConditionEnum.RunIfFileDoesNotExist:
+                    return !FileExists(RunIfArgument);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private bool FileExists(string filePath)
+        {
+            try
+            {
+                return File.Exists(filePath);
+            }
+            catch
+            {
+                return false;
             }
         }
 

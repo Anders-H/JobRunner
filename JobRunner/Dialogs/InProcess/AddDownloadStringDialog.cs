@@ -9,103 +9,100 @@ using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
 using JobRunner.ObjectModel;
 
-namespace JobRunner.Dialogs.InProcess
+namespace JobRunner.Dialogs.InProcess;
+
+public partial class AddDownloadStringDialog : Form, IAddInProcess
 {
-    public partial class AddDownloadStringDialog : Form, IAddInProcess
+    private readonly ILogger _log;
+    public string JobIdentifierString { get; private set; }
+    public string Arguments { get; private set; }
+    public IVariableList? Variables { get; set; }
+    public IJobList? Jobs { get; set; }
+
+    public AddDownloadStringDialog(ILogger log, string jobIdentifierString, string arguments)
     {
-        private readonly ILogger _log;
-        public string JobIdentifierString { get; private set; }
-        public string Arguments { get; private set; }
-        public IVariableList? Variables { get; set; }
-        public IJobList? Jobs { get; set; }
+        _log = log;
+        JobIdentifierString = jobIdentifierString;
+        Arguments = arguments;
+        InitializeComponent();
+    }
 
-        public AddDownloadStringDialog(ILogger log, string jobIdentifierString, string arguments)
+    private void DownloadStringDialog_Load(object sender, EventArgs e)
+    {
+        cboFileExistsBehaviour.Items.Add("Skip - do not download anything");
+        cboFileExistsBehaviour.Items.Add("Overwrite the existing file");
+        cboFileExistsBehaviour.Items.Add("Fail");
+        cboFileExistsBehaviour.SelectedIndex = 0;
+
+        var args = new ArgumentList(Arguments);
+        if (args.Count <= 0)
+            return;
+
+        var deleteFileArguments = new DownloadStringArguments(args);
+
+        txtSourceUrl.Text = deleteFileArguments.SourceUrl;
+        txtTargetFile.Text = deleteFileArguments.TargetFile;
+        var existsBehaviour = args.GetAfter(DownloadStringArguments.ExistsBehaviour);
+        cboFileExistsBehaviour.SelectedIndex = existsBehaviour.ToLower() switch
         {
-            _log = log;
-            JobIdentifierString = jobIdentifierString;
-            Arguments = arguments;
-            InitializeComponent();
+            DownloadStringArguments.ExistsBehaviourOverwrite => 1,
+            DownloadStringArguments.ExistsBehaviourFail => 2,
+            _ => 0
+        };
+    }
+
+    private void btnOk_Click(object sender, EventArgs e)
+    {
+        txtSourceUrl.Text = txtSourceUrl.Text.Trim();
+
+        if (string.IsNullOrEmpty(txtSourceUrl.Text))
+        {
+            MessageDisplayer.Tell(this, "Source URL is mandatory.", Text);
+            txtSourceUrl.Focus();
+            return;
         }
 
-        private void DownloadStringDialog_Load(object sender, EventArgs e)
+        if (!txtSourceUrl.ValidateDashAndQuotes(this, "Source URL", Text))
+            return;
+
+        txtTargetFile.Text = txtTargetFile.Text.Trim();
+
+        if (string.IsNullOrEmpty(txtTargetFile.Text))
         {
-            cboFileExistsBehaviour.Items.Add("Skip - do not download anything");
-            cboFileExistsBehaviour.Items.Add("Overwrite the existing file");
-            cboFileExistsBehaviour.Items.Add("Fail");
-            cboFileExistsBehaviour.SelectedIndex = 0;
-
-            var args = new ArgumentList(Arguments ?? "");
-            if (args.Count <= 0)
-                return;
-
-            var deleteFileArguments = new DownloadStringArguments(args);
-
-            txtSourceUrl.Text = deleteFileArguments.SourceUrl;
-            txtTargetFile.Text = deleteFileArguments.TargetFile;
-            var existsBehaviour = args.GetAfter(DownloadStringArguments.ExistsBehaviour);
-            cboFileExistsBehaviour.SelectedIndex = existsBehaviour.ToLower() switch
-            {
-                DownloadStringArguments.ExistsBehaviourOverwrite => 1,
-                DownloadStringArguments.ExistsBehaviourFail => 2,
-                _ => 0
-            };
+            MessageDisplayer.Tell(this, "Target file is mandatory.", Text);
+            txtTargetFile.Focus();
+            return;
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            txtSourceUrl.Text = txtSourceUrl.Text.Trim();
+        if (!txtTargetFile.ValidateDashAndQuotes(this, "Target file", Text))
+            return;
 
-            if (string.IsNullOrEmpty(txtSourceUrl.Text))
-            {
-                MessageDisplayer.Tell("Source URL is mandatory.", Text);
-                txtSourceUrl.Focus();
-                return;
-            }
+        JobIdentifierString = new InProcessJobIdentifierHelper(_log)
+            .GetIdentifierString(
+                InProcessJobIdentifier.DownloadString
+            );
 
-            if (!txtSourceUrl.ValidateDashAndQuotes("Source URL", Text))
-                return;
-
-            txtTargetFile.Text = txtTargetFile.Text.Trim();
-
-            if (string.IsNullOrEmpty(txtTargetFile.Text))
-            {
-                MessageDisplayer.Tell("Target file is mandatory.", Text);
-                txtTargetFile.Focus();
-                return;
-            }
-
-            if (!txtTargetFile.ValidateDashAndQuotes("Target file", Text))
-                return;
-
-            JobIdentifierString = new InProcessJobIdentifierHelper(_log)
-                .GetIdentifierString(
-                    InProcessJobIdentifier.DownloadString
-                );
-
-            Arguments = DownloadStringArguments.CreateArgumentString(txtSourceUrl.Text, txtTargetFile.Text, GetExistsBehaviour());
+        Arguments = DownloadStringArguments.CreateArgumentString(txtSourceUrl.Text, txtTargetFile.Text, GetExistsBehaviour());
             
-            DialogResult = DialogResult.OK;
-        }
+        DialogResult = DialogResult.OK;
+    }
 
-        private FileExistsBehaviour GetExistsBehaviour() =>
-            cboFileExistsBehaviour.SelectedIndex switch
-            {
-                0 => FileExistsBehaviour.Skip,
-                1 => FileExistsBehaviour.Overwrite,
-                _ => FileExistsBehaviour.Fail
-            };
-
-        private void btnBrowse_Click(object sender, EventArgs e)
+    private FileExistsBehaviour GetExistsBehaviour() =>
+        cboFileExistsBehaviour.SelectedIndex switch
         {
-            using var x = new OpenFileDialog
-            {
-                Title = @"Target file",
-                Filter = @"All files (*.*)|*.*",
-                FileName = txtTargetFile.Text
-            };
+            0 => FileExistsBehaviour.Skip,
+            1 => FileExistsBehaviour.Overwrite,
+            _ => FileExistsBehaviour.Fail
+        };
 
-            if (x.ShowDialog(this) == DialogResult.OK)
-                txtTargetFile.Text = x.FileName;
-        }
+    private void btnBrowse_Click(object sender, EventArgs e)
+    {
+        using var x = new OpenFileDialog();
+        x.Title = @"Target file";
+        x.Filter = @"All files (*.*)|*.*";
+        x.FileName = txtTargetFile.Text;
+
+        if (x.ShowDialog(this) == DialogResult.OK)
+            txtTargetFile.Text = x.FileName;
     }
 }

@@ -24,7 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,7 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Settings %2825%29.ico</ApplicationIcon>
@@ -161,6 +161,7 @@
     <Compile Include="ObjectModel\InProcess\Jobs\DeleteFileJob.cs" />
     <Compile Include="ObjectModel\InProcess\Jobs\DownloadStringJob.cs" />
     <Compile Include="ObjectModel\IVariableList.cs" />
+    <Compile Include="ObjectModel\JobRunConditionEnum.cs" />
     <Compile Include="ObjectModel\Variable.cs" />
     <Compile Include="ObjectModel\VariableList.cs" />
     <Compile Include="ObjectModel\Xml\XmlBuilder.cs" />

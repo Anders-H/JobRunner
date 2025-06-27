@@ -1,8 +1,7 @@
-﻿namespace JobRunner.ObjectModel
+﻿namespace JobRunner.ObjectModel;
+
+public enum JobFileLocation
 {
-    public enum JobFileLocation
-    {
-        Application,
-        UserSettings
-    }
+    Application,
+    UserSettings
 }
