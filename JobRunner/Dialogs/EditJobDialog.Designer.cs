@@ -47,6 +47,11 @@
             this.chkEnabled = new System.Windows.Forms.CheckBox();
             this.cboRetryCount = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnBrowseConditionArg = new System.Windows.Forms.Button();
+            this.txtRunningConditionArgumentFile = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cboRunIf = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtName
@@ -69,10 +74,10 @@
             // chkHidden
             // 
             this.chkHidden.AutoSize = true;
-            this.chkHidden.Location = new System.Drawing.Point(8, 272);
+            this.chkHidden.Location = new System.Drawing.Point(8, 356);
             this.chkHidden.Name = "chkHidden";
             this.chkHidden.Size = new System.Drawing.Size(81, 17);
-            this.chkHidden.TabIndex = 15;
+            this.chkHidden.TabIndex = 20;
             this.chkHidden.Text = "Run hidden";
             this.chkHidden.UseVisualStyleBackColor = true;
             // 
@@ -141,10 +146,10 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(288, 320);
+            this.btnOk.Location = new System.Drawing.Point(288, 404);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 17;
+            this.btnOk.TabIndex = 22;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
@@ -152,20 +157,20 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(372, 320);
+            this.btnCancel.Location = new System.Drawing.Point(372, 404);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 18;
+            this.btnCancel.TabIndex = 23;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // chkBreakOnError
             // 
             this.chkBreakOnError.AutoSize = true;
-            this.chkBreakOnError.Location = new System.Drawing.Point(8, 292);
+            this.chkBreakOnError.Location = new System.Drawing.Point(8, 376);
             this.chkBreakOnError.Name = "chkBreakOnError";
             this.chkBreakOnError.Size = new System.Drawing.Size(93, 17);
-            this.chkBreakOnError.TabIndex = 16;
+            this.chkBreakOnError.TabIndex = 21;
             this.chkBreakOnError.Text = "Break on error";
             this.chkBreakOnError.UseVisualStyleBackColor = true;
             // 
@@ -205,10 +210,10 @@
             // chkEnabled
             // 
             this.chkEnabled.AutoSize = true;
-            this.chkEnabled.Location = new System.Drawing.Point(8, 252);
+            this.chkEnabled.Location = new System.Drawing.Point(8, 336);
             this.chkEnabled.Name = "chkEnabled";
             this.chkEnabled.Size = new System.Drawing.Size(65, 17);
-            this.chkEnabled.TabIndex = 14;
+            this.chkEnabled.TabIndex = 19;
             this.chkEnabled.Text = "Enabled";
             this.chkEnabled.UseVisualStyleBackColor = true;
             // 
@@ -230,13 +235,63 @@
             this.label3.TabIndex = 12;
             this.label3.Text = "Retry count:";
             // 
+            // btnBrowseConditionArg
+            // 
+            this.btnBrowseConditionArg.Enabled = false;
+            this.btnBrowseConditionArg.Location = new System.Drawing.Point(412, 306);
+            this.btnBrowseConditionArg.Name = "btnBrowseConditionArg";
+            this.btnBrowseConditionArg.Size = new System.Drawing.Size(35, 23);
+            this.btnBrowseConditionArg.TabIndex = 18;
+            this.btnBrowseConditionArg.Text = "...";
+            this.btnBrowseConditionArg.UseVisualStyleBackColor = true;
+            // 
+            // txtRunningConditionArgumentFile
+            // 
+            this.txtRunningConditionArgumentFile.Enabled = false;
+            this.txtRunningConditionArgumentFile.Location = new System.Drawing.Point(8, 308);
+            this.txtRunningConditionArgumentFile.Name = "txtRunningConditionArgumentFile";
+            this.txtRunningConditionArgumentFile.Size = new System.Drawing.Size(400, 20);
+            this.txtRunningConditionArgumentFile.TabIndex = 17;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 292);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(159, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Running condition argument file:";
+            // 
+            // cboRunIf
+            // 
+            this.cboRunIf.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRunIf.FormattingEnabled = true;
+            this.cboRunIf.Location = new System.Drawing.Point(8, 264);
+            this.cboRunIf.Name = "cboRunIf";
+            this.cboRunIf.Size = new System.Drawing.Size(440, 21);
+            this.cboRunIf.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 248);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(96, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Running condition:";
+            // 
             // EditJobDialog
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(456, 349);
+            this.ClientSize = new System.Drawing.Size(456, 433);
+            this.Controls.Add(this.btnBrowseConditionArg);
+            this.Controls.Add(this.txtRunningConditionArgumentFile);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.cboRunIf);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.cboRetryCount);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.chkEnabled);
@@ -290,5 +345,10 @@
         private System.Windows.Forms.CheckBox chkEnabled;
         private System.Windows.Forms.ComboBox cboRetryCount;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnBrowseConditionArg;
+        private System.Windows.Forms.TextBox txtRunningConditionArgumentFile;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cboRunIf;
+        private System.Windows.Forms.Label label4;
     }
 }

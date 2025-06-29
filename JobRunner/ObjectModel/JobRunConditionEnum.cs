@@ -8,7 +8,8 @@ public enum JobRunConditionEnum
 {
     NoCondition,
     RunIfFileExists,
-    RunIfFileDoesNotExist
+    RunIfFileDoesNotExist,
+    RubIfExistsAndChangedThreeHoursAgo
 }
 
 public static class JobRunConditionEnumHelper
@@ -20,6 +21,7 @@ public static class JobRunConditionEnumHelper
             JobRunConditionEnum.NoCondition => "No Condition",
             JobRunConditionEnum.RunIfFileExists => "Run if file exists",
             JobRunConditionEnum.RunIfFileDoesNotExist => "Run if file does not exist",
+            JobRunConditionEnum.RubIfExistsAndChangedThreeHoursAgo => "Run if file exists and is recently changed",
             _ => throw new ArgumentOutOfRangeException(nameof(condition), condition, null)
         };
     }
@@ -31,6 +33,7 @@ public static class JobRunConditionEnumHelper
             "No Condition" => JobRunConditionEnum.NoCondition,
             "Run if file exists" => JobRunConditionEnum.RunIfFileExists,
             "Run if file does not exist" => JobRunConditionEnum.RunIfFileDoesNotExist,
+            "Run if file exists and is recently changed" => JobRunConditionEnum.RubIfExistsAndChangedThreeHoursAgo,
             _ => throw new ArgumentException($@"Unknown condition: {condition}", nameof(condition))
         };
     }
