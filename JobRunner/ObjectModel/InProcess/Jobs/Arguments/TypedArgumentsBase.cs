@@ -1,14 +1,13 @@
 ﻿using JobRunner.Services;
 
-namespace JobRunner.ObjectModel.InProcess.Jobs.Arguments
-{
-    public abstract class TypedArgumentsBase
-    {
-        protected ArgumentList Arguments { get; }
+namespace JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 
-        protected TypedArgumentsBase(ArgumentList arguments)
-        {
-            Arguments = arguments;
-        }
+public abstract class TypedArgumentsBase
+{
+    protected ArgumentList Arguments { get; }
+
+    protected TypedArgumentsBase(ArgumentList arguments)
+    {
+        Arguments = arguments;
     }
 }

@@ -1,10 +1,9 @@
 ﻿using JobRunner.ObjectModel;
 
-namespace JobRunner.Dialogs.InProcess
+namespace JobRunner.Dialogs.InProcess;
+
+public interface IAddInProcess
 {
-    public interface IAddInProcess
-    {
-        IVariableList? Variables { get; set; }
-        IJobList? Jobs { get; set; }
-    }
+    IVariableList? Variables { get; set; }
+    IJobList? Jobs { get; set; }
 }

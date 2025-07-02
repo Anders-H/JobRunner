@@ -1,7 +1,6 @@
-﻿namespace JobRunner.Dialogs
+﻿namespace JobRunner.Dialogs;
+
+public abstract class Controller
 {
-    public abstract class Controller
-    {
-        public abstract void ThrowIfRequiredPropertiesAreNull();
-    }
+    public abstract void ThrowIfRequiredPropertiesAreNull();
 }

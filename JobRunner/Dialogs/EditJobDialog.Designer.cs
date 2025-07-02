@@ -244,6 +244,7 @@
             this.btnBrowseConditionArg.TabIndex = 18;
             this.btnBrowseConditionArg.Text = "...";
             this.btnBrowseConditionArg.UseVisualStyleBackColor = true;
+            this.btnBrowseConditionArg.Click += new System.EventHandler(this.btnBrowseConditionArg_Click);
             // 
             // txtRunningConditionArgumentFile
             // 
@@ -270,6 +271,7 @@
             this.cboRunIf.Name = "cboRunIf";
             this.cboRunIf.Size = new System.Drawing.Size(440, 21);
             this.cboRunIf.TabIndex = 15;
+            this.cboRunIf.SelectedIndexChanged += new System.EventHandler(this.cboRunIf_SelectedIndexChanged);
             // 
             // label4
             // 

@@ -6,7 +6,6 @@ using System.Threading;
 using JobRunner.GuiComponents;
 using JobRunner.Logging;
 using JobRunner.ObjectModel.InProcess;
-using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.Services;
 using JobRunner.Utils;
 
@@ -32,8 +31,8 @@ namespace JobRunner.ObjectModel
         public bool BreakOnError { get; internal set; }
         public int RetryCount { get; internal set; }
         public int CurrentRetry { get; private set; }
-        public JobRunConditionEnum RunIf { get; }
-        public string RunIfArgument { get; }
+        public JobRunConditionEnum RunIf { get; set; }
+        public string RunIfArgument { get; set; }
 
         public Job(ILogger log, int number, string name, bool enabled, string command, string arguments, TimeSpan timeout, bool hidden, bool breakOnError, int retryCount, JobRunConditionEnum runIf, string runIfArgument)
         {
@@ -131,7 +130,7 @@ namespace JobRunner.ObjectModel
                     {
                         var s = EndTime.Value;
                         var result = log.AppendLog($"Ended at {s.Year:0000}-{s.Month:00}-{s.Day:00} {s.Hour:00}:{s.Minute:00}:{s.Second:00} with exit code: {ExitCode}.");
-                        
+
                         if (!result && Config.TreatLoggingErrorsAsStepErrors)
                             throw new SystemException("Logging failed.");
                     }
@@ -167,6 +166,8 @@ namespace JobRunner.ObjectModel
                     return FileExists(RunIfArgument);
                 case JobRunConditionEnum.RunIfFileDoesNotExist:
                     return !FileExists(RunIfArgument);
+                case JobRunConditionEnum.RubIfExistsAndChangedThreeHoursAgo:
+                    return FileExistsAndIsChanged(RunIfArgument);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -177,6 +178,22 @@ namespace JobRunner.ObjectModel
             try
             {
                 return File.Exists(filePath);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool FileExistsAndIsChanged(string filePath)
+        {
+            try
+            {
+                if (!FileExists(filePath))
+                    return false;
+
+                var lastWriteTime = File.GetLastWriteTime(filePath);
+                return DateTime.Now.Subtract(lastWriteTime).TotalHours <= 3.0;
             }
             catch
             {
@@ -208,7 +225,7 @@ namespace JobRunner.ObjectModel
 
                 if (DateTime.Now.Subtract(StartTime!.Value) <= Timeout)
                     continue;
-                
+
                 process.Kill();
                 EndTime = DateTime.Now;
                 Status = JobStatus.Timeout;
@@ -269,9 +286,21 @@ namespace JobRunner.ObjectModel
         <display>{(Hidden ? "Hidden" : "Visible")}</display>
         <breakOnError>{(BreakOnError ? "true" : "false")}</breakOnError>
         <retryCount>{RetryCount}</retryCount>
+        <RunIf>{RunIf}</RunIf>
+        <RunIfArgument>{XmlEncode(RunIfArgument)}</RunIfArgument>
     </job>";
 
         public override string ToString() =>
             $"{Number}. {Name}";
+
+        private static string XmlEncode(string x)
+        {
+            x = x.Replace("&", "&amp;");
+            x = x.Replace("'", "&apos;");
+            x = x.Replace("\"", "&quot;");
+            x = x.Replace(">", "&gt;");
+            x = x.Replace("<", "&lt;");
+            return x;
+        }
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions
+﻿namespace JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
+
+public enum FileNotFoundBehaviour
 {
-    public enum FileNotFoundBehaviour
-    {
-        Skip,
-        Fail
-    }
+    Skip,
+    Fail
 }

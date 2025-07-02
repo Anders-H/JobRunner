@@ -5,7 +5,7 @@
    EnableLogging="0"
    TreatLoggingErrorsAsStepErrors="0">
     <job>
-        <name>dfgdfgdfg</name>
+        <name>Run process: notepad.exe</name>
         <enabled>true</enabled>
         <command>notepad.exe</command>
         <arguments></arguments>
@@ -13,5 +13,7 @@
         <display>Visible</display>
         <breakOnError>false</breakOnError>
         <retryCount>0</retryCount>
+        <RunIf>RubIfExistsAndChangedThreeHoursAgo</RunIf>
+        <RunIfArgument>C:\Users\hbom\Desktop\Erik Molnar &amp; Anders Hesselbom - Interstellar Excursion.mp4</RunIfArgument>
     </job>
 </jobs>

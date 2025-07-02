@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using JobRunner.Logging;
 using JobRunner.Services;
 

@@ -122,8 +122,6 @@ public partial class AddBinaryUploadDialog : Form, IAddInProcess
             "Usage (job name)"
         );
 
-            
-
         listDescriptor.AddRange(
             from variable in Variables!.All
             let jobs = Jobs.GetVariableUsage(variable)

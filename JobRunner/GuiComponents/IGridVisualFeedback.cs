@@ -1,8 +1,7 @@
-﻿namespace JobRunner.GuiComponents
+﻿namespace JobRunner.GuiComponents;
+
+public interface IGridVisualFeedback
 {
-    public interface IGridVisualFeedback
-    {
-        bool CursorBlink { get; set; }
-        void Invalidate();
-    }
+    bool CursorBlink { get; set; }
+    void Invalidate();
 }

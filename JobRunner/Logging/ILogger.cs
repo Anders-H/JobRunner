@@ -1,8 +1,7 @@
-﻿namespace JobRunner.Logging
+﻿namespace JobRunner.Logging;
+
+public interface ILogger
 {
-    public interface ILogger
-    {
-        bool DeleteLog();
-        bool AppendLog(string content);
-    }
+    bool DeleteLog();
+    bool AppendLog(string content);
 }

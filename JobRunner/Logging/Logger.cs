@@ -2,46 +2,45 @@
 using System.Text;
 using System.Windows.Forms;
 
-namespace JobRunner.Logging
+namespace JobRunner.Logging;
+
+public class Logger : ILogger
 {
-    public class Logger : ILogger
+    public bool DeleteLog()
     {
-        public bool DeleteLog()
-        {
-            var file = PathGenerator.GetLogFile();
+        var file = PathGenerator.GetLogFile();
 
-            if (!file.Exists)
-                return true;
+        if (!file.Exists)
+            return true;
             
-            try
-            {
-                file.Delete();
-                Application.DoEvents();
-                file = PathGenerator.GetLogFile();
-                return !file.Exists;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public bool AppendLog(string content)
+        try
         {
-            var file = PathGenerator.GetLogFile();
+            file.Delete();
+            Application.DoEvents();
+            file = PathGenerator.GetLogFile();
+            return !file.Exists;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 
-            try
-            {
-                using var sw = new StreamWriter(file.FullName, true, Encoding.UTF8);
-                sw.WriteLine(content);
-                sw.Flush();
-                sw.Close();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+    public bool AppendLog(string content)
+    {
+        var file = PathGenerator.GetLogFile();
+
+        try
+        {
+            using var sw = new StreamWriter(file.FullName, true, Encoding.UTF8);
+            sw.WriteLine(content);
+            sw.Flush();
+            sw.Close();
+            return true;
+        }
+        catch
+        {
+            return false;
         }
     }
 }

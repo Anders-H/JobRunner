@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace JobRunner.ObjectModel;
 
+
 public enum JobRunConditionEnum
 {
     NoCondition,

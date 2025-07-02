@@ -27,8 +27,8 @@ public partial class EditJobDialog : Form
     private void EditJobDialog_Load(object sender, EventArgs e)
     {
         _controller.ThrowIfRequiredPropertiesAreNull();
-
         _controller.PopulateTimeout(cboTimeout);
+        _controller.PopulateRunningConditions(cboRunIf, Job?.RunIf ?? JobRunConditionEnum.NoCondition);
 
         txtName.Text = Job!.Name;
         txtProgram.Text = Job.Command;
@@ -36,6 +36,7 @@ public partial class EditJobDialog : Form
         chkEnabled.Checked = Job.Enabled;
         chkHidden.Checked = Job.Hidden;
         chkBreakOnError.Checked = Job.BreakOnError;
+        txtRunningConditionArgumentFile.Text = Job.RunIfArgument;
 
         cboRetryCount.Items.Add(0);
         cboRetryCount.Items.Add(1);
@@ -112,6 +113,8 @@ public partial class EditJobDialog : Form
         Job.Hidden = chkHidden.Checked;
         Job.BreakOnError = chkBreakOnError.Checked;
         Job.RetryCount = cboRetryCount.SelectedIndex;
+        Job.RunIf = JobRunConditionEnumHelper.FromFriendlyString((string)cboRunIf.SelectedItem);
+        Job.RunIfArgument = txtRunningConditionArgumentFile.Text.Trim();
         DialogResult = DialogResult.OK;
     }
 
@@ -195,5 +198,22 @@ public partial class EditJobDialog : Form
 
         txtArgsEvaluated.Text = new ArgumentDecoder(Variables)
             .GetDecodedText(txtArguments.Text);
+    }
+
+    private void btnBrowseConditionArg_Click(object sender, EventArgs e)
+    {
+        using var x = new OpenFileDialog();
+        x.Title = @"Select a file for the running condition";
+        x.Filter = @"All files (*.*)|*.*";
+        x.FileName = txtRunningConditionArgumentFile.Text;
+
+        if (x.ShowDialog(this) == DialogResult.OK)
+            txtRunningConditionArgumentFile.Text = x.FileName.Trim();
+    }
+
+    private void cboRunIf_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        txtRunningConditionArgumentFile.Enabled = cboRunIf.SelectedIndex > 0;
+        btnBrowseConditionArg.Enabled = cboRunIf.SelectedIndex > 0;
     }
 }

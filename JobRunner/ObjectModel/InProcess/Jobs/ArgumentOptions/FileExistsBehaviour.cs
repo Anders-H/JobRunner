@@ -1,9 +1,8 @@
-﻿namespace JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions
+﻿namespace JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
+
+public enum FileExistsBehaviour
 {
-    public enum FileExistsBehaviour
-    {
-        Skip,
-        Overwrite,
-        Fail
-    }
+    Skip,
+    Overwrite,
+    Fail
 }

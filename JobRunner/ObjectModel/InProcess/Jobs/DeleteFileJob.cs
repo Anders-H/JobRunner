@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.IO;
 using System.Threading;
 using JobRunner.Logging;
@@ -7,70 +6,69 @@ using JobRunner.ObjectModel.InProcess.Jobs.ArgumentOptions;
 using JobRunner.ObjectModel.InProcess.Jobs.Arguments;
 using JobRunner.Services;
 
-namespace JobRunner.ObjectModel.InProcess.Jobs
+namespace JobRunner.ObjectModel.InProcess.Jobs;
+
+public class DeleteFileJob : InProcessJob
 {
-    public class DeleteFileJob : InProcessJob
+    private string FileToDelete { get; set; }
+    private DeleteFileDelegate? Action { get; set; }
+
+    public DeleteFileJob(ILogger log) : base(log)
     {
-        private string FileToDelete { get; set; }
-        private DeleteFileDelegate? Action { get; set; }
+        FileToDelete = "";
+    }
 
-        public DeleteFileJob(ILogger log) : base(log)
+    public override void Begin(ArgumentList args)
+    {
+        var deleteFileArguments = new DeleteFileArguments(args);
+
+        FileToDelete = deleteFileArguments.GetFilename();
+
+        switch (deleteFileArguments.GetFileNotFoundBehaviour())
         {
-            FileToDelete = "";
+            case FileNotFoundBehaviour.Skip:
+                if (!File.Exists(FileToDelete))
+                {
+                    HasExited = true;
+                    ExitCode = 0;
+                    return;
+                }
+                break;
+            case FileNotFoundBehaviour.Fail:
+                if (!File.Exists(FileToDelete))
+                {
+                    HasExited = true;
+                    ExitCode = 1;
+                    throw new SystemException("File not found.");
+                }
+                break;
         }
 
-        public override void Begin(ArgumentList args)
+        HasExited = false;
+        Action = DeleteFile;
+        Action.BeginInvoke(FileToDelete, CompletedCallback, null);
+    }
+
+    private void DeleteFile(string fileToDelete)
+    {
+        try
         {
-            var deleteFileArguments = new DeleteFileArguments(args);
-
-            FileToDelete = deleteFileArguments.GetFilename();
-
-            switch (deleteFileArguments.GetFileNotFoundBehaviour())
-            {
-                case FileNotFoundBehaviour.Skip:
-                    if (!File.Exists(FileToDelete))
-                    {
-                        HasExited = true;
-                        ExitCode = 0;
-                        return;
-                    }
-                    break;
-                case FileNotFoundBehaviour.Fail:
-                    if (!File.Exists(FileToDelete))
-                    {
-                        HasExited = true;
-                        ExitCode = 1;
-                        throw new SystemException("File not found.");
-                    }
-                    break;
-            }
-
-            HasExited = false;
-            Action = DeleteFile;
-            Action.BeginInvoke(FileToDelete, CompletedCallback, null);
+            File.Delete(fileToDelete);
+            Thread.Sleep(500);
+            if (File.Exists(fileToDelete))
+                throw new SystemException($"Failed to delete file: {fileToDelete}");
         }
-
-        private void DeleteFile(string fileToDelete)
+        catch (SystemException e)
         {
-            try
-            {
-                File.Delete(fileToDelete);
-                Thread.Sleep(500);
-                if (File.Exists(fileToDelete))
-                    throw new SystemException($"Failed to delete file: {fileToDelete}");
-            }
-            catch (SystemException e)
-            {
-                Exception = e;
-            }
+            Exception = e;
         }
+    }
 
-        protected override void CompletedCallback(IAsyncResult result)
-        {
-            HasExited = true;
-            ExitCode = Exception == null
-                ? 0
-                : -1;
-        }
+    protected override void CompletedCallback(IAsyncResult result)
+    {
+        HasExited = true;
+        ExitCode = Exception == null
+            ? 0
+            : -1;
     }
 }
