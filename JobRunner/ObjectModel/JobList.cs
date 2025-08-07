@@ -118,7 +118,7 @@ public class JobList : IJobList
             var enabled = jobXml.GetChildString("enabled").ToLower();
             var retryCountString = jobXml.GetChildString("retryCount");
             var retryCount = 0;
-            var runIf = jobXml.GetChildString("runIf");
+            var runIf = jobXml.GetChildString("RunIf");
             JobRunConditionEnum runIfEnum;
 
             try
@@ -130,7 +130,7 @@ public class JobList : IJobList
                 runIfEnum = JobRunConditionEnum.NoCondition;
             }
 
-            var runIfArg = jobXml.GetChildString("runIfArg");
+            var runIfArg = jobXml.GetChildString("RunIfArgument");
 
             if (!string.IsNullOrEmpty(retryCountString))
                 int.TryParse(retryCountString, NumberStyles.Any, CultureInfo.CurrentCulture, out retryCount);

@@ -42,49 +42,49 @@ public class Grid : DataGridView, IGridVisualFeedback
             Width = 30,
             ReadOnly = true
         });
-            
+
         Columns.Add(new DataGridViewColumn
         {
             HeaderText = @"Name",
             Width = 200,
             ReadOnly = true
         });
-            
+
         Columns.Add(new DataGridViewColumn
         {
             HeaderText = @"Start time",
             Width = 110,
             ReadOnly = true
         });
-            
+
         Columns.Add(new DataGridViewColumn
         {
             HeaderText = @"End time",
             Width = 110,
             ReadOnly = true
         });
-            
+
         Columns.Add(new DataGridViewColumn
         {
             HeaderText = @"Step time",
             Width = 65,
             ReadOnly = true
         });
-            
+
         Columns.Add(new DataGridViewColumn
         {
             HeaderText = @"Total time",
             Width = 65,
             ReadOnly = true
         });
-            
+
         Columns.Add(new DataGridViewColumn
         {
             HeaderText = @"Status",
-            Width = 100,
+            Width = 200,
             ReadOnly = true
         });
-            
+
         Columns.Add(new DataGridViewColumn
         {
             HeaderText = @"Result",
@@ -178,7 +178,7 @@ public class Grid : DataGridView, IGridVisualFeedback
     {
         get => SelectedCells.Count <= 0
             ? null
-            : (Job) Rows[SelectedCells[0].RowIndex].Tag;
+            : (Job)Rows[SelectedCells[0].RowIndex].Tag;
         set
         {
             if (Rows.Count <= 0)
@@ -245,7 +245,7 @@ public class Grid : DataGridView, IGridVisualFeedback
 
         base.OnMouseClick(e);
     }
-        
+
     protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
     {
         var centerY = CenterY(e.Graphics, e.CellBounds, out var width);
@@ -274,29 +274,31 @@ public class Grid : DataGridView, IGridVisualFeedback
                 e.Graphics.FillRectangle(CursorBlink ? BackgroundFromStatus(job) : Brushes.Black, e.CellBounds);
             else
                 e.Graphics.FillRectangle(BackgroundFromStatus(job), e.CellBounds);
-                
+
+            var foreground = ForegroundFromStatus(job);
+
             switch (e.ColumnIndex)
             {
                 case 0:
-                {
-                    var x = e.CellBounds.X + e.CellBounds.Width - 2 - width;
-                    var y = e.CellBounds.Y + centerY;
-                    e.Graphics.DrawString(job.Number.ToString(), Font, ForegroundFromStatus(job), x, y);
-                    break;
-                }
+                    {
+                        var x = e.CellBounds.X + e.CellBounds.Width - 2 - width;
+                        var y = e.CellBounds.Y + centerY;
+                        e.Graphics.DrawString(job.Number.ToString(), Font, foreground, x, y);
+                        break;
+                    }
                 case 1:
-                {
-                    var y = e.CellBounds.Y + centerY;
-                    e.Graphics.DrawString(job.Name, Font, ForegroundFromStatus(job), e.CellBounds.X + 3, y);
-                    break;
-                }
+                    {
+                        var y = e.CellBounds.Y + centerY;
+                        e.Graphics.DrawString(job.Name, Font, foreground, e.CellBounds.X + 3, y);
+                        break;
+                    }
                 case 2:
                     if (job.StartTime.HasValue)
                     {
                         var d = job.StartTime.Value.ToShortDateString();
                         var text = $"{d} {job.StartTime.Value.ToLongTimeString()}";
                         var y = e.CellBounds.Y + centerY;
-                        e.Graphics.DrawString(text, Font, ForegroundFromStatus(job), e.CellBounds.X + 3, y);
+                        e.Graphics.DrawString(text, Font, foreground, e.CellBounds.X + 3, y);
                     }
                     break;
                 case 3:
@@ -306,7 +308,7 @@ public class Grid : DataGridView, IGridVisualFeedback
                         var text = $"{d} {job.EndTime.Value.ToLongTimeString()}";
                         var x = e.CellBounds.X + 3;
                         var y = e.CellBounds.Y + centerY;
-                        e.Graphics.DrawString(text, Font, ForegroundFromStatus(job), x, y);
+                        e.Graphics.DrawString(text, Font, foreground, x, y);
                     }
                     else if (job.StartTime.HasValue)
                     {
@@ -328,7 +330,7 @@ public class Grid : DataGridView, IGridVisualFeedback
                         var s = Math.Abs(span.Seconds);
                         var x = $"{h:00}:{m:00}:{s:00}";
                         var y = e.CellBounds.Y + centerY;
-                        e.Graphics.DrawString(x, Font, ForegroundFromStatus(job), e.CellBounds.X + 3, y);
+                        e.Graphics.DrawString(x, Font, foreground, e.CellBounds.X + 3, y);
                     }
                     break;
                 case 5:
@@ -340,38 +342,38 @@ public class Grid : DataGridView, IGridVisualFeedback
                         var s = Math.Abs(span.Seconds);
                         var x = $"{h:00}:{m:00}:{s:00}";
                         var y = e.CellBounds.Y + centerY;
-                        e.Graphics.DrawString(x, Font, ForegroundFromStatus(job), e.CellBounds.X + 3, y);
+                        e.Graphics.DrawString(x, Font, foreground, e.CellBounds.X + 3, y);
                     }
                     break;
                 case 6:
-                {
-                    var x = e.CellBounds.X + 3;
-                    var y = e.CellBounds.Y + centerY;
-                    e.Graphics.DrawString(job.Enabled ? JobStatusHelper.GetStatusText(job.Status, job.CurrentRetry) : "Disabled", Font, ForegroundFromStatus(job), x, y);
-                }
+                    {
+                        var x = e.CellBounds.X + 3;
+                        var y = e.CellBounds.Y + centerY;
+                        e.Graphics.DrawString(job.Enabled ? JobStatusHelper.GetStatusText(job) : "Disabled", Font, foreground, x, y);
+                    }
                     break;
                 case 7:
-                {
-                    var text = $"{(job.ExitCode == 0 ? "" : $"{job.ExitCode}: ")}{job.FailMessage}";
-                    var x = e.CellBounds.X + 3;
-                    var y = e.CellBounds.Y + centerY;
-
-                    if (job.CurrentRetry > 0 && text != "")
                     {
-                        if (job.Status == JobStatus.Completed)
-                            text += $" (Required {job.CurrentRetry - 1} retries.)";
-                        else
-                            text += $" (Did {job.CurrentRetry - 1} retries.)";
+                        var text = $"{(job.ExitCode == 0 ? "" : $"{job.ExitCode}: ")}{job.FailMessage}";
+                        var x = e.CellBounds.X + 3;
+                        var y = e.CellBounds.Y + centerY;
+
+                        if (job.CurrentRetry > 0 && text != "")
+                        {
+                            if (job.Status == JobStatus.Completed)
+                                text += $" (Required {job.CurrentRetry - 1} retries.)";
+                            else
+                                text += $" (Did {job.CurrentRetry - 1} retries.)";
+                        }
+
+                        e.Graphics.DrawString(text, Font, foreground, x, y);
                     }
-                                
-                    e.Graphics.DrawString(text, Font, ForegroundFromStatus(job), x, y);
-                }
                     break;
             }
         }
 
         e.Graphics.DrawRectangle(Pens.Green, e.CellBounds);
-            
+
         if (SelectedCells.Count > 0)
         {
             var c = SelectedCells[0];

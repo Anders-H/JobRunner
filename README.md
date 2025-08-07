@@ -15,7 +15,7 @@ Or:
 
 This can be changed by editing the `JobRunner.exe.config` file.
 
-Download setup program for version 1.8 (preview 1): [JobRunnerSetup.zip](JobRunnerSetup.zip)
+Download setup program for version 1.8: [JobRunnerSetup.zip](JobRunnerSetup.zip)
 
 ## Version history:
 

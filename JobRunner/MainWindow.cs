@@ -447,4 +447,11 @@ public partial class MainWindow : Form
         Variables.Delete(variable.Name);
         _controller.SaveVariables(this, Variables);
     }
+
+    private void localAdminToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        MessageDisplayer.Tell(this,
+            "Only when you start JobRunner as a local administrator, you can edit the jobs and the job list. However, you can always try to run the jobs in the job list, and it will work if your user account has the authority to do so.",
+            "Local administrator");
+    }
 }

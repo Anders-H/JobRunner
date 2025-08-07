@@ -13,30 +13,49 @@ namespace JobRunner.ObjectModel
 
     public static class JobStatusHelper
     {
-        public static string GetStatusText(JobStatus jobStatus, int retryCount)
+        public static string GetStatusText(Job job)
         {
-            switch (jobStatus)
+            var append = " (no condition)";
+
+            switch (job.RunIf)
+            {
+                case JobRunConditionEnum.NoCondition:
+                    break;
+                case JobRunConditionEnum.RunIfFileExists:
+                    append = " (if file exist)";
+                    break;
+                case JobRunConditionEnum.RunIfFileDoesNotExist:
+                    append = " (if file don't exist)";
+                    break;
+                case JobRunConditionEnum.RubIfExistsAndChangedThreeHoursAgo:
+                    append = " (if file exist and is edited)";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            switch (job.Status)
             {
                 case JobStatus.Pending:
-                    return "Pending";
+                    return $"Pending{append}";
                 case JobStatus.Running:
-                    return retryCount switch
+                    return job.RetryCount switch
                     {
-                        1 => "Running, 1st retry",
-                        2 => "Running, 2nd retry",
-                        3 => "Running, 3rd retry",
-                        4 => "Running, 4th retry",
-                        5 => "Running, 5th retry",
-                        _ => "Running"
+                        1 => $"Running, 1st retry{append}",
+                        2 => $"Running, 2nd retry{append}",
+                        3 => $"Running, 3rd retry{append}",
+                        4 => $"Running, 4th retry{append}",
+                        5 => $"Running, 5th retry{append}",
+                        _ => $"Running{append}"
                     };
                 case JobStatus.Completed:
-                    return retryCount > 0 ? $"Completed after {retryCount} retries" : "Completed";
+                    return job.RetryCount > 0 ? $"Completed after {job.RetryCount} retries{append}" : $"Completed{append}";
                 case JobStatus.Failed:
-                    return "Failed";
+                    return $"Failed{append}";
                 case JobStatus.Timeout:
-                    return "Timeout";
+                    return $"Timeout{append}";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(jobStatus), jobStatus, null);
+                    throw new ArgumentOutOfRangeException(nameof(job.RetryCount), job.RetryCount, null);
             }
         }
     }

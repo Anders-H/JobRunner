@@ -286,7 +286,7 @@ namespace JobRunner.ObjectModel
         <display>{(Hidden ? "Hidden" : "Visible")}</display>
         <breakOnError>{(BreakOnError ? "true" : "false")}</breakOnError>
         <retryCount>{RetryCount}</retryCount>
-        <RunIf>{RunIf}</RunIf>
+        <RunIf>{RunIf.ToFriendlyString()}</RunIf>
         <RunIfArgument>{XmlEncode(RunIfArgument)}</RunIfArgument>
     </job>";
 

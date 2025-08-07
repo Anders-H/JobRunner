@@ -13,7 +13,7 @@
         <display>Visible</display>
         <breakOnError>false</breakOnError>
         <retryCount>0</retryCount>
-        <RunIf>RubIfExistsAndChangedThreeHoursAgo</RunIf>
+        <RunIf>Run if file exists and is recently changed</RunIf>
         <RunIfArgument>C:\Users\hbom\Desktop\Erik Molnar &amp; Anders Hesselbom - Interstellar Excursion.mp4</RunIfArgument>
     </job>
 </jobs>
