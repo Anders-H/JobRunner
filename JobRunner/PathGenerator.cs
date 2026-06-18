@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-#if !DEBUG
 using System.Reflection;
-#endif
 using JobRunner.ObjectModel;
 
 namespace JobRunner
@@ -10,22 +8,15 @@ namespace JobRunner
     public class PathGenerator
     {
         private const string JobRunnerFolderName = "JobRunnerJobListFile";
-#if !DEBUG
         private readonly JobFileLocation _location;
-#endif
 
         public PathGenerator(JobFileLocation location)
         {
-#if !DEBUG
             _location = location;
-#endif
         }
 
         public string GetDataFile(string name)
         {
-#if DEBUG
-            return $@"..\..\{name}";
-#else
             switch (_location)
             {
                 case JobFileLocation.Application:
@@ -42,7 +33,6 @@ namespace JobRunner
                 default:
                     throw new SystemException("Configuration error. Visit https://github.com/Anders-H/JobRunner for more information.");
             }
-#endif
         }
 
         public static FileInfo GetLogFile()

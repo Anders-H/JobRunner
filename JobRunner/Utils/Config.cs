@@ -41,8 +41,14 @@ public static class Config
         }
     }
 
-    public static string GetJobFilePath() =>
-        new PathGenerator(_jobFileLocation).GetDataFile("jobs.xml");
+    public static string GetJobFilePath()
+    {
+#if DEBUG
+        return @"D:\GitRepos\JobRunner\JobRunner\jobs.xml";
+#else
+        return new PathGenerator(_jobFileLocation).GetDataFile("jobs.xml");
+#endif
+    }
 
     public static string GetVariableFilePath() =>
         new PathGenerator(_jobFileLocation).GetDataFile("variables.xml");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -15,11 +16,13 @@ namespace JobRunner.Dialogs;
 
 public partial class AddJobDialog : Form
 {
+    private const string NoGood = "(Invalid value - must be corrected)";
     private readonly MainWindow _parent;
     private readonly IJobList _jobs;
     private readonly IVariableList? _variables;
     private readonly ILogger _log;
     private readonly int _suggestedSequenceNumber;
+    private TreeNode? _nameNode;
 
     public AddJobDialog(MainWindow parent, IJobList jobs, IVariableList variables, ILogger log, int suggestedSequenceNumber)
     {
@@ -46,17 +49,21 @@ public partial class AddJobDialog : Form
 
     private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (tabControl1.SelectedIndex >= tabControl1.TabCount - 1)
+        if (tabControl1.SelectedTab == tabPageOverview)
         {
             if (string.IsNullOrWhiteSpace(txtName.Text))
                 txtName.Text = SuggestName();
+
+            txtNameReprice.Text = txtName.Text;
+            ConstructOverview();
+        }
+        else if (tabControl1.SelectedIndex == 0)
+        {
+            if (!string.IsNullOrWhiteSpace(txtNameReprice.Text))
+                txtName.Text = txtNameReprice.Text;
         }
 
         btnOk.Enabled = ValidateForm(true);
-
-        if (tabControl1.SelectedTab == tabPageOverview)
-            ConstructOverview();
-            
         btnBack.Enabled = tabControl1.SelectedIndex > 0;
         btnNext.Enabled = tabControl1.SelectedIndex < tabControl1.TabCount - 1;
     }
@@ -93,14 +100,13 @@ public partial class AddJobDialog : Form
         if (string.IsNullOrWhiteSpace(txtName.Text))
             txtName.Text = SuggestName();
 
-        const string noGood = "(Invalid value - must be corrected)";
         tvOverview.BeginUpdate();
         tvOverview.Nodes.Clear();
-        AddItemToOverview("Sequence:", ValidateSequenceNumber(true) ? SequenceAsString(CalculateSequence()) : noGood);
-        AddItemToOverview("Name:", ValidateJobName(true) ? txtName.Text : noGood);
-        AddItemToOverview("Program:", ValidateProgram(true) ? txtProgram.Text : noGood);
+        AddItemToOverview("Sequence:", ValidateSequenceNumber(true) ? SequenceAsString(CalculateSequence()) : NoGood);
+        _nameNode = AddItemToOverview("Name:", ValidateJobName(true) ? txtName.Text : NoGood);
+        AddItemToOverview("Program:", ValidateProgram(true) ? txtProgram.Text : NoGood);
         AddItemToOverview("Arguments:", string.IsNullOrWhiteSpace(txtArguments.Text) ? "(No arguments)" : txtArguments.Text);
-        AddItemToOverview("Timeout:", ValidateTimeout(true) ? ((TimeSpan)cboTimeout.SelectedItem).ToString() : noGood);
+        AddItemToOverview("Timeout:", ValidateTimeout(true) ? ((TimeSpan)cboTimeout.SelectedItem).ToString() : NoGood);
         AddItemToOverview("Window:", chkHidden.Checked ? "Hidden" : "Visible");
         var flowControlNode = AddItemToOverview("Flow control:", chkBreakOnError.Checked ? "Break on error" : "Continue on error");
 
@@ -301,8 +307,7 @@ public partial class AddJobDialog : Form
         );
 
         listDescriptor.AddRange(
-            from variable
-                in _variables!.All
+            from variable in _variables!.All
             let jobs = _jobs.GetVariableUsage(variable)
             select new SimpleListItem(
                 $"\"{variable.Name}\"=\"{variable.Value}\"",
@@ -369,5 +374,11 @@ public partial class AddJobDialog : Form
 
         if (x.ShowDialog(this) == DialogResult.OK)
             txtRunningConditionArgumentFile.Text = x.FileName.Trim();
+    }
+
+    private void txtNameReprice_TextChanged(object sender, EventArgs e)
+    {
+        var t = txtNameReprice.Text.Trim();
+        _nameNode?.Nodes[0].Text = string.IsNullOrWhiteSpace(t) ? NoGood : t;
     }
 }

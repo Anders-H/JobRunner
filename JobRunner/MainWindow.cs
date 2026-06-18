@@ -34,6 +34,7 @@ public partial class MainWindow : Form
     {
         lblStatus.Text = @"Initializing...";
         Cursor = Cursors.WaitCursor;
+
         addJobToolStripMenuItem.Enabled
             = editJobToolStripMenuItem.Enabled
             = deleteJobToolStripMenuItem.Enabled

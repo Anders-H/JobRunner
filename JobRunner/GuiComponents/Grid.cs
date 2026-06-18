@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -213,17 +214,13 @@ public class Grid : DataGridView, IGridVisualFeedback
 
     public void MoveUp(int index)
     {
-        var x = Rows[index - 1].Tag;
-        Rows[index - 1].Tag = Rows[index].Tag;
-        Rows[index].Tag = x;
+        (Rows[index - 1].Tag, Rows[index].Tag) = (Rows[index].Tag, Rows[index - 1].Tag);
         CurrentCell = Rows[index - 1].Cells[CurrentCell.ColumnIndex];
     }
 
     public void MoveDown(int index)
     {
-        var x = Rows[index + 1].Tag;
-        Rows[index + 1].Tag = Rows[index].Tag;
-        Rows[index].Tag = x;
+        (Rows[index + 1].Tag, Rows[index].Tag) = (Rows[index].Tag, Rows[index + 1].Tag);
         CurrentCell = Rows[index + 1].Cells[CurrentCell.ColumnIndex];
     }
 

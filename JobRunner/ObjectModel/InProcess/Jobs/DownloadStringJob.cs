@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -61,6 +62,8 @@ public class DownloadStringJob : InProcessJob
             do
             {
                 Thread.Sleep(500);
+                if (!request.IsCompleted)
+                    continue;
                 if (request.IsCanceled || request.IsFaulted)
                     throw new SystemException("Download failed.");
                 if (request.IsCompleted)

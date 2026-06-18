@@ -39,7 +39,7 @@ namespace JobRunner.ObjectModel
                 case JobStatus.Pending:
                     return $"Pending{append}";
                 case JobStatus.Running:
-                    return job.RetryCount switch
+                    return job.CurrentRetry switch
                     {
                         1 => $"Running, 1st retry{append}",
                         2 => $"Running, 2nd retry{append}",
@@ -49,13 +49,13 @@ namespace JobRunner.ObjectModel
                         _ => $"Running{append}"
                     };
                 case JobStatus.Completed:
-                    return job.RetryCount > 0 ? $"Completed after {job.RetryCount} retries{append}" : $"Completed{append}";
+                    return job.CurrentRetry > 0 ? $"Completed after {job.CurrentRetry} retries{append}" : $"Completed{append}";
                 case JobStatus.Failed:
                     return $"Failed{append}";
                 case JobStatus.Timeout:
                     return $"Timeout{append}";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(job.RetryCount), job.RetryCount, null);
+                    throw new ArgumentOutOfRangeException(nameof(job.Status), job.Status, null);
             }
         }
     }
